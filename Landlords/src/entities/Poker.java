@@ -1,4 +1,8 @@
 package entities;
+
+import enums.PokerLevel;
+import enums.PokerType;
+
 public class Poker{
 	
 	private PokerLevel level;	//大小

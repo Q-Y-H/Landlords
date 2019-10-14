@@ -1,4 +1,4 @@
-package entities;
+package enums;
 public enum PokerType{
 
 	BLANK(" "),
