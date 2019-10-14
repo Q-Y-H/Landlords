@@ -1,5 +1,6 @@
 package enums;
-public enum PokerType{
+
+public enum PokerSuit{
 
 	BLANK(" "),
 	
@@ -14,7 +15,7 @@ public enum PokerType{
 	
 	private String name;
 
-	private PokerType(String name) {
+	private PokerSuit(String name) {
 		this.name = name;
 	}
 	

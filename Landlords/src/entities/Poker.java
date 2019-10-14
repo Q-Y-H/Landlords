@@ -1,30 +1,30 @@
 package entities;
 
-import enums.PokerLevel;
-import enums.PokerType;
+import enums.PokerRank;
+import enums.PokerSuit;
 
 public class Poker{
 	
-	private PokerLevel level;	//大小
+	private PokerRank rank;	//大小
 	
-	private PokerType type;		//花色
+	private PokerSuit suit;		//花色
 
-	public Poker(PokerLevel level, PokerType type) {
-		this.level = level;
-		this.type = type;
+	public Poker(PokerRank level, PokerSuit type) {
+		this.rank = level;
+		this.suit = type;
 	}
 
-	public final PokerLevel getLevel() {
-		return level;
+	public final PokerRank getLevel() {
+		return rank;
 	}
 
-	public final PokerType getType() {
-		return type;
+	public final PokerSuit getType() {
+		return suit;
 	}
 	
 	public boolean greater(Poker b) {	//compare the level between two poker
 		//return true if this.level>b.level
-		if (this.level.getLevel() >b.level.getLevel()) 
+		if (this.rank.getLevel() >b.rank.getLevel()) 
 			return true;
 		else 
 			return false;
@@ -32,7 +32,7 @@ public class Poker{
 
 	@Override
 	public String toString() {
-		return String.valueOf(level.getName()) + " ";
+		return String.valueOf(rank.getName()) + " ";
 	}
 	
 }
