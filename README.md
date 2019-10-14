@@ -14,7 +14,8 @@ Recommanded softwares:
 - Github Desktop
 - SourceTree
 
-*****Highly Recommanded Readings:**
+**Highly Recommanded Readings:**
 - [廖雪峰：多人协作](https://www.liaoxuefeng.com/wiki/896043488029600/900375748016320)
+- [wiki: dou dizhu](https://en.wikipedia.org/wiki/Dou_dizhu)
 
 
