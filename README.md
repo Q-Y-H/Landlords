@@ -22,6 +22,7 @@ Recommanded softwares:
 
 **Highly Recommanded Readings:**
 - [廖雪峰：多人协作](https://www.liaoxuefeng.com/wiki/896043488029600/900375748016320)
+- [廖雪峰：解决冲突](https://www.liaoxuefeng.com/wiki/896043488029600/900004111093344)
 - [wiki: dou dizhu](https://en.wikipedia.org/wiki/Dou_dizhu)
 - [编程语言中常用的变量命名缩写](https://blog.csdn.net/qq_37851620/article/details/94731227)
 - [upstream](https://www.cnblogs.com/schaepher/p/4933873.html#fetch)
