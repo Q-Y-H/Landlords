@@ -18,7 +18,7 @@ Note:
 
 Recommanded softwares:
 - Github Desktop
-- SourceTree # You can visualize the git actions.
+- SourceTree # You can visualize the git actions. hhhh
 
 **Highly Recommanded Readings:**
 - [廖雪峰：多人协作](https://www.liaoxuefeng.com/wiki/896043488029600/900375748016320)
