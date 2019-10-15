@@ -1,5 +1,5 @@
 package helpers;
 
 public class PokerHelper {
-	private int a;
+	private int a = 1;
 }
