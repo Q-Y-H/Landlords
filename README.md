@@ -3,7 +3,7 @@
 We have two main branches in the git repository:
 - master: for stable version of code
 - dev: for development version of code
-1
+
 You can follow the following:
 1. Fork this repository to your own account.
 2. Clone this repository to your local machine.
@@ -24,3 +24,4 @@ Recommanded softwares:
 - [廖雪峰：多人协作](https://www.liaoxuefeng.com/wiki/896043488029600/900375748016320)
 - [wiki: dou dizhu](https://en.wikipedia.org/wiki/Dou_dizhu)
 - [编程语言中常用的变量命名缩写](https://blog.csdn.net/qq_37851620/article/details/94731227)
+- [upstream](https://www.cnblogs.com/schaepher/p/4933873.html#fetch)
