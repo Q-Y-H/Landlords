@@ -3,7 +3,7 @@
 We have two main branches in the git repository:
 - master: for stable version of code
 - dev: for development version of code
-
+1
 You can follow the following:
 1. Fork this repository to your own account.
 2. Clone this repository to your local machine.
