@@ -1,3 +1,7 @@
+### SourceTree ###
+.lock
+.vpprefdata/
+
 
 # Created by https://www.gitignore.io/api/eclipse,intellij,visualstudiocode,vim,macos,idea
 # Edit at https://www.gitignore.io/?templates=eclipse,intellij,visualstudiocode,vim,macos,idea
