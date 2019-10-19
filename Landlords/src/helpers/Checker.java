@@ -13,7 +13,7 @@ public class Checker {
 			Sort.sortPoker(hand);
 			
 			int[] numOfRanks = new int[20];
-			for(Poker card: hand) numOfRanks[card.getLevel().getRank()]++;
+			for(Poker card: hand) numOfRanks[card.getRank()]++;
 			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;
 			int[] start = new int[5];
 			int[] count = new int[5];

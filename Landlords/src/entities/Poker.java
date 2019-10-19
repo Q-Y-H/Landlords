@@ -9,6 +9,7 @@ public class Poker{
 	
 	private PokerSuit suit;		//花色
 
+
 	public Poker(Rank level, PokerSuit type) {
 		this.rank = level;
 		this.suit = type;
@@ -18,13 +19,18 @@ public class Poker{
 		return rank;
 	}
 
-	public final PokerSuit getType() {
-		return suit;
+	public final int getRank() {
+		return rank.getRank();
 	}
 	
-	public boolean greater(Poker b) {	//compare the level between two poker
-		//return true if this.level>b.level
-		if (this.rank.getRank() >b.getLevel().getRank()) 
+	public final PokerSuit getSuit() {
+		return suit;
+	}
+
+	public boolean compareTo(Poker b) {	
+		//compare the rank between two poker
+		//return true if this.rank>b.rank
+		if (this.getRank() >b.getRank()) 
 			return true;
 		else 
 			return false;
