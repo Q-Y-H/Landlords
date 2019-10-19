@@ -1,6 +1,6 @@
 package enums;
 
-public enum PokerRank{
+public enum Rank{
 
 	RANK_3(3, "3"),
 	
@@ -37,16 +37,22 @@ public enum PokerRank{
 	
 	private String name;
 	
-	private PokerRank(int rank, String name) {
+	private Rank(int rank, String name) {
 		this.rank = rank;
 		this.name = name;
 	}
-
+	
 	public final String getName() {
 		return name;
 	}
 
 	public final int getRank() {
 		return rank;
+	}
+
+	public static Rank getRankByValue(int value) {
+		for(Rank r: Rank.values()) 
+			if(r.getRank() == value) return r;
+		return null;
 	}
 }

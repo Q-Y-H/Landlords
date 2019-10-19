@@ -2,11 +2,10 @@ package entities;
 
 import java.util.ArrayList;
 
-import enums.PokerHand;
 
 public class Player {
 
-	private static PokerHand lastHand;
+	private static Hand lastHand;
 	private ArrayList<Poker> pokerOnHand = new ArrayList<Poker>();
 	
 	public Player(ArrayList<Poker> pokerOnHand) {
@@ -14,12 +13,12 @@ public class Player {
 		this.pokerOnHand = pokerOnHand;
 	}
 	
-	public static PokerHand getLastHand() {
+	public static Hand getLastHand() {
 		return Player.lastHand;
 	}
 	
-	public static void setLastHand(PokerHand pokerHand) {
-		Player.lastHand = pokerHand;
+	public static void setLastHand(Hand Hand) {
+		Player.lastHand = Hand;
 	}
 	
 	public ArrayList<Poker> getPokerOnHand() {
