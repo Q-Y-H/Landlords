@@ -23,8 +23,7 @@ public class Poker{
 	}
 
 	public boolean compareTo(Poker b) {	
-		//compare the rank between two poker
-		//return true if this.rank>b.rank
+		//return true if greater in rank
 		if (this.getRank() >b.getRank()) 
 			return true;
 		else 
@@ -33,7 +32,7 @@ public class Poker{
 
 	@Override
 	public String toString() {
-		return String.valueOf(rank.getName()) + " ";
+		return (rank.toString()) + " ";
 	}
 	
 }
