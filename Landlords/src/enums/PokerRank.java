@@ -28,9 +28,9 @@ public enum PokerRank{
 	
 	RANK_2(15, "2"),
 	
-	RANK_BLACK_JOKER(16, "B"),	//小王
+	RANK_BLACK_JOKER(16, "B"),	
 	
-	RANK_RED_JOKER(17, "R")		// 大王
+	RANK_RED_JOKER(17, "R")	
 	;
 	
 	private int rank;
@@ -41,8 +41,9 @@ public enum PokerRank{
 		this.rank = rank;
 		this.name = name;
 	}
-
-	public final String getName() {
+	
+	@Override
+	public final String toString() {	//used for printing name
 		return name;
 	}
 
