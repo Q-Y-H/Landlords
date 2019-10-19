@@ -23,9 +23,10 @@ public class Poker{
 		return rank.getRank();
 	}
 	
-	public final PokerSuit getSuit() {
+	public final PokerSuit getType() {
 		return suit;
 	}
+	
 
 	public boolean compareTo(Poker b) {	
 		//compare the rank between two poker

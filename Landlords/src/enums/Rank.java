@@ -46,6 +46,7 @@ public enum Rank{
 		return name;
 	}
 
+ 
 	public final int getRank() {
 		return rank;
 	}
