@@ -1,30 +1,37 @@
 package entities;
 
-import enums.PokerRank;
+import enums.Rank;
 import enums.PokerSuit;
 
 public class Poker{
 	
-	private PokerRank rank;	//大小
+	private Rank rank;	//大小
 	
 	private PokerSuit suit;		//花色
 
-	public Poker(PokerRank level, PokerSuit type) {
+
+	public Poker(Rank level, PokerSuit type) {
 		this.rank = level;
 		this.suit = type;
 	}
 
-	public final PokerRank getLevel() {
+	public final Rank getLevel() {
 		return rank;
 	}
 
+	public final int getRank() {
+		return rank.getRank();
+	}
+	
 	public final PokerSuit getType() {
 		return suit;
 	}
 	
-	public boolean greater(Poker b) {	//compare the level between two poker
-		//return true if this.level>b.level
-		if (this.rank.getLevel() >b.rank.getLevel()) 
+
+	public boolean compareTo(Poker b) {	
+		//compare the rank between two poker
+		//return true if this.rank>b.rank
+		if (this.getRank() >b.getRank()) 
 			return true;
 		else 
 			return false;

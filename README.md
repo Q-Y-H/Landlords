@@ -1,6 +1,6 @@
 # Landlords pokercard game
 ## Collaboration Guide
-We have two main branches in the git repository:
+ave two main branches in the git repository:
 - master: for stable version of code
 - dev: for development version of code
 
