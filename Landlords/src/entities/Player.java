@@ -8,6 +8,7 @@ public class Player {
 
 	private static PokerHand lastHand;
 	private ArrayList<Poker> pokerOnHand = new ArrayList<Poker>();
+	private int a;
 	
 	public Player(ArrayList<Poker> pokerOnHand) {
 		super();
