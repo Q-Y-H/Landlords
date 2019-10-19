@@ -9,22 +9,23 @@ public class Poker{
 	
 	private PokerSuit suit;		//花色
 
-	public Poker(PokerRank level, PokerSuit type) {
-		this.rank = level;
-		this.suit = type;
+	public Poker(PokerRank	rank, PokerSuit suit) {
+		this.rank = rank;
+		this.suit = suit;
 	}
 
-	public final PokerRank getLevel() {
-		return rank;
-	}
-
-	public final PokerSuit getType() {
-		return suit;
+	public final int getRank() {
+		return rank.getRank();
 	}
 	
-	public boolean greater(Poker b) {	//compare the level between two poker
-		//return true if this.level>b.level
-		if (this.rank.getLevel() >b.rank.getLevel()) 
+	public final PokerSuit getSuit() {
+		return suit;
+	}
+
+	public boolean compareTo(Poker b) {	
+		//compare the rank between two poker
+		//return true if this.rank>b.rank
+		if (this.getRank() >b.getRank()) 
 			return true;
 		else 
 			return false;
