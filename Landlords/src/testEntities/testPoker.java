@@ -10,7 +10,7 @@ import enums.PokerRank;
 class TestPoker {
 
 	@Test
-	void Should_ReturnTure_When_RankIsHigher() {
+	void CompareTo_CalledPokerHasHigherRankThanPokerB_ReturnTure() {
 		Poker poker1=new Poker(PokerRank.RANK_K, null);
 		Poker poker2=new Poker(PokerRank.RANK_Q, null);
 		boolean result=poker1.compareTo(poker2);
@@ -18,7 +18,7 @@ class TestPoker {
 	}
 	
 	@Test
-	void Should_ReturnFalso_When_RankIsLower() {
+	void ComparetO_CalledPokerHasLowerRankThanPokerB_ReturnFalse() {
 		Poker poker1=new Poker(PokerRank.RANK_3, null);
 		Poker poker2=new Poker(PokerRank.RANK_10, null);
 		boolean result=poker1.compareTo(poker2);
