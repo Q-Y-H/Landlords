@@ -78,7 +78,7 @@ class TestPoker {
 	@Test//Õ¨µ¯´ó
 	void compareTo_Bomb_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.BOMB,Rank.RANK_2,4);
-		Hand hand2=new Hand(HandType.QUAD,Rank.RANK_8,4);
+		Hand hand2=new Hand(HandType.BOMB,Rank.RANK_8,4);
 		boolean result =true;//need to be modified(comparison between Bomb)
 		assertEquals(result,true);		
 	}
