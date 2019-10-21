@@ -6,14 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import entities.Player;
 
 public class distribute{
-  private List<Player> orderOfPlayers=new ArrayList<Player>(3);
-	
-	public distribute(List<Player> Order) {
-		orderOfPlayers=Order;
-	}
+  
 	public void washPoker(List<Poker> basePoker) {
 		Collections.shuffle(basePoker);
 	}
