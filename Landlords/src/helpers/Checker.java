@@ -3,17 +3,17 @@ package helpers;
 import java.util.ArrayList;
 
 import entities.Hand;
-import entities.Poker;
+import entities.Card;
 import enums.HandType;
 import enums.Rank;
 
 public class Checker {
-	public static Hand checkHandType(ArrayList<Poker> hand) {
+	public static Hand checkHandType(ArrayList<Card> hand) {
 		if(hand != null && !hand.isEmpty()) {
 			Sort.sortPoker(hand);
 			
 			int[] numOfRanks = new int[20];
-			for(Poker card: hand) numOfRanks[card.getRank()]++;
+			for(Card card: hand) numOfRanks[card.getRank()]++;
 			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;
 			int[] start = new int[5];
 			int[] count = new int[5];

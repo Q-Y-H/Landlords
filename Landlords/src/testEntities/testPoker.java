@@ -4,30 +4,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import entities.Poker;
+import entities.Card;
 import entities.Hand;
 
 import enums.Rank;
 import enums.HandType;
 class TestPoker {
 
-	@Test//µ¥ÅÆ´ó
+	@Test//ï¿½ï¿½ï¿½Æ´ï¿½
 	void Should_ReturnTure_When_RankIsHigher() {
-		Poker poker1=new Poker(Rank.RANK_K,null);
-		Poker poker2=new Poker(Rank.RANK_Q, null);
+		Card poker1=new Card(Rank.RANK_K,null);
+		Card poker2=new Card(Rank.RANK_Q, null);
 		boolean result=poker1.compareTo(poker2);
 		assertEquals(result,true);
 	}
 	
-	@Test//µ¥ÅÆÐ¡
+	@Test//ï¿½ï¿½ï¿½ï¿½Ð¡
 	void Should_ReturnFalse_When_RankIsLower() {
-		Poker poker1=new Poker(Rank.RANK_3, null);
-		Poker poker2=new Poker(Rank.RANK_10, null);
+		Card poker1=new Card(Rank.RANK_3, null);
+		Card poker2=new Card(Rank.RANK_10, null);
 		boolean result=poker1.compareTo(poker2);
 		assertEquals(result,false);
 	}
 	
-	@Test//¶Ô×Ó´ó
+	@Test//ï¿½ï¿½ï¿½Ó´ï¿½
 	void compareTo_Pair_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_2,2);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_J,2);
@@ -35,7 +35,7 @@ class TestPoker {
 		assertEquals(result,true);
 	}
 	
-	@Test//¶Ô×ÓÐ¡
+	@Test//ï¿½ï¿½ï¿½ï¿½Ð¡
 	void compareTo_Pair_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_5,2);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_8,2);
@@ -43,7 +43,7 @@ class TestPoker {
 		assertEquals(result,false);	
 	}
 	
-	@Test//Èý´ø´ó
+	@Test//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void compareTo_Trio_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.TRIO,Rank.RANK_A,null,3);
 		Hand hand2=new Hand(HandType.TRIO,Rank.RANK_K,null,3);
@@ -51,7 +51,7 @@ class TestPoker {
 		assertEquals(result,true);
 	}
 	
-	@Test//Èý´øÐ¡
+	@Test//ï¿½ï¿½ï¿½ï¿½Ð¡
 	void compareTo_Trio_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.TRIO,Rank.RANK_4,null,3);
 		Hand hand2=new Hand(HandType.TRIO,Rank.RANK_7,null,3);
@@ -59,7 +59,7 @@ class TestPoker {
 		assertEquals(result,false);
 	}
 	
-	@Test//ËÄ´ø´ó
+	@Test//ï¿½Ä´ï¿½ï¿½ï¿½
 	void compareTo_Quad_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.QUAD,Rank.RANK_K,null,4);
 		Hand hand2=new Hand(HandType.QUAD,Rank.RANK_10,null,4);
@@ -67,7 +67,7 @@ class TestPoker {
 		assertEquals(result,true);
 	}
 	
-	@Test//ËÄ´øÐ¡
+	@Test//ï¿½Ä´ï¿½Ð¡
 	void compareTo_Quad_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.QUAD,Rank.RANK_5,null,4);
 		Hand hand2=new Hand(HandType.QUAD,Rank.RANK_9,null,4);
@@ -75,7 +75,7 @@ class TestPoker {
 		assertEquals(result,false);		
 	}
 	
-	@Test//Õ¨µ¯´ó
+	@Test//Õ¨ï¿½ï¿½ï¿½ï¿½
 	void compareTo_Bomb_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.BOMB,Rank.RANK_2,4);
 		Hand hand2=new Hand(HandType.BOMB,Rank.RANK_8,4);
@@ -83,7 +83,7 @@ class TestPoker {
 		assertEquals(result,true);		
 	}
 	
-	@Test//Õ¨µ¯Ð¡
+	@Test//Õ¨ï¿½ï¿½Ð¡
 	void compareTo_Bomb_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.BOMB,Rank.RANK_5,null,4);
 		Hand hand2=new Hand(HandType.BOMB,Rank.RANK_9,null,4);
@@ -91,7 +91,7 @@ class TestPoker {
 		assertEquals(result,false);		
 	}
 	
-	@Test//Ë³×Ó´ó
+	@Test//Ë³ï¿½Ó´ï¿½
 	void compareTo_StraightOfSolo_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.SOLO,Rank.RANK_10,5);
 		Hand hand2=new Hand(HandType.SOLO,Rank.RANK_4,5);
@@ -99,7 +99,7 @@ class TestPoker {
 		assertEquals(result,true);	
 	}
 
-	@Test//Ë³×ÓÐ¡
+	@Test//Ë³ï¿½ï¿½Ð¡
 	void compareTo_StraightOfSolo_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.SOLO,Rank.RANK_3,7);
 		Hand hand2=new Hand(HandType.SOLO,Rank.RANK_8,7);
@@ -107,7 +107,7 @@ class TestPoker {
 		assertEquals(result,false);	
 	}
 
-	@Test//Á¬¶Ô´ó
+	@Test//ï¿½ï¿½ï¿½Ô´ï¿½
 	void compareTo_StraightOfPair_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_10,3);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_4,3);
@@ -115,7 +115,7 @@ class TestPoker {
 		assertEquals(result,true);	
 	}
 
-	@Test//Á¬¶ÔÐ¡
+	@Test//ï¿½ï¿½ï¿½ï¿½Ð¡
 	void compareTo_StraightOfPair_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_3,4);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_8,4);

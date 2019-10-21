@@ -1,6 +1,6 @@
 package helpers;
 
-import entities.Poker;
+import entities.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,16 +9,16 @@ import java.util.List;
 
 public class distribute{
   
-	public void washPoker(List<Poker> basePoker) {
+	public void washPoker(List<Card> basePoker) {
 		Collections.shuffle(basePoker);
 	}
-	public List<List<Poker>> distributePoker(List<Poker> basePoker){
-		List<Poker> pokerOnHand1=new ArrayList<Poker>(17);
-		List<Poker> pokerOnHand2=new ArrayList<Poker>(17);
-		List<Poker> pokerOnHand3=new ArrayList<Poker>(17);
-		List<Poker> PokerForLandload=new ArrayList<Poker>(3);//Poker for landload
+	public List<List<Card>> distributePoker(List<Card> basePoker){
+		List<Card> pokerOnHand1=new ArrayList<Card>(17);
+		List<Card> pokerOnHand2=new ArrayList<Card>(17);
+		List<Card> pokerOnHand3=new ArrayList<Card>(17);
+		List<Card> PokerForLandload=new ArrayList<Card>(3);//Poker for landload
 		
-		List<List<Poker>> PokerGroup =new ArrayList<List<Poker>>(4);
+		List<List<Card>> PokerGroup =new ArrayList<List<Card>>(4);
 		
 		washPoker(basePoker);
 		
