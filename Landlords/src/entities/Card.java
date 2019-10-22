@@ -1,18 +1,19 @@
 package entities;
 
+
 import enums.Rank;
-import enums.PokerSuit;
+import enums.Suit;
 
-public class Poker{
+public class Card{
 	
-	private Rank rank;	//大小
+	private Rank rank;
 	
-	private PokerSuit suit;		//花色
+	private Suit suit;
 
 
-	public Poker(Rank level, PokerSuit type) {
-		this.rank = level;
-		this.suit = type;
+	public Card(Rank rank, Suit suit) {
+		this.rank = rank;
+		this.suit = suit;
 	}
 
 	public final Rank getLevel() {
@@ -23,12 +24,12 @@ public class Poker{
 		return rank.getRank();
 	}
 	
-	public final PokerSuit getType() {
+	public final Suit getType() {
 		return suit;
 	}
 	
 
-	public boolean compareTo(Poker b) {	
+	public boolean compareTo(Card b) {	
 		//compare the rank between two poker
 		//return true if this.rank>b.rank
 		if (this.getRank() >b.getRank()) 
@@ -41,5 +42,6 @@ public class Poker{
 	public String toString() {
 		return String.valueOf(rank.getName()) + " ";
 	}
+	
 	
 }

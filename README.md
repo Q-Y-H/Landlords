@@ -1,5 +1,14 @@
 # Landlords pokercard game
+## To-Do
+
+-   [ ] Hand.java: only need to have 2 fields at this stage: `HandType` and `Arraylist<Card>`; use the constructor to find the type of the hand ==> ycx
+-   [ ] HandType.java: more specific defined Hand Types ===> ycx
+-   [ ] 
+
+
+
 ## Collaboration Guide
+
 ave two main branches in the git repository:
 - master: for stable version of code
 - dev: for development version of code

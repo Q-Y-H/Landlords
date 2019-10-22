@@ -1,17 +1,21 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import enums.PlayerRole;
 
 
 public class Player {
 
 	private static Hand lastHand;
-	private ArrayList<Poker> pokerOnHand = new ArrayList<Poker>();
-	private int a;
+	private List<Card> pokers = new ArrayList<Card>();
+	private PlayerRole role;
 	
-	public Player(ArrayList<Poker> pokerOnHand) {
+
+	public Player(ArrayList<Card> pokers) {
 		super();
-		this.pokerOnHand = pokerOnHand;
+		this.pokers = pokers;
 	}
 	
 	public static Hand getLastHand() {
@@ -22,12 +26,12 @@ public class Player {
 		Player.lastHand = Hand;
 	}
 	
-	public ArrayList<Poker> getPokerOnHand() {
+	public ArrayList<Card> getPokerOnHand() {
 		// return pokerOnHand;
-		return new ArrayList<Poker>(this.pokerOnHand);
+		return new ArrayList<Card>(this.pokers);
 	}
 	
-	public void setPokerOnHand(ArrayList<Poker> pokerOnHand) {
-		this.pokerOnHand = pokerOnHand;
+	public void setPokerOnHand(ArrayList<Card> pokerOnHand) {
+		this.pokers = pokerOnHand;
 	}
 }
