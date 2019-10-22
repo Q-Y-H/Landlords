@@ -28,32 +28,30 @@ public enum Rank{
 	
 	RANK_2(15, "2"),
 	
-	RANK_BLACK_JOKER(16, "B"),	//小王
+	RANK_BLACK_JOKER(16, "B"),	// 小王
 	
-	RANK_RED_JOKER(17, "R")		// 大王
+	RANK_RED_JOKER(17, "R"),	// 大王
 	;
 	
-	private int rank;
-	
+	private int value;
 	private String name;
 	
-	private Rank(int rank, String name) {
-		this.rank = rank;
+	private Rank(int value, String name) {
+		this.value = value;
 		this.name = name;
 	}
 	
-	public final String getName() {
+	public String getName() {
 		return name;
 	}
 
- 
-	public final int getRank() {
-		return rank;
+	public int getValue() {
+		return value;
 	}
 
 	public static Rank getRankByValue(int value) {
 		for(Rank r: Rank.values()) 
-			if(r.getRank() == value) return r;
+			if(r.getValue() == value) return r;
 		return null;
 	}
 }

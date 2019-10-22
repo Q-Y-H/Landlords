@@ -1,10 +1,6 @@
 package entities;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import enums.Rank;
 import enums.Suit;
@@ -12,41 +8,30 @@ import enums.Suit;
 public class Card{
 	
 	private Rank rank;
-	
 	private Suit suit;
-
+	
+	public static Comparator<Card> cardComparator = new Comparator<Card>() {
+		@Override
+		public int compare(Card o1, Card o2) {
+			return o1.compareTo(o2);
+		}
+	};
 
 	public Card(Rank rank, Suit suit) {
 		this.rank = rank;
 		this.suit = suit;
 	}
 
-	public final Rank getLevel() {
+	public Rank getRank() {
 		return rank;
 	}
 
-	public final int getRank() {
-		return rank.getRank();
-	}
-	
-	public final Suit getType() {
+	public Suit getSuit() {
 		return suit;
 	}
 	
-
 	public int compareTo(Card card) {	
-		return this.getRank() - card.getRank();
-	}
-
-	private static Comparator<Card> cardComparator = new Comparator<Card>() {
-		@Override
-		public int compare(Card o1, Card o2) {
-			return o1.compareTo(o2);
-		}
-	};
-	
-	public static void sortPoker(List<Card> cards){
-		Collections.sort(cards, cardComparator);
+		return this.getRank().getValue() - card.getRank().getValue();
 	}
 	
 	@Override

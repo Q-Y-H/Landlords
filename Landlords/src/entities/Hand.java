@@ -1,11 +1,10 @@
 package entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import enums.HandType;
 import enums.Rank;
-import helpers.Sort;
+import helpers.Helper;
 
 
 public class Hand {
@@ -15,12 +14,8 @@ public class Hand {
 	private Hand[] kickers;
 	private int chainLength;
 	
-	public Hand(List<Card> cards) {
-		
-	}
-	
 	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength) {
-		this.type=type;
+		this.setType(type);
 		this.primal=primal;
 		this.kickers=kickers;
 		this.chainLength=chainLength;
@@ -42,12 +37,20 @@ public class Hand {
 		this(type,null,null,0);
 	}
 	
+	public HandType getType() {
+		return type;
+	}
+
+	public void setType(HandType type) {
+		this.type = type;
+	}
+	
 	public static Hand cards2hand(List<Card> cards) {
 		if(cards != null && !cards.isEmpty()) {
-			Card.sortPoker(cards);
+			Helper.sortPokers(cards);
 			
 			int[] numOfRanks = new int[20];
-			for(Card card: cards) numOfRanks[card.getRank()]++;
+			for(Card card: cards) numOfRanks[card.getRank().getValue()]++;
 			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;
 			int[] start = new int[5];
 			int[] count = new int[5];
@@ -130,4 +133,10 @@ public class Hand {
  		
 		return new Hand(HandType.ILLEGAL);//illegal
 	}
+
+	public boolean over(Hand lastHand) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

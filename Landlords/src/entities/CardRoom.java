@@ -3,16 +3,19 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokerRoom {
+public class CardRoom {
 	
 	private List<Player> players;
 	private List<Card> landlordCards;
 	private Hand lastHand;
+	private int landlordID;
+	private Player lastHandPlayer;
 	
-	public PokerRoom() {
+	public CardRoom() {
 		this.players = new ArrayList<Player>();
 		this.landlordCards = null;
 		this.lastHand = null;
+		this.lastHandPlayer = null;
 	}
 	
 	public List<Player> getPlayers() {
@@ -32,5 +35,21 @@ public class PokerRoom {
 	}
 	public void setLastHand(Hand lastHand) {
 		this.lastHand = lastHand;
+	}
+
+	public int getLandlordID() {
+		return landlordID;
+	}
+
+	public void setLandlordID(int landlordID) {
+		this.landlordID = landlordID;
+	}
+
+	public Player getLastHandPlayer() {
+		return lastHandPlayer;
+	}
+
+	public void setLastHandPlayer(Player lastHandPlayer) {
+		this.lastHandPlayer = lastHandPlayer;
 	}
 }

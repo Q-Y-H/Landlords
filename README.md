@@ -1,9 +1,12 @@
 # Landlords pokercard game
 ## To-Do
 
--   [ ] Hand.java: only need to have 2 fields at this stage: `HandType` and `Arraylist<Card>`; use the constructor to find the type of the hand ==> ycx
--   [ ] HandType.java: more specific defined Hand Types ===> ycx
--   [ ] 
+-   [ ] 考虑当前code是否符合principles和patterns
+-   [ ] Rank Alias. Example: ‘a’ and ‘A’
+-   [ ] 完成Main.js里`TODO`代码
+-   [ ] 完成各处auto-generated的method
+
+请求大家帮忙更新README！
 
 
 

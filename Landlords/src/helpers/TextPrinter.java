@@ -3,24 +3,25 @@ package helpers;
 import entities.Player;
 import entities.Card;
 import java.util.List;
-public class Printer {
+
+public class TextPrinter {
 	
 	
 	
-	public String printCards(List<Card>pokers) {
+	public static String printCards(List<Card> cards) {
 		
 		String message = "┌";		
-		int len = pokers.size();
+		int len = cards.size();
 		for(int i = 0; i < len; i++) {
 			message += "──┐";
 		}
 		message += "\n|";
-		for(Card poker: pokers) {
-			message += (poker.getLevel().getName()+" |");
+		for(Card poker: cards) {
+			message += (poker.getRank().getName()+" |");
 		}
 		message += "\n|";
-		for(Card poker: pokers) {
-			message += (poker.getType().getName()+" |");
+		for(Card poker: cards) {
+			message += (poker.getSuit().getName()+" |");
 		}
 		message += "\n└";
 		for(int i = 0; i < len; i++) {
@@ -40,14 +41,14 @@ public class Printer {
 	
 	public String printPreviousPokers(List<Card> nextPokers, List<Card> previousPokers, Player nextP, Player previousP) {
 		String message = "";
-		if(nextPokers.size()==0)message+=(nextP.getName() + " passes.\n");
+		if(nextPokers.size()==0)message+=(nextP.getNickname() + " passes.\n");
 		else {
-			message += (nextP.getName() + " plays:\n");
+			message += (nextP.getNickname() + " plays:\n");
 			printCards(nextPokers);
 		}
-		if(previousPokers.size()==0)message+=(previousP.getName() + " passes.\n");
+		if(previousPokers.size()==0)message+=(previousP.getNickname() + " passes.\n");
 		else {
-			message += (nextP.getName() + " plays:\n");
+			message += (nextP.getNickname() + " plays:\n");
 			printCards(nextPokers);
 		}
 		return message;
@@ -57,9 +58,14 @@ public class Printer {
 		String message = "Everyone's current status:\n";
 		int len1 = nextP.getPokers().size();
 		int len2 = previousP.getPokers().size();
-		message += (nextP.getName()+":	["+nextP.getRole()+"] "+len1+"pokers remaining\n");
-		message += (previousP.getName()+":	["+previousP.getRole()+"] "+len2+"pokers remaining\n\n");
+		message += (nextP.getNickname()+":	["+nextP.getRole()+"] "+len1+"pokers remaining\n");
+		message += (previousP.getNickname()+":	["+previousP.getRole()+"] "+len2+"pokers remaining\n\n");
 		return message;
+	}
+
+	public static void helpInfo() {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

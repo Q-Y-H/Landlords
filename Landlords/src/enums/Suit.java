@@ -19,7 +19,7 @@ public enum Suit{
 		this.name = name;
 	}
 	
-	public final String getName() {
+	public String getName() {
 		return name;
 	}
 }
