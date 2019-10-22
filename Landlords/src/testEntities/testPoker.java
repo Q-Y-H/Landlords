@@ -4,42 +4,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-<<<<<<< HEAD
-import entities.Poker;
-import enums.Rank;
-=======
 import entities.Card;
 import entities.Hand;
->>>>>>> dev
+
 
 import enums.Rank;
 import enums.HandType;
 class TestPoker {
 
 	@Test//���ƴ�
-	void Should_ReturnTure_When_RankIsHigher() {
-<<<<<<< HEAD
-		Poker poker1=new Poker(Rank.RANK_K, null);
-		Poker poker2=new Poker(Rank.RANK_Q, null);
-=======
+	void compareTo_1stCardRankGreaterthan2ndCardRank_ReturnTrue() {
 		Card poker1=new Card(Rank.RANK_K,null);
 		Card poker2=new Card(Rank.RANK_Q, null);
->>>>>>> dev
 		boolean result=poker1.compareTo(poker2);
 		assertEquals(result,true);
 	}
 	
-<<<<<<< HEAD
-	@Test
-	void Should_ReturnFalso_When_RankIsLower() {
-		Poker poker1=new Poker(Rank.RANK_3, null);
-		Poker poker2=new Poker(Rank.RANK_10, null);
-=======
 	@Test//����С
-	void Should_ReturnFalse_When_RankIsLower() {
+	void compareTo_1stCardRankLowerThan2ndCardRank_ReturnFalse() {
 		Card poker1=new Card(Rank.RANK_3, null);
 		Card poker2=new Card(Rank.RANK_10, null);
->>>>>>> dev
 		boolean result=poker1.compareTo(poker2);
 		assertEquals(result,false);
 	}
