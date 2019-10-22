@@ -1,6 +1,11 @@
 package entities;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import enums.Rank;
 import enums.Suit;
 
@@ -29,15 +34,21 @@ public class Card{
 	}
 	
 
-	public boolean compareTo(Card b) {	
-		//compare the rank between two poker
-		//return true if this.rank>b.rank
-		if (this.getRank() >b.getRank()) 
-			return true;
-		else 
-			return false;
+	public int compareTo(Card card) {	
+		return this.getRank() - card.getRank();
 	}
 
+	private static Comparator<Card> cardComparator = new Comparator<Card>() {
+		@Override
+		public int compare(Card o1, Card o2) {
+			return o1.compareTo(o2);
+		}
+	};
+	
+	public static void sortPoker(List<Card> cards){
+		Collections.sort(cards, cardComparator);
+	}
+	
 	@Override
 	public String toString() {
 		return String.valueOf(rank.getName()) + " ";
