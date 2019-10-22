@@ -11,7 +11,7 @@ import enums.Rank;
 import enums.HandType;
 class TestPoker {
 
-	@Test//���ƴ�
+	@Test//single bigger
 	void Should_ReturnTure_When_RankIsHigher() {
 		Card poker1=new Card(Rank.RANK_K,null);
 		Card poker2=new Card(Rank.RANK_Q, null);
@@ -19,7 +19,7 @@ class TestPoker {
 		assertEquals(result,true);
 	}
 	
-	@Test//����С
+	@Test//single smaller
 	void Should_ReturnFalse_When_RankIsLower() {
 		Card poker1=new Card(Rank.RANK_3, null);
 		Card poker2=new Card(Rank.RANK_10, null);
@@ -27,64 +27,64 @@ class TestPoker {
 		assertEquals(result,false);
 	}
 	
-	@Test//���Ӵ�
-	void compareTo_Pair_When_RankIsHigher_True_Comparison() {
+	@Test//pair bigger
+	void CompareTo_Pair_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_2,2);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_J,2);
 		boolean result =true;//need to be modified(comparison between Pair)
 		assertEquals(result,true);
 	}
 	
-	@Test//����С
-	void compareTo_Pair_When_RankIsLower_False_Comparison() {
+	@Test//pair smaller
+	void CompareTo_Pair_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_5,2);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_8,2);
 		boolean result =false;//need to be modified(comparison between Pair)
 		assertEquals(result,false);	
 	}
 	
-	@Test//������
-	void compareTo_Trio_When_RankIsHigher_True_Comparison() {
+	@Test//Trio bigger
+	void CompareTo_Trio_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.TRIO,Rank.RANK_A,null,3);
 		Hand hand2=new Hand(HandType.TRIO,Rank.RANK_K,null,3);
 		boolean result =true;//need to be modified(comparison between Trio)
 		assertEquals(result,true);
 	}
 	
-	@Test//����С
-	void compareTo_Trio_When_RankIsLower_False_Comparison() {
+	@Test//Trio smaller
+	void CompareTo_Trio_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.TRIO,Rank.RANK_4,null,3);
 		Hand hand2=new Hand(HandType.TRIO,Rank.RANK_7,null,3);
 		boolean result =false;//need to be modified(comparison between Trio)
 		assertEquals(result,false);
 	}
 	
-	@Test//�Ĵ���
-	void compareTo_Quad_When_RankIsHigher_True_Comparison() {
+	@Test//Quad bigger
+	void CompareTo_Quad_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.QUAD,Rank.RANK_K,null,4);
 		Hand hand2=new Hand(HandType.QUAD,Rank.RANK_10,null,4);
 		boolean result =true;//need to be modified(comparison between Quad)
 		assertEquals(result,true);
 	}
 	
-	@Test//�Ĵ�С
-	void compareTo_Quad_When_RankIsLower_False_Comparison() {
+	@Test//Quad smaller
+	void CompareTo_Quad_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.QUAD,Rank.RANK_5,null,4);
 		Hand hand2=new Hand(HandType.QUAD,Rank.RANK_9,null,4);
 		boolean result =false;//need to be modified(comparison between Quad)
 		assertEquals(result,false);		
 	}
 	
-	@Test//ը����
-	void compareTo_Bomb_When_RankIsHigher_True_Comparison() {
+	@Test//Bomb Bigger
+	void CompareTo_Bomb_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.BOMB,Rank.RANK_2,4);
 		Hand hand2=new Hand(HandType.BOMB,Rank.RANK_8,4);
 		boolean result =true;//need to be modified(comparison between Bomb)
 		assertEquals(result,true);		
 	}
 	
-	@Test//ը��С
-	void compareTo_Bomb_When_RankIsLower_False_Comparison() {
+	@Test//Bomb Smaller
+	void CompareTo_Bomb_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.BOMB,Rank.RANK_5,null,4);
 		Hand hand2=new Hand(HandType.BOMB,Rank.RANK_9,null,4);
 		boolean result =false;//need to be modified(comparison between Bomb)
@@ -92,7 +92,7 @@ class TestPoker {
 	}
 	
 	@Test//˳�Ӵ�
-	void compareTo_StraightOfSolo_When_RankIsHigher_True_Comparison() {
+	void CompareTo_StraightOfSolo_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.SOLO,Rank.RANK_10,5);
 		Hand hand2=new Hand(HandType.SOLO,Rank.RANK_4,5);
 		boolean result =true;//need to be modified(comparison between Straight)
@@ -100,7 +100,7 @@ class TestPoker {
 	}
 
 	@Test//˳��С
-	void compareTo_StraightOfSolo_When_RankIsLower_False_Comparison() {
+	void CompareTo_StraightOfSolo_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.SOLO,Rank.RANK_3,7);
 		Hand hand2=new Hand(HandType.SOLO,Rank.RANK_8,7);
 		boolean result =false;//need to be modified(comparison between Straight)
@@ -108,7 +108,7 @@ class TestPoker {
 	}
 
 	@Test//���Դ�
-	void compareTo_StraightOfPair_When_RankIsHigher_True_Comparison() {
+	void CompareTo_StraightOfPair_When_RankIsHigher_True_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_10,3);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_4,3);
 		boolean result =true;//need to be modified(comparison between Straight)
@@ -116,7 +116,7 @@ class TestPoker {
 	}
 
 	@Test//����С
-	void compareTo_StraightOfPair_When_RankIsLower_False_Comparison() {
+	void CompareTo_StraightOfPair_When_RankIsLower_False_Comparison() {
 		Hand hand1=new Hand(HandType.PAIR,Rank.RANK_3,4);
 		Hand hand2=new Hand(HandType.PAIR,Rank.RANK_8,4);
 		boolean result =false;//need to be modified(comparison between Straight)
