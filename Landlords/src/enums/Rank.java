@@ -45,13 +45,9 @@ public enum Rank{
 		return name;
 	}
 
-	public int getValue() {
-		return value;
-	}
-
 	public static Rank getRankByValue(int value) {
 		for(Rank r: Rank.values()) 
-			if(r.getValue() == value) return r;
+			if(r.ordinal()+3 == value) return r;
 		return null;
 	}
 }

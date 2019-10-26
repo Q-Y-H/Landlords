@@ -7,12 +7,46 @@ import enums.Rank;
 import helpers.Helper;
 
 
-public class Hand {
+public class Hand implements Comparable<Hand>{
 	
 	private HandType type;
 	private Rank primal;
 	private Hand[] kickers;
 	private int chainLength;
+	
+	private boolean sameCategoryWith(Hand h) {
+		if(type!=h.type) 
+			return false;
+		else if(chainLength!=h.chainLength)
+			return false;
+		else if(kickers!=null && h.kickers!=null) 
+			if(kickers[0].getType()!=h.kickers[0].getType())
+				return false;
+		else if(!(kickers==null && h.kickers==null))
+			return false;
+		return true;
+	}
+	
+	public int compareTo(Hand h) {
+		if(!sameCategoryWith(h))
+			return 1;
+		if(primal.ordinal()<h.primal.ordinal())
+			return -1;
+		else if(primal.ordinal()==h.primal.ordinal())
+			return 0;
+		else 
+			return 1;
+	}
+	
+	public String toString() {
+		if(type == HandType.ILLEGAL) return "Illegal "+"\n";
+		String kickersInfo = "";
+		kickersInfo = (kickers == null)?  "null " : kickers[0].getInfo();
+		return type+" "+primal.getName()+" Kickers: "+ kickersInfo + chainLength+"\n";
+	}
+	
+	public String getInfo() {return type +" "+primal.getName()+" ";}
+	
 	
 	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength) {
 		this.setType(type);
@@ -50,7 +84,7 @@ public class Hand {
 			Helper.sortPokers(cards);
 			
 			int[] numOfRanks = new int[20];
-			for(Card card: cards) numOfRanks[card.getRank().getValue()]++;
+			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;
 			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;
 			int[] start = new int[5];
 			int[] count = new int[5];
@@ -80,7 +114,7 @@ public class Hand {
 			}
 			
 			//pair of jokers
-			if(startOfRank==16 && endOfRank==17) return new Hand(HandType.ROCKET);
+			if(startOfRank==16 && endOfRank==17) return new Hand(HandType.ROCKET, Rank.RANK_BLACK_JOKER);
 			
 			//34567, 334455, 333444, 33334444
 			if(endOfRank - startOfRank == length - 1 && endOfRank < 15) {
@@ -90,8 +124,8 @@ public class Hand {
 					return new Hand(HandType.PAIR, Rank.getRankByValue(start[2]), length);
 				if(count[3] >= 2 && count[1]+count[2]+count[4] == 0)
 					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), length);
-				if(count[4] >= 2 && count[1]+count[2]+count[3] == 0)
-					return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]), length);
+//				if(count[4] >= 2 && count[1]+count[2]+count[3] == 0)
+//					return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]), length);
 			}
 			
 			if(count[3] != 0 && endOfTrio - start[3] == count[3]-1) {
@@ -118,15 +152,25 @@ public class Hand {
 			}
 			
 			if(count[4] != 0 && endOfQuad - start[4] == count[4]-1) {
-				//3333+44, 33334444+5566
-				if(count[4] == count[2] && count[1]+count[3] == 0) {
+				//3333+45, 33334444+5678
+				if(2*count[4] == count[1] && count[2]+count[3] == 0) {
+					int n = count[1], temp = start[1];
+					Hand[] kickers = new Hand[n];
+					for(int i=0; i<n; i++, temp++) {
+						while(numOfRanks[temp] != 1) temp++;
+						kickers[i] = new Hand(HandType.SOLO, Rank.getRankByValue(temp));
+					}
+					return new Hand(HandType.QUAD, Rank.getRankByValue(start[4]), kickers, count[4]);
+				}
+				//3333+4455, 33334444+55667788
+				if(2*count[4] == count[2] && count[1]+count[3] == 0) {
 					int n = count[2], temp = start[2];
 					Hand[] kickers = new Hand[n];
 					for(int i=0; i<n; i++, temp++) {
 						while(numOfRanks[temp] != 2) temp++;
 						kickers[i] = new Hand(HandType.PAIR, Rank.getRankByValue(temp));
 					}
-					return new Hand(HandType.QUAD, Rank.getRankByValue(start[3]), kickers, count[4]);
+					return new Hand(HandType.QUAD, Rank.getRankByValue(start[4]), kickers, count[4]);
 				}
 			}
 		}
@@ -137,6 +181,6 @@ public class Hand {
 	public boolean over(Hand lastHand) {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	} 
 
 }

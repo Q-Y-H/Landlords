@@ -1,4 +1,4 @@
-package testHelpers;
+package testCases;
 
 public class testPrinter {
 

@@ -1,4 +1,4 @@
-package testEntities;
+package testCases;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,22 +10,22 @@ import entities.Hand;
 
 import enums.Rank;
 import enums.HandType;
-class TestPoker {
+class testCard {
 
 	@Test//single smaller
 	void compareTo_1stCardRankGreaterthan2ndCardRank_ReturnTrue() {
 		Card poker1=new Card(Rank.RANK_K,null);
 		Card poker2=new Card(Rank.RANK_Q, null);
-		boolean result=poker1.compareTo(poker2);
-		assertEquals(result,true);
+		int result=poker1.compareTo(poker2);
+		assertEquals(result,1);
 	}
 
 	@Test//single smaller
 	void compareTo_1stCardRankLowerThan2ndCardRank_ReturnFalse() {
 		Card poker1=new Card(Rank.RANK_3, null);
 		Card poker2=new Card(Rank.RANK_10, null);
-		boolean result=poker1.compareTo(poker2);
-		assertEquals(result,false);
+		int result=poker1.compareTo(poker2);
+		assertEquals(result,-7);
 	}
 
 	@Test//pair bigger

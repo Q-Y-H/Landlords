@@ -31,7 +31,7 @@ public class Card{
 	}
 	
 	public int compareTo(Card card) {	
-		return this.getRank().getValue() - card.getRank().getValue();
+		return this.getRank().ordinal() - card.getRank().ordinal();
 	}
 	
 	@Override
