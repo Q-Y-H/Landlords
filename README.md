@@ -1,4 +1,14 @@
 # Landlords pokercard game
+## Methods that need to be tested
+
+-   [ ] Helper.checkValidCards()
+-   [ ] Hand.cards2hand()
+-   [ ] Hand.compareTo()
+-   [ ] Player.checkCardOnHand()
+-   [ ] Player.playCards()
+
+
+
 ## To-Do
 
 -   [ ] 考虑当前code是否符合principles和patterns

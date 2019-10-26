@@ -18,6 +18,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);  
+
 		
 		// Initialize the card room and the players 
 		CardRoom room = new CardRoom();
@@ -26,6 +27,7 @@ public class Main {
 			String nickname = sc.nextLine();
 			room.getPlayers().add(new Player(nickname, PlayerRole.PEASANT));
 		}
+		
 		List<Player> players = room.getPlayers();
 		
 		
@@ -79,6 +81,7 @@ public class Main {
 			Player player = players.get(playerCursor);
 			List<Card> playerCards = players.get(playerCursor).getCards();
 			System.out.println(TextPrinter.printCards(playerCards));
+
 			
 			System.out.println("Please choose the cards to play.");
 			if (firstIn) { // TODO: here is actually the help (example 3)

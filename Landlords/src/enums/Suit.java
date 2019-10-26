@@ -20,6 +20,6 @@ public enum Suit{
 	}
 	
 	public String getName() {
-		return name;
+		return name; 
 	}
 }

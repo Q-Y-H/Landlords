@@ -89,9 +89,9 @@ public class Player {
 	}
 	
 	public void removeCards(List<Card> handCards) {
-		for(Card c: handCards)
-			if(cards.contains(c))
-				cards.remove(c);
+		for(int i=0;i<handCards.size();i++)
+			if(cards.contains(handCards.get(i)))
+				cards.remove(handCards.get(i));
 	}
 
 	public void playCards(List<Card> cards) {
