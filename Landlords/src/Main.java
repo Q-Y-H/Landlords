@@ -1,129 +1,143 @@
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import entities.Card;
 import entities.CardCase;
 import entities.Player;
-import enums.HandType;
 import enums.PlayerRole;
 import helpers.Helper;
-import helpers.TextPrinter;
+import helpers.Messager;
 import entities.CardRoom;
 import entities.Hand;
 
 public class Main {
-	
 	public static void main(String[] args) {
 		
-		Scanner sc = new Scanner(System.in);  
+		Scanner in = new Scanner(System.in);
 
-		
-		// Initialize the card room and the players 
+		/*
+		 * Initialize the card room and the players 
+		 */
 		CardRoom room = new CardRoom();
-		for (int i=0; i<3; ++i) {
-			System.out.print("Player " + i + ": Please Enter Your Nickname > ");
-			String nickname = sc.nextLine();
-			room.getPlayers().add(new Player(nickname, PlayerRole.PEASANT));
-		}
-		
+		LinkedList<List<Card>> previousCardsList = room.getPreviousCardsList();
 		List<Player> players = room.getPlayers();
+		Helper.shuffleCards(room.getCardCase());
+		List<List<Card>> cardLists = Helper.cutCards(room.getCardCase()); // Cut the base cards to 4 folders;
+		room.setLandlordCards(cardLists.get(3)); // the last one folder for the landlord
 		
-		
-		// Cut and distribute cards 
-		CardCase cardCase = new CardCase();
-		List<List<Card>> cardLists = Helper.cutCards(cardCase);
-//		Helper.shuffle(cardCase.getBaseCards());
-		
-		for (Player player: players) {
-			player.setCards(cardLists.get(player.getId()));
+		for (int i=0; i<3; ++i) {
+			System.out.print("Player " + i + ": Please Set Your Nickname >> ");
+			String nickname = in.nextLine();
+			players.add(new Player(nickname, PlayerRole.PEASANT));
+			players.get(i).setCards(cardLists.get(i));
+			Helper.sortCards(players.get(i).getCards());
 		}
-		room.setLandlordCards(cardLists.get(3));
 		
-		// System.out.println("Game Start! Player " + players.get(0).getNickname() + " first!");
-		// System.out.println("Press ENTER ...");
-		// sc.next();
-		
-		
-		/* ******************** */
-		// TODO: Print Players' cards on hand one by one in their own windows
-		//
-		// Yes, I know, really weird to play on a single cmd ORZ
-		// Maybe use robot in release 2
-		//
-		//
-		/* ******************** */
-		
-		
-		/* ******************** */
-		// TODO: Elect the landlord
-		//
+		/*
+		 * Landlord election
+		 */
+		// TODO: Here I only implement the basic idea of running for landlord. Need to be further implemented.
+		Random rand=new Random();
+		int cursor = rand.nextInt(3);
 		int landlordID = 0;
+		System.out.println("Running for the landlord! Player " + players.get(cursor).getNickname() + " first!");
+		for (int i=0; i<4; ++i) {
+			Player currPlayer = players.get(cursor);
+			String msg = Messager.printCards(currPlayer.getCards());
+			System.out.print(msg);
+			System.out.print("Player " + currPlayer.getNickname() + ": Do you want to run for landlord? [y/n]");
+			String choice = in.nextLine();
+			if (choice.equals("y") || choice.equals("Y")) {
+				// ...
+			}
+			// ...
+			cursor = ++cursor%3;
+		}
+		
+		/* ******************** Default landlord, modify it later */
 		room.setLandlordID(landlordID);
 		players.get(landlordID).setRole(PlayerRole.LANDLORD);
 		players.get(landlordID).getCards().addAll(room.getLandlordCards());
-		
-		for (Player player: players) {
-			Helper.sortCards(player.getCards());
-		}
-		//
-		// TODO: Display the three landlord cards
+		Helper.sortCards(players.get(landlordID).getCards());
+		System.out.println("The landlords is Player " + players.get(landlordID).getNickname());
+		System.out.println("Landlord cards:");
+		String msg = Messager.printCards(room.getLandlordCards());
+		System.out.println(msg);
 		/* ******************** */
-		
-		// Game Start
-		System.out.println("Game Start! Player " + players.get(0).getNickname() + " first!");
+
+		/*
+		 * Game start
+		 */
+		cursor = landlordID;
+		System.out.println("Game Start! Player " + players.get(cursor).getNickname() + " first!");
 		boolean finishFlag = false;
-		boolean firstIn = true;
-		int playerCursor = landlordID;
 		
 		while(!finishFlag) {
-			Player player = players.get(playerCursor);
-			List<Card> playerCards = players.get(playerCursor).getCards();
-			System.out.println(TextPrinter.printCards(playerCards));
-
+			Player player = players.get(cursor);
+			List<Card> playerCards = players.get(cursor).getCards();
 			
-			System.out.println("Please choose the cards to play.");
-			if (firstIn) { // TODO: here is actually the help (example 3)
-				System.out.println("Example 1: 3 3 3 4");
-				System.out.println("Example 2: pass");
-				System.out.println("Example 3: help");
-				firstIn = false;
-			}
-			
-			ArrayList<String> cardNames = new ArrayList<String>();
 			do {
-				// get player input
-				System.out.print("Player " + player.getNickname() + " > ");
-				cardNames = new ArrayList<String>();
-				String input = sc.nextLine();
-				// TODO: extract check inputs methods: checkInput(String input)
-				if (input.equals("help")) TextPrinter.helpInfo(); // TODO
-				if (input.equals("pass")) ; // TODO
-				// ArrayList<Character> cardNames = new ArrayList<Character>();
-				Scanner in = new Scanner(input);
-				while(in.hasNext()) { // TODO: exception handle
-					cardNames.add(in.next());
+				/* ******************** Display refresh part */
+				System.out.println(Messager.printCards(playerCards));
+				System.out.println("Please choose the cards to play. Input 'help' for example inputs. \n");
+				System.out.print("[" + player.getRole().toString() + "]" + "Player " + player.getNickname() + " >> ");
+//				System.out.println("Example 1: 3 3 3 4");
+//				System.out.println("Example 2: pass");
+//				System.out.println("Example 3: help\n");
+				/* ******************** */
+				
+				String cmd = in.nextLine();
+				if (cmd.equals("help")) {
+					msg = Messager.inputHelp(); // TODO
+					System.out.println(msg);
+					continue;
 				}
-			} while(!Helper.checkValidCards(cardNames)
-						||player.checkCardsOnHand(cardNames)==null);// check if input valid
-			
-			
-			List<Card> cards = player.checkCardsOnHand(cardNames); // return null if player doesn't has those cards
-			Hand currHand = Hand.cards2hand(cards);
-			Hand lastHand = room.getLastHand();
-			
-			// compare to last hands
-			int res = lastHand.compareTo(currHand);
-			if(res >= 0) continue;
-			else {
-				player.removeCards(cards);
-				room.setLastHand(currHand);
-			}
-			
-			// play cards (how to translate "chu pai" ?)
-			//player.playCards(cards); // delete cards from player's cards
-			TextPrinter.printCards(cards);
+				else if (cmd.equals("pass")) { // TODO: Landlord cannot pass in the first round? or cannot pass in the winning round?
+					previousCardsList.add(new ArrayList<Card>());
+					if (previousCardsList.size() >= 3)
+						previousCardsList.remove();
+					break;
+				}
+				// TODO: handle invalid input like 'jgjkdkas'
+				ArrayList<String> cardNames = new ArrayList<String>();
+				Scanner cmdScanner = new Scanner(cmd);
+				while(cmdScanner.hasNext()) { // TODO: exception handle
+					cardNames.add(cmdScanner.next());
+				}
+				cmdScanner.close();
+				
+				if (!Helper.checkValidCards(cardNames)) { // check if valid string input
+					// TODO: error message
+					continue;
+				}
+				List<Card> selectedCards = player.checkCardsOnHand(cardNames); // check if cards are on hand
+				if (selectedCards == null)  {
+					// TODO: error message
+					continue;
+				}
+				
+				Hand currHand = Hand.cards2hand(selectedCards);
+				Hand lastHand = room.getLastHand();
+				if(room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || lastHand.compareTo(currHand) >= 0) {
+					player.removeCards(selectedCards);
+					room.setLastHand(currHand);
+					room.setLastHandPlayer(player);
+					previousCardsList.add(selectedCards);
+					if (previousCardsList.size() >= 3)
+						previousCardsList.remove();
+					break;
+				}
+				else {
+					// TODO: error msg
+					continue;
+				}
+			} while(true);	
+
+			msg = Messager.printCards(previousCardsList.getLast());
+			System.out.println(msg);
 			
 			// check finish
 			if (player.getCards().size() == 0) {
@@ -131,9 +145,7 @@ public class Main {
 			}
 			
 			// Room info update
-			room.setLastHand(currHand);
-			room.setLastHandPlayer(player);
-			playerCursor = (playerCursor+1)%3;
+			cursor = (cursor+1)%3;
 		}
 		
 		// Check winner
@@ -145,6 +157,8 @@ public class Main {
 		}
 		
 		System.out.println("Press ENTER ...");
-		sc.next();
+		in.next();
+		
+		in.close();
 	}
 }

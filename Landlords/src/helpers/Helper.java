@@ -14,13 +14,12 @@ public class Helper {
 		Collections.sort(cards, Card.cardComparator);
 	}
 	
-	public static void shuffle(List<Card> baseCards) {
-		Collections.shuffle(baseCards);
+	public static void shuffleCards(CardCase cardCase) {
+		Collections.shuffle(cardCase.getBaseCards());
 	}
 	
 	public static List<List<Card>> cutCards(CardCase cardCase){
 		List<List<Card>> cardGroups =new ArrayList<List<Card>>(4);
-		shuffle(cardCase.getBaseCards());
 		
 		for (int i=0; i<3; i++) {
 			cardGroups.add(new ArrayList<Card>(17));

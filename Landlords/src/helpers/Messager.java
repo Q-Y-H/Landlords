@@ -4,7 +4,7 @@ import entities.Player;
 import entities.Card;
 import java.util.List;
 
-public class TextPrinter {
+public class Messager {
 	
 	
 	
@@ -63,9 +63,10 @@ public class TextPrinter {
 		return message;
 	}
 
-	public static void helpInfo() {
+	public static String inputHelp() {
 		// TODO Auto-generated method stub
 		
 	}
+
 }
 

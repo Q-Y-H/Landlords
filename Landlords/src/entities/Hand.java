@@ -13,6 +13,7 @@ public class Hand implements Comparable<Hand>{
 	private Rank primal;
 	private Hand[] kickers;
 	private int chainLength;
+	private List<Card> cards;
 	
 	private boolean sameCategoryWith(Hand h) {
 		if(type!=h.type) 

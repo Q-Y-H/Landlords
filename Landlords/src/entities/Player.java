@@ -65,27 +65,21 @@ public class Player {
 		this.id = id;
 	}
 
-	public List<Card> checkCardsOnHand(ArrayList<String> cardNames) {
-		// TODO Auto-generated method stub
+	public List<Card> checkCardsOnHand(ArrayList<String> cardNames) { // TODO: cardNames should be sorted
+		int i = 0, j = 0;
+		List<Card> res = new ArrayList<Card>();
 		
-		//if not contain
-		ArrayList<String> names = new ArrayList<String>();
-		for(Card c: cards) 
-			names.add(c.getRank().getName());
-		for(String name: cardNames)
-			if(!names.contains(name)) return null; 
-		
-		//if contain all cardNames(input)
-		List<Card> output = new ArrayList<Card>();
-		for(String name: cardNames) {
-			for(int i=0;i<cards.size();i++) {
-				if((cards.get(i).getRank().getName()).equals(name)) {
-					output.add(cards.get(i));
-					continue;
-				}
+		while(i <= cardNames.size() && j <= this.cards.size()) {
+			if (cardNames.get(i) == this.cards.get(j).getRank().getName()) { // TODO: adapt for a | A
+				res.add(this.cards.get(j));
+				++i; ++j;
 			}
+			else
+				++j;
 		}
-		return output;
+		if (res.size() != cardNames.size())
+			return null;
+		return res;
 	}
 	
 	public void removeCards(List<Card> handCards) {

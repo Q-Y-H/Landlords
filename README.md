@@ -7,18 +7,18 @@
 -   [ ] Player.checkCardOnHand()
 -   [ ] Player.playCards()
 
-
-
 ## To-Do
 
--   [ ] 考虑当前code是否符合principles和patterns
--   [ ] Rank Alias. Example: ‘a’ and ‘A’
+-   [ ] **Principles** & **Pattern**
+-   [ ] Rank: Alias for ‘A’ and ‘a’, etc.
+-   [ ] Player: id是否有用？
+-   [ ] Messager: **Card 10** display problem
+-   [ ] Messager: 不同Players之间的过场动画
+-   [ ] Player: checkCardsOnHand有错 need to be fixed
 -   [ ] 完成Main.js里`TODO`代码
 -   [ ] 完成各处auto-generated的method
 
 请求大家帮忙更新README！
-
-
 
 ## Collaboration Guide
 

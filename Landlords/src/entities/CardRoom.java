@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import enums.HandType;
@@ -10,14 +11,18 @@ public class CardRoom {
 	private List<Player> players;
 	private List<Card> landlordCards;
 	private Hand lastHand;
-	private int landlordID;
 	private Player lastHandPlayer;
+	private int landlordID;
+	private CardCase cardCase;
+	private LinkedList<List<Card>> previousCardsList;
 	
-	public CardRoom() { 
+	public CardRoom() {
 		this.players = new ArrayList<Player>();
 		this.landlordCards = null;
 		this.lastHand = new Hand(HandType.ILLEGAL);
 		this.lastHandPlayer = null;
+		this.cardCase = new CardCase();
+		this.setPreviousCardsList(new LinkedList<List<Card>>());
 	}
 	
 	public List<Player> getPlayers() {
@@ -54,4 +59,20 @@ public class CardRoom {
 	public void setLastHandPlayer(Player lastHandPlayer) {
 		this.lastHandPlayer = lastHandPlayer;
 	}
+	
+	public CardCase getCardCase() {
+		return this.cardCase;
+	}
+
+	public LinkedList<List<Card>> getPreviousCardsList() {
+		return previousCardsList;
+	}
+
+	public void setPreviousCardsList(LinkedList<List<Card>> previousCardsList) {
+		this.previousCardsList = previousCardsList;
+	}
+	
+//	public List<Card> getBaseCards() {
+//		return this.cardCase.getBaseCards();
+//	}
 }
