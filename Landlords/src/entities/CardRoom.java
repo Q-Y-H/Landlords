@@ -3,6 +3,8 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import enums.HandType;
+
 public class CardRoom {
 	
 	private List<Player> players;
@@ -11,10 +13,10 @@ public class CardRoom {
 	private int landlordID;
 	private Player lastHandPlayer;
 	
-	public CardRoom() {
+	public CardRoom() { 
 		this.players = new ArrayList<Player>();
 		this.landlordCards = null;
-		this.lastHand = null;
+		this.lastHand = new Hand(HandType.ILLEGAL);
 		this.lastHandPlayer = null;
 	}
 	

@@ -13,13 +13,13 @@ public class CardCase {
 	public CardCase() {
 		this.baseCards = new ArrayList<Card>(54);
 		
-		Rank[] ranks = Rank.values();
+		Rank[] ranks = Rank.values(); 
 		Suit[] suits = Suit.values();
 
 		for(Rank rank: ranks) {
 			if(rank == Rank.RANK_BLACK_JOKER) {
 				this.baseCards.add(new Card(rank, Suit.BLANK));
-				continue;
+				continue; 
 			}
 			if(rank == Rank.RANK_RED_JOKER) {
 				this.baseCards.add(new Card(rank, Suit.BLANK));

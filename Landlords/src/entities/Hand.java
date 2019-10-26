@@ -24,10 +24,16 @@ public class Hand implements Comparable<Hand>{
 				return false;
 		else if(!(kickers==null && h.kickers==null))
 			return false;
-		return true;
+		return true; 
 	}
 	
 	public int compareTo(Hand h) {
+		// TODO Refractory: throw exceptions
+		if(type==HandType.ROCKET || h.getType()==HandType.ILLEGAL || h.getType()==null)
+			return 1;
+		else if( h.getType()==HandType.ROCKET || type==HandType.ILLEGAL)
+			return -1;
+		
 		if(!sameCategoryWith(h))
 			return 1;
 		if(primal.ordinal()<h.primal.ordinal())
@@ -79,9 +85,11 @@ public class Hand implements Comparable<Hand>{
 		this.type = type;
 	}
 	
+	
+	// TODO Refractory: use for loop
 	public static Hand cards2hand(List<Card> cards) {
 		if(cards != null && !cards.isEmpty()) {
-			Helper.sortPokers(cards);
+			Helper.sortCards(cards);
 			
 			int[] numOfRanks = new int[20];
 			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;

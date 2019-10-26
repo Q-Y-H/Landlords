@@ -13,7 +13,9 @@ public class Card{
 	public static Comparator<Card> cardComparator = new Comparator<Card>() {
 		@Override
 		public int compare(Card o1, Card o2) {
-			return o1.compareTo(o2);
+			int res = o1.compareTo(o2);
+			if(res == 0) return o1.getSuit().ordinal()-o2.getSuit().ordinal();
+			return res;
 		}
 	};
 

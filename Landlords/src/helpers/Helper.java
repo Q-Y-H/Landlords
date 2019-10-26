@@ -1,6 +1,7 @@
 package helpers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import entities.CardCase;
 
 public class Helper {
 	
-	public static void sortPokers(List<Card> cards){
+	public static void sortCards(List<Card> cards){
 		Collections.sort(cards, Card.cardComparator);
 	}
 	
@@ -33,11 +34,19 @@ public class Helper {
 		landloadCards.addAll(cardCase.getBaseCards().subList(51, 54));
 		cardGroups.add(landloadCards);
 		
-		return cardGroups;
+		return cardGroups; 
 	}
 
-	public static void checkValidCards(ArrayList<String> cardNames) {
+	public static boolean checkValidCards(ArrayList<String> cardNames) {
 		// TODO Auto-generated method stub
-		
+		ArrayList<String> validInput = new ArrayList<String>();
+		for(int i=2;i<=10;i++)
+			validInput.add(""+i);
+		validInput.addAll(Arrays.asList("A","a","J","j","Q","q","K","k","B","b","R","r"));
+		for(String card: cardNames) {
+			if(!validInput.contains(card)) 
+				return false;
+		}
+		return true;
 	}
 }

@@ -1,87 +1,73 @@
 package testCases;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Assert;
 
 import java.util.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import entities.*;
 import enums.*;
+import junit.framework.TestCase;
 
-class testHand { 
+class testHand extends TestCase { 
+	private Card[] c = new Card[20];
+	
+
+	@BeforeEach
+ 	//initial 17 cards
+    public void setUp() {
+	 	for(int i=3;i<18;i++)
+	 		c[i] = new Card(Rank.getRankByValue(i),Suit.BLANK);
+    }
+
+	
 	/*
 	 * test method card2Hand(List<Card>)
 	 *
 	 */
 	@Test //5
 	void test01() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1);
+		List<Card> cards = Arrays.asList(c[5]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	@Test //55
 	void test02() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2);
+		List<Card> cards = Arrays.asList(c[5],c[5]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	@Test //555
 	void test03() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3);
+		List<Card> cards = Arrays.asList(c[5],c[5],c[5]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	@Test //5555
 	void test04() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_5, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4);
+		List<Card> cards = Arrays.asList(c[5],c[5],c[5],c[5]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //34567
 	void test05() {
-		Card c1 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_7, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5);
+		List<Card> cards = Arrays.asList(c[3],c[4],c[5],c[6],c[7]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //445566
 	void test06() {
-		Card c1 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_6, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6);
+		List<Card> cards = Arrays.asList(c[4],c[5],c[6],c[4],c[5],c[6]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //555666
 	void test07() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_6, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6);
+		List<Card> cards = Arrays.asList(c[5],c[6],c[5],c[6],c[5],c[6]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
@@ -89,26 +75,14 @@ class testHand {
 	
 	@Test //5553
 	void test08() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_3, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4);
+		List<Card> cards = Arrays.asList(c[5],c[5],c[5],c[3]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //555666+34
 	void test09() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c7 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c8 = new Card(Rank.RANK_4, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6,c7,c8);
+		List<Card> cards = Arrays.asList(c[5],c[6],c[5],c[6],c[5],c[6],c[3],c[4]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
@@ -116,107 +90,50 @@ class testHand {
 	@Test //55533
 	void test10() {
 		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_3, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5);
+		Card c2 = new Card(Rank.RANK_3, Suit.BLANK);
+		List<Card> cards = Arrays.asList(c[5],c[5],c[5],c[3],c[3]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //555666+3344
 	void test11() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c7 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c8 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c9 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c10 = new Card(Rank.RANK_4, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10);
+		List<Card> cards = Arrays.asList(c[5],c[6],c[5],c[6],c[5],c[6],c[3],c[4],c[3],c[4]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //5555+34
 	void test12() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_3, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6);
+		List<Card> cards = Arrays.asList(c[5],c[5],c[5],c[5],c[3],c[4]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //5555+3344
 	void test13() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c7 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c8 = new Card(Rank.RANK_3, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6,c7,c8);
+		List<Card> cards = Arrays.asList(c[5],c[5],c[5],c[5],c[3],c[4],c[3],c[4]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 
 	@Test //55556666+789 10
 	void test14() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_10, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_9, Suit.BLANK);
-		Card c7 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c8 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c9 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c10 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c11 = new Card(Rank.RANK_7, Suit.BLANK);
-		Card c12 = new Card(Rank.RANK_8, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12);
+		List<Card> cards = Arrays.asList(c[5],c[6],c[5],c[6],c[5],c[6],c[5],c[6],c[7],c[8],c[9],c[10]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //55556666+33447788
 	void test15() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c7 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c8 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c9 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c10 = new Card(Rank.RANK_6, Suit.BLANK);
-		Card c11 = new Card(Rank.RANK_7, Suit.BLANK);
-		Card c12 = new Card(Rank.RANK_8, Suit.BLANK);
-		Card c13 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c14 = new Card(Rank.RANK_4, Suit.BLANK);
-		Card c15 = new Card(Rank.RANK_7, Suit.BLANK);
-		Card c16 = new Card(Rank.RANK_8, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16);
+		List<Card> cards = Arrays.asList(c[5],c[6],c[5],c[6],c[5],c[6],c[5],c[6],c[7],c[8],c[7],c[8],c[3],c[4],c[3],c[4]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 	
 	@Test //Jj
 	void test16() {
-		Card c1 = new Card(Rank.RANK_BLACK_JOKER, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_RED_JOKER, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2);
+		List<Card> cards = Arrays.asList(c[16],c[17]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
@@ -224,14 +141,90 @@ class testHand {
 
 	@Test //Illegal 333555
 	void test17() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c3 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c4 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c5 = new Card(Rank.RANK_3, Suit.BLANK);
-		Card c6 = new Card(Rank.RANK_3, Suit.BLANK);
-		List<Card> cards = Arrays.asList(c1,c2,c3,c4,c5,c6);
+		List<Card> cards = Arrays.asList();
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
+	
+	/*
+	 * test method compareTo(Hand)
+	 *
+	 */
+	
+	@Test //3 vs 5
+	void test100() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[5]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //33 vs 55
+	void test101() {
+		List<Card> cards1 = Arrays.asList(c[3],c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[5],c[5]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	@Test //3333 vs Rocket
+	void test102() {
+		List<Card> cards1 = Arrays.asList(c[3],c[3],c[3],c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[16],c[17]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //34567 vs 78910J
+	void test103() {
+		List<Card> cards1 = Arrays.asList(c[3],c[4],c[5],c[6],c[7]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[7],c[8],c[9],c[10],c[11]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	@Test //34567 vs 78910JQ
+	void test104() {
+		List<Card> cards1 = Arrays.asList(c[3],c[4],c[5],c[6],c[7]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[7],c[8],c[9],c[10],c[11],c[12]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(1, result);
+	}
+	@Test //3 vs Illegal
+	void test105() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[3],c[5]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(1, result);
+	}
+	
+	@Test //3 vs Illegal
+	void test106() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[3],c[5]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(1, result);
+	}
+	@Test //Illegal vs 3
+	void test107() {
+		List<Card> cards1 = Arrays.asList(c[3],c[5]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[3]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
 }
