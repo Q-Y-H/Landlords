@@ -81,6 +81,8 @@ public class Main {
 			
 			do {
 				/* ******************** Display refresh part */
+				Messager.clear();
+				System.out.println(Messager.printOtherPlayersInfo(players.get((cursor+1)%3), players.get((cursor+2)%3)));
 				System.out.println(Messager.printCards(playerCards));
 				System.out.println("Please choose the cards to play. Input 'help' for example inputs. \n");
 				System.out.print("[" + player.getRole().toString() + "]" + "Player " + player.getNickname() + " >> ");
@@ -110,12 +112,12 @@ public class Main {
 				cmdScanner.close();
 				
 				if (!Helper.checkValidCards(cardNames)) { // check if valid string input
-					// TODO: error message
+					System.out.println(Messager.inputErrorMessage());
 					continue;
 				}
 				List<Card> selectedCards = player.checkCardsOnHand(cardNames); // check if cards are on hand
 				if (selectedCards == null)  {
-					// TODO: error message
+					System.out.println(Messager.cardsNotOnHandError());
 					continue;
 				}
 				
@@ -131,7 +133,7 @@ public class Main {
 					break;
 				}
 				else {
-					// TODO: error msg
+					System.out.println(Messager.disobeyRulesError());
 					continue;
 				}
 			} while(true);	
