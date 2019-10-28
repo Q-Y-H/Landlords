@@ -13,6 +13,7 @@
 -   [ ] Rank: Alias for ‘A’ and ‘a’, etc.
 -   [ ] Player: id是否有用？
 -   [ ] Messager: 不同Players之间的过场动画
+-   [x] Messager: **Card 10** display problem
 -   [ ] Player: checkCardsOnHand有错 need to be fixed
 -   [ ] 完成Main.js里`TODO`代码
 -   [ ] 完成各处auto-generated的method
