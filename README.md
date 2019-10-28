@@ -12,7 +12,6 @@
 -   [ ] **Principles** & **Pattern**
 -   [ ] Rank: Alias for ‘A’ and ‘a’, etc.
 -   [ ] Player: id是否有用？
--   [ ] Messager: **Card 10** display problem
 -   [ ] Messager: 不同Players之间的过场动画
 -   [ ] Player: checkCardsOnHand有错 need to be fixed
 -   [ ] 完成Main.js里`TODO`代码
