@@ -1,11 +1,14 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.management.relation.Role;
 
 import enums.PlayerRole;
+import enums.Rank;
 
 
 public class Player {
@@ -68,9 +71,16 @@ public class Player {
 	public List<Card> checkCardsOnHand(ArrayList<String> cardNames) { // TODO: cardNames should be sorted
 		int i = 0, j = 0;
 		List<Card> res = new ArrayList<Card>();
+		Collections.sort(cardNames, new Comparator<String>() {
+	        @Override
+	        public int compare(String s1, String s2)
+	        {
+	            return Rank.getRankByName(s1).ordinal() - Rank.getRankByName(s2).ordinal();
+	        }
+	    });
 		
-		while(i <= cardNames.size() && j <= this.cards.size()) {
-			if (cardNames.get(i) == this.cards.get(j).getRank().getName()) { // TODO: adapt for a | A
+		while(i < cardNames.size() && j < this.cards.size()) {
+			if (cardNames.get(i).equals(this.cards.get(j).getRank().getName())) { // TODO: adapt for a | A
 				res.add(this.cards.get(j));
 				++i; ++j;
 			}

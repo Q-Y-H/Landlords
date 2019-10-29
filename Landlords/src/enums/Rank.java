@@ -50,4 +50,10 @@ public enum Rank{
 			if(r.ordinal()+3 == value) return r;
 		return null;
 	}
+	
+	public static Rank getRankByName(String name) {
+		for (Rank r: Rank.values())
+			if (r.name.equals(name)) return r;
+		return null;
+	}
 }

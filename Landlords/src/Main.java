@@ -16,6 +16,8 @@ import entities.Hand;
 public class Main {
 	public static void main(String[] args) {
 		
+		System.out.print("10".toCharArray()[0]);
+		
 		Scanner in = new Scanner(System.in);
 
 		/*
