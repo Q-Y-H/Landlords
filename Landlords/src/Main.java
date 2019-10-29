@@ -16,8 +16,6 @@ import entities.Hand;
 public class Main {
 	public static void main(String[] args) {
 		
-		System.out.print("10".toCharArray()[0]);
-		
 		Scanner in = new Scanner(System.in);
 
 		/*
@@ -45,18 +43,48 @@ public class Main {
 		Random rand=new Random();
 		int cursor = rand.nextInt(3);
 		int landlordID = 0;
+		boolean[] forfeited= {false,false,false};
+		int nForfeited=0;
 		System.out.println("Running for the landlord! Player " + players.get(cursor).getNickname() + " first!");
-		for (int i=0; i<4; ++i) {
+		for (int i=0; i<3; ++i) {
 			Player currPlayer = players.get(cursor);
 			String msg = Messager.printCards(currPlayer.getCards());
 			System.out.print(msg);
 			System.out.print("Player " + currPlayer.getNickname() + ": Do you want to run for landlord? [y/n]");
 			String choice = in.nextLine();
 			if (choice.equals("y") || choice.equals("Y")) {
-				// ...
+				landlordID=cursor;
+			}
+			else {
+				forfeited[cursor]=true;
+				nForfeited++;
 			}
 			// ...
-			cursor = ++cursor%3;
+			cursor = (cursor+1)%3;
+		}
+		if(nForfeited==3)
+			landlordID=rand.nextInt(3);
+		else if(nForfeited==1) {
+			while(forfeited[cursor%3])
+				cursor++;
+			Player currPlayer = players.get(cursor);
+			String msg = Messager.printCards(currPlayer.getCards());
+			System.out.print(msg);
+			System.out.print("Player " + currPlayer.getNickname() + ": Do you want to run for landlord? [y/n]");
+			String choice = in.nextLine();
+			if (choice.equals("y") || choice.equals("Y")) {
+				landlordID=cursor;
+			}
+		}
+		else if(nForfeited==0) {
+			Player currPlayer = players.get(cursor);
+			String msg = Messager.printCards(currPlayer.getCards());
+			System.out.print(msg);
+			System.out.print("Player " + currPlayer.getNickname() + ": Do you want to run for landlord? [y/n]");
+			String choice = in.nextLine();
+			if (choice.equals("y") || choice.equals("Y")) {
+				landlordID=cursor;
+			}
 		}
 		
 		/* ******************** Default landlord, modify it later */
@@ -125,7 +153,7 @@ public class Main {
 				
 				Hand currHand = Hand.cards2hand(selectedCards);
 				Hand lastHand = room.getLastHand();
-				if(room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || lastHand.compareTo(currHand) >= 0) {
+				if(room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || lastHand.compareTo(currHand) < 0) {
 					player.removeCards(selectedCards);
 					room.setLastHand(currHand);
 					room.setLastHandPlayer(player);
