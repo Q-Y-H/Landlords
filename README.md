@@ -1,4 +1,7 @@
 # Landlords pokercard game
+
+## 记得记Bug Report！
+
 ## Methods that need to be tested
 
 -   [ ] Helper.checkValidCards()
@@ -9,6 +12,12 @@
 
 ## To-Do
 
+-   [ ] 符号输入是否会破坏目前的输入判断？如多个空格 换行符 制表符
+-   [ ] 每次输入前清空输入流？
+-   [ ] 输入Alias直接转换大小写？
+-   [ ] cursor => Room.getNextPlayer(Player p)
+-   [ ] 检查抢地主是否有逻辑错误
+-   [ ] 检查Main.java是否有逻辑错误
 -   [ ] **Principles** & **Pattern**
 -   [ ] Rank: Alias for ‘A’ and ‘a’, etc.
 -   [ ] Player: id是否有用？

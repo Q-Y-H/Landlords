@@ -80,7 +80,7 @@ public class Player {
 	    });
 		
 		while(i < cardNames.size() && j < this.cards.size()) {
-			if (cardNames.get(i).equals(this.cards.get(j).getRank().getName())) { // TODO: adapt for a | A
+			if (cardNames.get(i).toUpperCase().equals(this.cards.get(j).getRank().getName())) { // TODO: adapt for a | A
 				res.add(this.cards.get(j));
 				++i; ++j;
 			}
