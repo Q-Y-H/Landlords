@@ -146,12 +146,18 @@ class testHand extends TestCase {
 		System.out.println(h.toString());
 	}
 	
+	@Test //Illegal 31617
+	void test18() {
+		List<Card> cards = Arrays.asList(c[3],c[16],c[17]);
+		Hand h = Hand.cards2hand(cards);
+		System.out.println(h.toString());
+	}
 	/*
 	 * test method compareTo(Hand)
 	 *
 	 */
 	
-	@Test //3 vs 5
+	@Test //SOLO(3) vs SOLO(5)
 	void test100() {
 		List<Card> cards1 = Arrays.asList(c[3]);
 		Hand h1 = Hand.cards2hand(cards1);
@@ -161,8 +167,78 @@ class testHand extends TestCase {
 		Assert.assertEquals(-1, result);
 	}
 	
-	@Test //33 vs 55
+	@Test //SOLO(4) vs SOLO(4)
 	void test101() {
+		List<Card> cards1 = Arrays.asList(c[4]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[4]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(0, result);
+	}
+	
+	@Test //SOLO(9) vs SOLO(7)
+	void test102() {
+		List<Card> cards1 = Arrays.asList(c[9]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[7]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(1, result);
+	}
+	
+	@Test //SOLO(3) vs PAIR(66)
+	void test103() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[6],c[6]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //SOLO(3) vs TRIO(666)
+	void test104() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[6],c[6],c[6]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //SOLO(3) vs QUAD(666645)
+	void test105() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[6],c[6],c[6],c[6],c[5],c[4]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //SOLO(3) vs BOMB(6666)
+	void test106() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[6],c[6],c[6],c[6]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //SOLO(3) vs ROCKET(6666)
+	void test107() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[16],c[17]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //PAIR(33) vs PAIR(55)
+	void test108() {
 		List<Card> cards1 = Arrays.asList(c[3],c[3]);
 		Hand h1 = Hand.cards2hand(cards1);
 		List<Card> cards2 = Arrays.asList(c[5],c[5]);
@@ -170,11 +246,172 @@ class testHand extends TestCase {
 		int result = h1.compareTo(h2);
 		Assert.assertEquals(-1, result);
 	}
-	@Test //3333 vs Rocket
-	void test102() {
-		List<Card> cards1 = Arrays.asList(c[3],c[3],c[3],c[3]);
+	
+	@Test //PAIR(44) vs PAIR(44)
+	void test109() {
+		List<Card> cards1 = Arrays.asList(c[4],c[4]);
 		Hand h1 = Hand.cards2hand(cards1);
-		List<Card> cards2 = Arrays.asList(c[16],c[17]);
+		List<Card> cards2 = Arrays.asList(c[4],c[4]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(0, result);
+	}
+	
+	@Test //PAIR(77) vs PAIR(44)
+	void test110() {
+		List<Card> cards1 = Arrays.asList(c[7],c[7]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[4],c[4]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(1, result);
+	}
+	
+	@Test //PAIR(77) vs TRIO(444)
+	void test111() {
+		List<Card> cards1 = Arrays.asList(c[7],c[7]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[4],c[4],c[4]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //PAIR(77) vs SQUAD(333345)
+	void test111() {
+		List<Card> cards1 = Arrays.asList(c[7],c[7]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[3],c[3],c[3],c[3],c[4],c[5]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //PAIR(77) vs BOMB(10101010)
+	void test112() {
+		List<Card> cards1 = Arrays.asList(c[7],c[7]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[10],c[10],c[10],c[10]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //PAIR(77) vs SOLO(10)
+	void test113() {
+		List<Card> cards1 = Arrays.asList(c[7],c[7]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[10]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs SOLO(10)
+	void test114() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[10]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs ILLEGAL(46)
+	void test114() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[4],c[6]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs SOLO(10)
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[10]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs PAIR(1010)
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[10],c[10]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs TRIO(101010)
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[10],c[10],c[10]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs TRIO(888)
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs TRIO(777)
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[7],c[7],c[7]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs SQUAD(77771011)
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[7],c[7],c[7],c[7],c[10],c[11]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+
+	@Test //TRIO(888) vs BOMB(7777)
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[7],c[7],c[7],c[7]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs ROCKET
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[17],c[16]);
+		Hand h2 = Hand.cards2hand(cards2);
+		int result = h1.compareTo(h2);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test //TRIO(888) vs ROCKET
+	void test115() {
+		List<Card> cards1 = Arrays.asList(c[8],c[8],c[8]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[17],c[16]);
 		Hand h2 = Hand.cards2hand(cards2);
 		int result = h1.compareTo(h2);
 		Assert.assertEquals(-1, result);
@@ -189,6 +426,7 @@ class testHand extends TestCase {
 		int result = h1.compareTo(h2);
 		Assert.assertEquals(-1, result);
 	}
+	
 	@Test //34567 vs 78910JQ
 	void test104() {
 		List<Card> cards1 = Arrays.asList(c[3],c[4],c[5],c[6],c[7]);
@@ -197,34 +435,6 @@ class testHand extends TestCase {
 		Hand h2 = Hand.cards2hand(cards2);
 		int result = h1.compareTo(h2);
 		Assert.assertEquals(1, result);
-	}
-	@Test //3 vs Illegal
-	void test105() {
-		List<Card> cards1 = Arrays.asList(c[3]);
-		Hand h1 = Hand.cards2hand(cards1);
-		List<Card> cards2 = Arrays.asList(c[3],c[5]);
-		Hand h2 = Hand.cards2hand(cards2);
-		int result = h1.compareTo(h2);
-		Assert.assertEquals(1, result);
-	}
-	
-	@Test //3 vs Illegal
-	void test106() {
-		List<Card> cards1 = Arrays.asList(c[3]);
-		Hand h1 = Hand.cards2hand(cards1);
-		List<Card> cards2 = Arrays.asList(c[3],c[5]);
-		Hand h2 = Hand.cards2hand(cards2);
-		int result = h1.compareTo(h2);
-		Assert.assertEquals(1, result);
-	}
-	@Test //Illegal vs 3
-	void test107() {
-		List<Card> cards1 = Arrays.asList(c[3],c[5]);
-		Hand h1 = Hand.cards2hand(cards1);
-		List<Card> cards2 = Arrays.asList(c[3]);
-		Hand h2 = Hand.cards2hand(cards2);
-		int result = h1.compareTo(h2);
-		Assert.assertEquals(-1, result);
 	}
 	
 }
