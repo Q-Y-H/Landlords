@@ -32,12 +32,11 @@ public class Hand implements Comparable<Hand>{
 		// TODO Refractory: throw exceptions
 		if(type==HandType.ROCKET || h.getType()==HandType.ILLEGAL || h.getType()==null)
 			return 1;
-		else if( h.getType()==HandType.ROCKET || type==HandType.ILLEGAL)
-			return -1;
-		
-		if(!sameCategoryWith(h))
+		else if( h.getType()==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
+			return -1;		
+		else if(!sameCategoryWith(h))
 			return 1;
-		if(primal.ordinal()<h.primal.ordinal())
+		else if(primal.ordinal()<h.primal.ordinal())
 			return -1;
 		else if(primal.ordinal()==h.primal.ordinal())
 			return 0;
