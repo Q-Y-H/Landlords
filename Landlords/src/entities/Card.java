@@ -9,15 +9,6 @@ public class Card{
 	
 	private Rank rank;
 	private Suit suit;
-	
-	public static Comparator<Card> cardComparator = new Comparator<Card>() {
-		@Override
-		public int compare(Card o1, Card o2) {
-			int res = o1.compareTo(o2);
-			if(res == 0) return o1.getSuit().ordinal()-o2.getSuit().ordinal();
-			return res;
-		}
-	};
 
 	public Card(Rank rank, Suit suit) {
 		this.rank = rank;
@@ -35,6 +26,15 @@ public class Card{
 	public int compareTo(Card card) {	
 		return this.getRank().ordinal() - card.getRank().ordinal();
 	}
+	
+	public static Comparator<Card> cardComparator = new Comparator<Card>() {
+		@Override
+		public int compare(Card o1, Card o2) {
+			int res = o1.compareTo(o2);
+			if(res == 0) return o1.getSuit().ordinal()-o2.getSuit().ordinal();
+			return res;
+		}
+	};
 	
 	@Override
 	public String toString() {
