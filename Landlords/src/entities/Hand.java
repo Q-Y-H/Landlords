@@ -32,12 +32,11 @@ public class Hand implements Comparable<Hand>{
 		// TODO Refractory: throw exceptions
 		if(type==HandType.ROCKET || h.getType()==HandType.ILLEGAL || h.getType()==null)
 			return 1;
-		else if( h.getType()==HandType.ROCKET || type==HandType.ILLEGAL)
-			return -1;
-		
-		if(!sameCategoryWith(h))
+		else if( h.getType()==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
+			return -1;		
+		else if(!sameCategoryWith(h))
 			return 1;
-		if(primal.ordinal()<h.primal.ordinal())
+		else if(primal.ordinal()<h.primal.ordinal())
 			return -1;
 		else if(primal.ordinal()==h.primal.ordinal())
 			return 0;
@@ -58,7 +57,7 @@ public class Hand implements Comparable<Hand>{
 	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength) {
 		this.setType(type);
 		this.primal=primal;
-		this.kickers=kickers;
+		this.kickers=kickers; 
 		this.chainLength=chainLength;
 	}
 	
@@ -93,10 +92,10 @@ public class Hand implements Comparable<Hand>{
 			Helper.sortCards(cards);
 			
 			int[] numOfRanks = new int[20];
-			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;
-			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;
-			int[] start = new int[5];
-			int[] count = new int[5];
+			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;		//numOfRanks stores how many times a rank occurs
+			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;	//length stores number of different ranks
+			int[] start = new int[5];	//stores the first card's rank of different cards combination length i.e. SOLO(1),PAIR(2)
+			int[] count = new int[5];	//stores how many times the card combination of different length occur
 			
 			for(int rank=0; rank<numOfRanks.length; rank++) {
 				if(numOfRanks[rank] == 0) continue;
@@ -105,7 +104,7 @@ public class Hand implements Comparable<Hand>{
 				endOfRank = rank;
 				if(start[numOfRanks[rank]] == 0) start[numOfRanks[rank]] = rank;
 				switch(numOfRanks[rank]) {
-					case 3: endOfTrio = rank;break;
+					case 3: endOfTrio = rank;break;		
 					case 4: endOfQuad = rank;break;
 				}
 				count[numOfRanks[rank]]++;
