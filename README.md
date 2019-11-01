@@ -8,6 +8,8 @@
 -   [ ] Class Diagram Version 1 (需要在目前的设计上考虑各种Principles和Patterns，为Release 2做指导)
 -   [ ] 抢地主Refactor以缩减代码
 -   [ ] （Idea）Messenger Refactor为通过Message Token得到message信息
+-   [ ] Rank.alias如果不考虑‘10‘的’x‘'X'和A的‘1’，可以考虑去掉alias并将Helper.isValidInputCardNames()的判断通过toUpperCase来实现
+-   [ ] 将所有Ask for input的部分改写为用Helper.getCheckInput()并通过toUpperCase()来预处理Input
 
 ## Methods that need to be tested
 
