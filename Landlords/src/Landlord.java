@@ -8,12 +8,12 @@ import java.util.Scanner;
 import entities.Card;
 import entities.CardCase;
 import entities.Player;
-import entities.humanPlayer;
 import enums.PlayerRole;
 import helpers.Helper;
 import helpers.Messenger;
 import entities.CardRoom;
 import entities.Hand;
+import entities.HumanPlayer;
 
 public class Landlord {
 	public static void main(String[] args) {
@@ -35,7 +35,7 @@ public class Landlord {
 		for (int i = 0; i < 3; ++i) { // TODO: room.distributeCards() ?
 			Messenger.printAskForInput("Player " + (i+1) + ": Please Set Your Nickname >> ");
 			String nickname = in.nextLine();
-			players.add(new humanPlayer(nickname, PlayerRole.PEASANT));
+			players.add(new HumanPlayer(nickname, PlayerRole.PEASANT));
 			players.get(i).setCards(cardLists.get(i));
 			Helper.sortCards(players.get(i).getCards());
 		}

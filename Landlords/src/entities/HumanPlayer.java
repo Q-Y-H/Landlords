@@ -9,16 +9,16 @@ import enums.PlayerRole;
 import helpers.Helper;
 import helpers.Messenger;
 
-public class humanPlayer extends Player{
-	public humanPlayer(String nickname, PlayerRole role) {
+public class HumanPlayer extends Player{
+	public HumanPlayer(String nickname, PlayerRole role) {
 		super(nickname,role);
 	}
 	
-	public humanPlayer(String nickname) {
+	public HumanPlayer(String nickname) {
 		super(nickname, null);
 	}
 	
-	public humanPlayer() {
+	public HumanPlayer() {
 		super(null, null);
 	}
 	
