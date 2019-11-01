@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.management.relation.Role;
 
@@ -11,7 +12,7 @@ import enums.PlayerRole;
 import enums.Rank;
 
 
-public class Player {
+public abstract class Player {
 
 	private static int idCounter = 0; 
 	private int id;
@@ -98,9 +99,6 @@ public class Player {
 				cards.remove(handCards.get(i));
 	}
 
-	public void playCards(List<Card> cards) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract boolean playCards(Scanner in, CardRoom room);
 
 }

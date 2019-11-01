@@ -8,6 +8,7 @@ import java.util.Scanner;
 import entities.Card;
 import entities.CardCase;
 import entities.Player;
+import entities.humanPlayer;
 import enums.PlayerRole;
 import helpers.Helper;
 import helpers.Messenger;
@@ -34,7 +35,7 @@ public class Landlord {
 		for (int i = 0; i < 3; ++i) { // TODO: room.distributeCards() ?
 			Messenger.printAskForInput("Player " + (i+1) + ": Please Set Your Nickname >> ");
 			String nickname = in.nextLine();
-			players.add(new Player(nickname, PlayerRole.PEASANT));
+			players.add(new humanPlayer(nickname, PlayerRole.PEASANT));
 			players.get(i).setCards(cardLists.get(i));
 			Helper.sortCards(players.get(i).getCards());
 		}
@@ -110,64 +111,11 @@ public class Landlord {
 			/* ******************** */
 			
 			do {
-				Messenger.print("Please choose the cards to play. Input 'help' for example inputs.\n");
-				Messenger.printAskForInput("[" + player.getRole() + "] " + player.getNickname() + " >> ");
-				
-				// Input Processing
-				String cmd = in.nextLine();
-				if (cmd.toUpperCase().equals("HELP")) {
-					Messenger.print(Messenger.inputHelp()); // TODO: need to be implemented
-					continue;
-				}
-				
-				if (cmd.toUpperCase().equals("PASS")) { 
-					// TODO: Landlord cannot pass in the first round? or cannot pass in the
-					// winning round?
-					previousCardsList.add(new ArrayList<Card>());
-					if (previousCardsList.size() >= 3)
-						previousCardsList.remove();
+				boolean correctInput=player.playCards(in,room);
+				if(correctInput)
 					break;
-				}
-				
-				ArrayList<String> inputCardNames = new ArrayList<String>();
-				Scanner cmdScanner = new Scanner(cmd);
-				while (cmdScanner.hasNext()) { // TODO: exception handle
-					inputCardNames.add(cmdScanner.next());
-				}
-				cmdScanner.close();
-
-				// TODO: if input nothing, PASS or re-input?
-				if (inputCardNames.size() == 0) {
-					System.out.println(Messenger.inputErrorMessage());
+				else
 					continue;
-				}
-				
-				if (!Helper.isValidInputCardNames(inputCardNames)) { // check if valid string input
-					System.out.println(Messenger.inputErrorMessage());
-					continue;
-				}
-				
-				List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
-				if (selectedCards == null) {
-					System.out.println(Messenger.cardsNotOnHandError());
-					continue;
-				}
-
-				Hand currHand = Hand.cards2hand(selectedCards);
-				Hand lastHand = room.getLastHand();
-				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-						|| lastHand.compareTo(currHand) < 0) {
-					player.removeCards(selectedCards);
-					room.setLastHand(currHand);
-					room.setLastHandPlayer(player);
-					previousCardsList.add(selectedCards);
-					if (previousCardsList.size() >= 3)
-						previousCardsList.remove();
-					break;
-				} else {
-					System.out.println(Messenger.disobeyRulesError());
-					continue;
-				}
 			} while (true);
 
 			Messenger.print(Messenger.printCards(previousCardsList.getLast()));
