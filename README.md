@@ -10,6 +10,7 @@
 -   [ ] （Idea）Messenger Refactor为通过Message Token得到message信息
 -   [ ] Rank.alias如果不考虑‘10‘的’x‘'X'和A的‘1’，可以考虑去掉alias并将Helper.isValidInputCardNames()的判断通过toUpperCase来实现
 -   [ ] 将所有Ask for input的部分改写为用Helper.getCheckInput()并通过toUpperCase()来预处理Input
+-   [ ] PASS输出会输出空卡，要判断lastCardList新家的是不是空
 
 ## Methods that need to be tested
 
