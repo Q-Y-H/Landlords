@@ -1,10 +1,11 @@
 package helpers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.Scanner;
 import entities.Card;
 import entities.CardCase;
 import enums.Rank;
@@ -44,4 +45,9 @@ public class Helper {
 		}
 		return true;
 	}
+	
+	public static void clearInputStream() {
+		Scanner in = new Scanner(System.in);
+		in.nextLine();
+	}	
 }
