@@ -95,7 +95,7 @@ public class Landlord {
 		 * Game start
 		 */
 		cursor = landlordID;
-		Messenger.clear();
+		//Messenger.clear();
 		Messenger.print("Game Start!\n");
 		boolean finishFlag = false;
 
@@ -105,7 +105,7 @@ public class Landlord {
 			Player player = players.get(cursor);
 			List<Card> playerCards = player.getCards();
 			Messenger.waitForPlayer(player);
-			Messenger.clear();
+			//Messenger.clear();
 			Messenger.print(Messenger.playersInfo(players, cursor, previousCardsList));
 			/* ******************** */
 			
@@ -123,9 +123,16 @@ public class Landlord {
 				if (cmd.toUpperCase().equals("PASS")) { 
 					// TODO: Landlord cannot pass in the first round? or cannot pass in the
 					// winning round?
+					if(room.getLastHandPlayer()==null) {
+						System.out.println(Messenger.disobeyRulesError());
+						continue;
+					}
 					previousCardsList.add(new ArrayList<Card>());
-					if (previousCardsList.size() >= 3)
+					if (previousCardsList.size() >= 3) {
 						previousCardsList.remove();
+						System.out.println(Messenger.disobeyRulesError());
+						continue;
+					}
 					break;
 				}
 				
@@ -155,24 +162,24 @@ public class Landlord {
 
 				Hand currHand = Hand.cards2hand(selectedCards);
 				Hand lastHand = room.getLastHand();
-				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-						|| lastHand.compareTo(currHand) < 0) {
+				if (lastHand.compareTo(currHand) < 0
+						|| room.getLastHandPlayer() == player) {
 					player.removeCards(selectedCards);
 					room.setLastHand(currHand);
 					room.setLastHandPlayer(player);
 					previousCardsList.add(selectedCards);
 					if (previousCardsList.size() >= 3)
-						previousCardsList.remove();
+						previousCardsList.clear();
 					break;
 				} else {
 					System.out.println(Messenger.disobeyRulesError());
-					continue;
+					continue; 
 				}
 			} while (true);
 
 			Messenger.print(Messenger.printCards(previousCardsList.getLast()));
 			Messenger.waiting();
-			Messenger.clear();
+			//Messenger.clear();
 
 			// check finish
 			if (player.getCards().size() == 0) {

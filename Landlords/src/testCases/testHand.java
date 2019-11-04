@@ -151,7 +151,11 @@ class testHand extends TestCase {
 		List<Card> cards = Arrays.asList(c[3],c[16],c[17]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
+		List<Card> cards1 = Arrays.asList(c[3],c[4],c[3],c[4]);
+		Hand h1 = Hand.cards2hand(cards1);
+		System.out.println(h1.toString());
 	}
+	
 	
 	/*
 	 * test method compareTo(Hand)
