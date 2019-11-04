@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 import entities.Card;
 import entities.CardCase;
+import entities.Hand;
+import entities.Player;
 import enums.Rank;
 
 public class Helper {
@@ -44,6 +46,26 @@ public class Helper {
 				return false;
 		}
 		return true;
+	}
+	
+	public static List<Card> hintCards(List<Card> cards, List<Card> selectCards, Hand prev,int shartPoint, int length){
+
+		List<Card> TempCards=new ArrayList<Card>();
+		
+		if(selectCards!=null&&Hand.cards2hand(selectCards).compareTo(prev)>0) {
+			return selectCards;
+		}
+		
+		for(int i=shartPoint;i<length;i++){
+			TempCards.add(cards.get(i));
+			selectCards=hintCards(cards, TempCards, prev, i+1, length);
+			if(selectCards!=null) {
+				return selectCards;
+			}
+			TempCards.remove(TempCards.size()-1);
+		}
+		return null;
+		
 	}
 	
 	public static void clearInputStream() {
