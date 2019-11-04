@@ -8,6 +8,7 @@ import java.util.Scanner;
 import entities.Card;
 import entities.CardCase;
 import entities.Player;
+import enums.HandType;
 import enums.PlayerRole;
 import helpers.Helper;
 import helpers.Messenger;
@@ -154,6 +155,10 @@ public class Landlord {
 				}
 
 				Hand currHand = Hand.cards2hand(selectedCards);
+				if(currHand.getType() ==HandType.ILLEGAL) {
+					System.out.println(Messenger.disobeyRulesError());
+					continue;
+				}
 				Hand lastHand = room.getLastHand();
 				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
 						|| lastHand.compareTo(currHand) < 0) {
