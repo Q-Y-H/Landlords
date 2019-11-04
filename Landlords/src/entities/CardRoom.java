@@ -72,6 +72,14 @@ public class CardRoom {
 		this.previousCardsList = previousCardsList;
 	}
 	
+	public Player getNextPlayer(Player player) {
+		return this.players.get((player.getId()+1)%3);
+	}
+	
+	public Player getPrePlayer(Player player) {
+		return this.players.get((player.getId()+2)%3);
+	}
+	
 //	public List<Card> getBaseCards() {
 //		return this.cardCase.getBaseCards();
 //	}
