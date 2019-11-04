@@ -29,13 +29,14 @@ public class Messenger {
 		print("Press ENTER to continue ...");
 		try {
 			System.in.read();
+			Helper.clearInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void waitForPlayer(Player player, String status) {
-		print(status);
+	public static void RunforLandlordMsg(Player player) {
+		print("\nRunning for the LANDLORD position!\n");
 		waitForPlayer(player);
 	}
 
@@ -170,6 +171,16 @@ public class Messenger {
 		msg += ("It's your turn. Your cards are as follows:\n");
 		msg += (printCards(players.get(cursor).getCards()) + "\n");
 
+		return msg;
+	}
+	
+	public static String getMessageByToken(String token) {
+		String msg = "";
+		switch(token) {
+		case "RunForLandlord":
+			clear();
+			
+		}
 		return msg;
 	}
 }

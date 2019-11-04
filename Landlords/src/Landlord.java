@@ -8,6 +8,7 @@ import java.util.Scanner;
 import entities.Card;
 import entities.CardCase;
 import entities.Player;
+import enums.HandType;
 import enums.PlayerRole;
 import helpers.Helper;
 import helpers.Messenger;
@@ -51,7 +52,7 @@ public class Landlord {
 		for (int i = 0; i < 3; ++i) {
 			Player player = players.get(cursor);
 			Messenger.clear();
-			Messenger.waitForPlayer(player, "\nRunning for the LANDLORD position!\n");
+			Messenger.RunforLandlordMsg(player);
 			Messenger.print(Messenger.previousRunForLandlordInfo(players, cursor, choices));
 
 			Messenger.printAskForInput("Player " + player.getNickname() + ": Do you want to run for landlord? [y/n] ");
@@ -85,7 +86,7 @@ public class Landlord {
 		players.get(landlordID).setRole(PlayerRole.LANDLORD);
 		players.get(landlordID).getCards().addAll(room.getLandlordCards());
 		Helper.sortCards(players.get(landlordID).getCards());
-		Messenger.print("The landlords is Player " + players.get(landlordID).getNickname());
+		Messenger.print("The landlord is Player " + players.get(landlordID).getNickname());
 		Messenger.print("Landlord cards:");
 		Messenger.print(Messenger.printCards(room.getLandlordCards()));
 		/* ******************** */
@@ -161,6 +162,10 @@ public class Landlord {
 				}
 
 				Hand currHand = Hand.cards2hand(selectedCards);
+				if(currHand.getType() ==HandType.ILLEGAL) {
+					System.out.println(Messenger.disobeyRulesError());
+					continue;
+				}
 				Hand lastHand = room.getLastHand();
 				if (lastHand.compareTo(currHand) < 0
 						|| room.getLastHandPlayer() == player) {

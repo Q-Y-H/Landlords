@@ -150,13 +150,44 @@ class testHand extends TestCase {
 	void test18() {
 		List<Card> cards = Arrays.asList(c[3],c[16],c[17]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
-		List<Card> cards1 = Arrays.asList(c[3],c[4],c[3],c[4]);
-		Hand h1 = Hand.cards2hand(cards1);
-		System.out.println(h1.toString());
+		System.out.println("Test 18: "+h.toString());
 	}
 	
+	@Test //Illegal 44443
+	void test19() {
+		List<Card> cards = Arrays.asList(c[3],c[4],c[4],c[4],c[4]);
+		Hand h = Hand.cards2hand(cards);
+		System.out.println("Test 19: " +h.toString());
+	}
 	
+	@Test //Illegal 34
+	void test20() {
+		List<Card> cards = Arrays.asList(c[3],c[4]);
+		Hand h = Hand.cards2hand(cards);
+		System.out.println("Test 20: "+h.toString());
+	}
+	
+	@Test //Illegal 345
+	void test21() {
+		List<Card> cards = Arrays.asList(c[3],c[4],c[5]);
+		Hand h = Hand.cards2hand(cards);
+		System.out.println("Test 21: " +h.toString());
+	}
+	
+	@Test //Illegal 443
+	void test22() {
+		List<Card> cards = Arrays.asList(c[3],c[4],c[4]);
+		Hand h = Hand.cards2hand(cards);
+		System.out.println("Test 22: "+h.toString());
+	}
+	
+	@Test //Illegal 345
+	void test23() {
+		List<Card> cards = Arrays.asList(c[3],c[4],c[5],c[6]);
+		Hand h = Hand.cards2hand(cards);
+		System.out.println("Test 23: " +h.toString());
+	}
+
 	/*
 	 * test method compareTo(Hand)
 	 *
@@ -712,4 +743,6 @@ class testHand extends TestCase {
 		int result = h1.compareTo(h2);
 		Assert.assertEquals(1, result);
 	}
+	
+	
 }
