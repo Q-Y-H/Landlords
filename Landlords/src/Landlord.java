@@ -182,7 +182,9 @@ public class Landlord {
 				}
 			} while (true);
 
-			Messenger.print(Messenger.printCards(previousCardsList.getLast()));
+			if (!previousCardsList.getLast().isEmpty()) {
+				Messenger.print(Messenger.printCards(previousCardsList.getLast()));				
+			}
 			Messenger.waiting();
 			//Messenger.clear();
 
