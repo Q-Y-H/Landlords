@@ -54,33 +54,38 @@ public class Hand implements Comparable<Hand>{
 	public String getInfo() {return type +" "+primal.getName()+" ";}
 	
 	
-	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength) {
+	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength,List<Card> cards) {
 		this.setType(type);
 		this.primal=primal;
 		this.kickers=kickers; 
 		this.chainLength=chainLength;
+		this.cards=cards;
 	}
 	
-	public Hand(HandType type,Rank primal,int chainLength) {
-		this(type,primal,null,chainLength);
+	public Hand(HandType type,Rank primal,int chainLength,List<Card> cards) {
+		this(type,primal,null,chainLength,cards);
 	}
 	
-	public Hand(HandType type,Rank primal,Hand[] kickers) {
-		this(type,primal,kickers,1);
+	public Hand(HandType type,Rank primal,Hand[] kickers,List<Card> cards) {
+		this(type,primal,kickers,1,cards);
 	}
 	
-	public Hand(HandType type,Rank primal) {
-		this(type,primal,null,1);
+	public Hand(HandType type,Rank primal,List<Card> cards) {
+		this(type,primal,null,1,cards);
 	}
 	
-	public Hand(HandType type) {
-		this(type,null,null,0);
+	public Hand(HandType type,List<Card> cards) {
+		this(type,null,null,0,cards);
 	}
 	
 	public HandType getType() {
 		return type;
 	}
-
+	
+	public List<Card> getCards(){
+		return cards;
+	}
+	
 	public void setType(HandType type) {
 		this.type = type;
 	}
@@ -112,26 +117,26 @@ public class Hand implements Comparable<Hand>{
 			
 			if(startOfRank == endOfRank) {//3, 33, 333, 3333
 				if(count[1] == 1 && count[2]+count[3]+count[4] == 0) 
-					return new Hand(HandType.SOLO, Rank.getRankByValue(start[1]));
+					return new Hand(HandType.SOLO, Rank.getRankByValue(start[1]),cards);
 				if(count[2] == 1 && count[1]+count[3]+count[4] == 0)
-					return new Hand(HandType.PAIR, Rank.getRankByValue(start[2]));
+					return new Hand(HandType.PAIR, Rank.getRankByValue(start[2]),cards);
 				if(count[3] == 1 && count[1]+count[2]+count[4] == 0)
-					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]));
+					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]),cards);
 				if(count[4] == 1 && count[1]+count[2]+count[3] == 0)
-					return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]));
+					return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]),cards);
 			}
 			
 			//pair of jokers
-			if(startOfRank==16 && endOfRank==17) return new Hand(HandType.ROCKET, Rank.RANK_BLACK_JOKER);
+			if(startOfRank==16 && endOfRank==17) return new Hand(HandType.ROCKET, Rank.RANK_BLACK_JOKER,cards);
 			
 			//34567, 334455, 333444, 33334444
 			if(endOfRank - startOfRank == length - 1 && endOfRank < 15) {
 				if(count[1] >= 5 && count[2]+count[3]+count[4] == 0) 
-					return new Hand(HandType.SOLO, Rank.getRankByValue(start[1]), length);
+					return new Hand(HandType.SOLO, Rank.getRankByValue(start[1]), length,cards);
 				if(count[2] >= 3 && count[1]+count[3]+count[4] == 0)
-					return new Hand(HandType.PAIR, Rank.getRankByValue(start[2]), length);
+					return new Hand(HandType.PAIR, Rank.getRankByValue(start[2]), length,cards);
 				if(count[3] >= 2 && count[1]+count[2]+count[4] == 0)
-					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), length);
+					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), length,cards);
 //				if(count[4] >= 2 && count[1]+count[2]+count[3] == 0)
 //					return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]), length);
 			}
@@ -143,9 +148,9 @@ public class Hand implements Comparable<Hand>{
 					Hand[] kickers = new Hand[n];
 					for(int i=0; i<n; i++, temp++) {
 						while(numOfRanks[temp] != 1) temp++;
-						kickers[i] = new Hand(HandType.SOLO, Rank.getRankByValue(temp));
+						kickers[i] = new Hand(HandType.SOLO, Rank.getRankByValue(temp),cards);
 					}
-					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), kickers, count[3]);
+					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), kickers, count[3],cards);
 				}
 				//333+44, 333444+5566
 				if(count[3] == count[2] && count[1]+count[4] == 0) {
@@ -153,9 +158,9 @@ public class Hand implements Comparable<Hand>{
 					Hand[] kickers = new Hand[n];
 					for(int i=0; i<n; i++, temp++) {
 						while(numOfRanks[temp] != 2) temp++;
-						kickers[i] = new Hand(HandType.PAIR, Rank.getRankByValue(temp));
+						kickers[i] = new Hand(HandType.PAIR, Rank.getRankByValue(temp),cards);
 					}
-					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), kickers, count[3]);
+					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), kickers, count[3],cards);
 				}					
 			}
 			
@@ -166,9 +171,9 @@ public class Hand implements Comparable<Hand>{
 					Hand[] kickers = new Hand[n];
 					for(int i=0; i<n; i++, temp++) {
 						while(numOfRanks[temp] != 1) temp++;
-						kickers[i] = new Hand(HandType.SOLO, Rank.getRankByValue(temp));
+						kickers[i] = new Hand(HandType.SOLO, Rank.getRankByValue(temp),cards);
 					}
-					return new Hand(HandType.QUAD, Rank.getRankByValue(start[4]), kickers, count[4]);
+					return new Hand(HandType.QUAD, Rank.getRankByValue(start[4]), kickers, count[4],cards);
 				}
 				//3333+4455, 33334444+55667788
 				if(2*count[4] == count[2] && count[1]+count[3] == 0) {
@@ -176,19 +181,22 @@ public class Hand implements Comparable<Hand>{
 					Hand[] kickers = new Hand[n];
 					for(int i=0; i<n; i++, temp++) {
 						while(numOfRanks[temp] != 2) temp++;
-						kickers[i] = new Hand(HandType.PAIR, Rank.getRankByValue(temp));
+						kickers[i] = new Hand(HandType.PAIR, Rank.getRankByValue(temp),cards);
 					}
-					return new Hand(HandType.QUAD, Rank.getRankByValue(start[4]), kickers, count[4]);
+					return new Hand(HandType.QUAD, Rank.getRankByValue(start[4]), kickers, count[4],cards);
 				}
 			}
 		}
  		
-		return new Hand(HandType.ILLEGAL);//illegal
+		return new Hand(HandType.ILLEGAL,cards);//illegal
 	}
 
 	public boolean over(Hand lastHand) {
 		// TODO Auto-generated method stub
 		return false;
 	} 
-
+	
+	public int getChainLength() {
+		return this.chainLength;
+	}
 }
