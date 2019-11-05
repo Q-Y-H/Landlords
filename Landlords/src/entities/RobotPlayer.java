@@ -55,10 +55,12 @@ public class RobotPlayer extends Player {
 	
 	public List<Card> playCardsPassively(List<Card> formerCards) {
 		List<Card> response = null;
-		sparseCards();
+		sparseCards(formerCards);
 		Hand lastHand=Hand.cards2hand(formerCards);
 		HandType lastHandType=lastHand.getType();
-
+		int[] numOfCards = new int[20];
+		for(Card card: cards) numOfCards[card.getRank().ordinal()+3]++;
+		
 		if(totalHandCount==2 && hasBomb) {
 			
 		}
@@ -68,7 +70,10 @@ public class RobotPlayer extends Player {
 			break;
 		}
 		case BOMB:{
-			
+			for (int i=3;i<18;i++) {
+				if(numOfCards[i]==4 && i>lastHand.getOrdinal())
+					response=
+			}
 		}
 		case SOLO:{
 			if(lastHand.getChainLength()==1) {
@@ -87,7 +92,12 @@ public class RobotPlayer extends Player {
 			}
 		}
 		case TRIO:{
-			
+			if(lastHand.getChainLength()==1) {
+				
+			}
+			else {
+				
+			}
 		}
 		case QUAD:{
 			
@@ -101,7 +111,7 @@ public class RobotPlayer extends Player {
 		return response;
 	}
 	
-	public void sparseCards() {
-		
+	public void sparseCards() {		
+		//TO-DO:
 	}
 }

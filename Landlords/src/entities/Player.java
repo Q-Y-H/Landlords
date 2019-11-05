@@ -103,4 +103,8 @@ public class Player {
 		return response;
 	}
 
+	public List<Card> getCards() {
+		return this.cards;
+	}
+
 }

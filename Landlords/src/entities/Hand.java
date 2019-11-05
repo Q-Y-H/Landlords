@@ -44,8 +44,8 @@ public class Hand implements Comparable<Hand>{
 			return 1;
 	}
 	
-	public Rank getPrimal() {
-		return primal;
+	public int getOrdinal() {
+		return primal.ordinal();
 	}
   
 	public String toString() {
@@ -94,7 +94,7 @@ public class Hand implements Comparable<Hand>{
 		this.type = type;
 	}
 	
-	
+
 	// TODO Refractory: use for loop
 	public static Hand cards2hand(List<Card> cards) {
 		if(cards != null && !cards.isEmpty()) {
