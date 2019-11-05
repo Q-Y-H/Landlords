@@ -52,8 +52,8 @@ public class Helper {
 
 		List<Card> TempCards=new ArrayList<Card>();
 		
-		if(selectCards!=null&&Hand.cards2hand(selectCards).compareTo(prev)>0) {
-			return selectCards;
+		if(selectCards!=null&&Hand.cards2hand(selectCards).isSmallerThan(prev)==false) {
+			return selectCards; 
 		}
 		
 		for(int i=shartPoint;i<length;i++){

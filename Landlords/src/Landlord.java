@@ -158,7 +158,7 @@ public class Landlord {
 				}
 				Hand lastHand = room.getLastHand();
 				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-						|| lastHand.compareTo(currHand) < 0) {
+						|| lastHand.isSmallerThan(currHand)==true) {
 					player.removeCards(selectedCards);
 					room.setLastHand(currHand);
 					room.setLastHandPlayer(player);
@@ -176,7 +176,7 @@ public class Landlord {
 				Messenger.print(Messenger.printCards(previousCardsList.getLast()));				
 			
 			Messenger.waiting();
-			//Messenger.clear();
+			Messenger.clear();
 
 			// check finish
 			if (player.getCards().size() == 0) 

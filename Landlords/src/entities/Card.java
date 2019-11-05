@@ -41,5 +41,4 @@ public class Card{
 		return String.valueOf(rank.getName()) + " ";
 	}
 	
-	
 }

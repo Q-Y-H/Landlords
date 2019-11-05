@@ -7,7 +7,7 @@ import enums.Rank;
 import helpers.Helper;
 
 
-public class Hand implements Comparable<Hand>{
+public class Hand {
 	
 	private HandType type;
 	private Rank primal;
@@ -18,36 +18,52 @@ public class Hand implements Comparable<Hand>{
 	public HandType getType() {return type;}
 	public Rank getPrimal() {return primal;}
 	
-	private boolean sameCategoryWith(Hand h) {
-		if(type!=h.type) 
-			return false;
-		else if(chainLength!=h.chainLength)
-			return false;
-
-		if(kickers!=null && h.kickers!=null) 
-			if(kickers[0].type!=h.kickers[0].type)
-				return false;
-		else if(!(kickers==null && h.kickers==null))
-			return false;
-		return true; 
-	}
+//	private boolean sameCategoryWith(Hand h) {
+//		if(type!=h.type) 
+//			return false;
+//		else if(chainLength!=h.chainLength)
+//			return false;
+//
+//		if(kickers!=null && h.kickers!=null) 
+//			if(kickers[0].type!=h.kickers[0].type)
+//				return false;
+//		else if(!(kickers==null && h.kickers==null))
+//			return false;
+//		return true; 
+//	}
+//	
+//	public int compareTo(Hand h) {
+//		// TODO Refractory: throw exceptions
+//		if(h.type==HandType.ILLEGAL || h.type==null || type==HandType.ROCKET )
+//			return 1;
+//		else if( h.type==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
+//			return -1;		
+//		else if(!sameCategoryWith(h))
+//			return 1;
+//		else if(primal.ordinal()<h.primal.ordinal())
+//			return -1;
+//		else if(primal.ordinal()==h.primal.ordinal())
+//			return 0;
+//		else 
+//			return 1; 
+//	}
 	
-	public int compareTo(Hand h) {
-		// TODO Refractory: throw exceptions
-		if(h.type==HandType.ILLEGAL || h.type==null || type==HandType.ROCKET )
-			return 1;
-		else if( h.type==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
-			return -1;		
-		else if(!sameCategoryWith(h))
-			return 1;
-		else if(primal.ordinal()<h.primal.ordinal())
-			return -1;
-		else if(primal.ordinal()==h.primal.ordinal())
-			return 0;
-		else 
-			return 1; 
-	}
-	
+	public boolean isSmallerThan(Hand h) {
+		if(h.type == HandType.ILLEGAL || type == HandType.ROCKET) return false;
+		if(type == HandType.ILLEGAL || h.type == HandType.ROCKET) return true;
+		if(type == h.type) {
+			if(chainLength != h.chainLength) return false;
+			if(kickers!=null && h.kickers!=null) {
+				if(kickers[0].type != h.kickers[0].type) return false;
+				else if(primal.ordinal()<h.primal.ordinal()) return true;
+			}
+			else if(!(kickers == null && h.kickers == null)) return false;
+			
+			if(primal.ordinal()<h.primal.ordinal()) return true;
+		}
+		if(h.type == HandType.BOMB) return true;
+		else return false; 
+	} 
 	
 	public String toString() {
 		if(type == HandType.ILLEGAL) return "Illegal "+"\n";

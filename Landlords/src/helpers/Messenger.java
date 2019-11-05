@@ -28,12 +28,14 @@ public class Messenger {
 			case "landlord":
 				if(input.equals("Y") || input.equals("N"))
 					return input;
-				else
+				else {
+					System.out.print(prompt);
 					break;
+				}
 			case "play":
 				return input;
 			}
-			System.out.print("Please input correctly\n");
+			System.out.print("Please input correctly: ");
 		}
 		
 	}
@@ -150,7 +152,7 @@ public class Messenger {
 	}
 
 	public static String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices, int first) {
-		String msg = "";
+		String msg = "Round "+(choices.size()+1)+":\n";
 		int size = choices.size();
 
 		for (int i = 0; i < size; i++) {
@@ -186,7 +188,7 @@ public class Messenger {
 			}
 		}
 
-		msg += ("It's your turn. Your cards are as follows:\n");
+		msg += ("\nIt's your turn. Your cards are as follows:\n");
 		msg += (printCards(players.get(cursor).getCards()) + "\n");
 
 		return msg;
@@ -196,8 +198,9 @@ public class Messenger {
 		Player player=players.get(cursor);
 		
 		clear();
-		print("\nRunning for the LANDLORD position!\n");
+		print("\nRound "+ (choices.size()+1) +": Running for the LANDLORD position!\n");
 		waitForPlayer(player);
+		clear();
 		print(Messenger.previousRunForLandlordInfo(players, cursor, choices, first));
 	}
 	
