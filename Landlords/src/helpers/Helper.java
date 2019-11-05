@@ -1,4 +1,3 @@
-
 package helpers;
 
 import java.io.IOException;
@@ -11,7 +10,6 @@ import entities.Card;
 import entities.CardCase;
 import entities.Hand;
 import entities.Player;
-import enums.HandType;
 import enums.Rank;
 
 public class Helper {
@@ -49,39 +47,24 @@ public class Helper {
 		}
 		return true;
 	}
-	//穷尽后比较，输出满足条件的第一个List.(单牌对子ok,三带一输出为null，怀疑是list至hand转换出现问题）
-	//need to be modified. ^_^
-	public static List<Card> hintCards(List<Card> cards, Hand prev, int length){
+
+	public static List<Card> hintCards(List<Card> cards, List<Card> selectCards, Hand prev,int shartPoint, int length){
 
 		List<Card> TempCards=new ArrayList<Card>();
-	    List<List<Card>> workspace =new ArrayList<List<Card>>();
-	    combinationSelect(workspace,cards,TempCards,length);
-		for(List<Card> c: workspace) {
-			Hand tempHand=Hand.cards2hand(c);
-			if(prev.compareTo(tempHand)<0) {
-				return c;
+
+		if(selectCards!=null&&Hand.cards2hand(selectCards).compareTo(prev)>0) {
+			return selectCards;
+		}
+
+		for(int i=shartPoint;i<length;i++){
+			TempCards.add(cards.get(i));
+			selectCards=hintCards(cards, TempCards, prev, i+1, length);
+			if(selectCards!=null) {
+				return selectCards;
 			}
+			TempCards.remove(TempCards.size()-1);
 		}
 		return null;
-	}
-
-	private static void combinationSelect(List<List<Card>> workspace,List<Card> dataList, List<Card> resultList, int length) {
-		List<Card> copyData;
-		List<Card> copyResult;
-
-		if(resultList.size() == length) {
-			workspace.add(resultList);
-		}
-
-		for(int i = 0; i < dataList.size(); i++) {
-			copyData = new ArrayList<Card>(dataList);
-			copyResult = new ArrayList<Card>(resultList);
-
-			copyResult.add(copyData.get(i));
-			for(int j = i; j >=  0; j--)
-				copyData.remove(j);
-			combinationSelect(workspace,copyData, copyResult, length);
-		}
 
 	}
 
