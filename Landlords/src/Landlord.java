@@ -33,7 +33,7 @@ public class Landlord {
 		room.setLandlordCards(cardLists.get(3));
 
 		for (int i = 0; i < 3; ++i) { // TODO: room.distributeCards() ?
-			String nickname = Messenger.printAskForInput(in, "name", 
+			String nickname = Messenger.printAskForInput(in, "name",
 					"Player " + (i+1) + ": Please Set Your Nickname >> ");
 			players.add(new Player(nickname, PlayerRole.PEASANT));
 			players.get(i).setCards(cardLists.get(i));
@@ -51,33 +51,33 @@ public class Landlord {
 		int nWaive = 0;
 
 		for (int i = 0; i < 4; ++i) {
-			if(i == 3) 
+			if(i == 3)
 				if (nWaive == 3) { // all waive
 					landlordID = rand.nextInt(3);
-					break;	
-				} 
+					break;
+				}
 				else if(nWaive == 2) // two players waive
 					break;
 				else if (nWaive == 1) // one player waives
 					while(!choices.get((cursor + 3 - first)%3))
 						cursor = (cursor+1)%3;
 				//no player waives
-			
+
 			Player player = players.get(cursor);
 			Messenger.handleRunForLandlord(players, cursor, choices, first);
-			String cmd = Messenger.printAskForInput(in, "landlord", "Player " + player.getNickname() + 
+			String cmd = Messenger.printAskForInput(in, "landlord", "Player " + player.getNickname() +
 					": Do you want to run for landlord? [y/n] ");
 			if (cmd.equals("Y")) { // TODO: check invalid input like 'ilsdhcvi'
 				choices.add(true);
 				landlordID = cursor;
-			} 
+			}
 			else {
 				choices.add(false);
 				nWaive++;
 			}
 			cursor = (cursor + 1) % 3;
 		}
-		
+
 		/* ******************** Default landlord, modify it later */
 		room.setLandlordID(landlordID);
 		players.get(landlordID).setRole(PlayerRole.LANDLORD);
@@ -88,7 +88,7 @@ public class Landlord {
 		Messenger.print(Messenger.printCards(room.getLandlordCards()));
 		/* ******************** */
 
-		
+
 		/*
 		 * Game start
 		 */
@@ -98,7 +98,7 @@ public class Landlord {
 		boolean finishFlag = false;
 
 		while (!finishFlag) {
-			
+
 			/* ******************** Display refresh part */
 			Player player = players.get(cursor);
 			List<Card> playerCards = player.getCards();
@@ -106,33 +106,33 @@ public class Landlord {
 			Messenger.clear();
 			Messenger.print(Messenger.playersInfo(players, cursor, previousCardsList));
 			/* ******************** */
-			
+
 			do {
 				Messenger.print("Please choose the cards to play. Input 'help' for example inputs.\n");
-				
+
 				// Input Processing
 				String cmd = Messenger.printAskForInput(in,"play",
 						"[" + player.getRole() + "] " + player.getNickname() + " >> ");
-				
+
 				if (cmd.equals("HELP")) {
-					Messenger.print(Messenger.inputHelp()); // TODO: need to be implemented
+					Messenger.print(Messenger.inputHelp(player, previousCardsList.getLast())); // TODO: need to be implemented
 					continue;
 				}
-				
-				if (cmd.equals("PASS")) { 
+
+				if (cmd.equals("PASS")) {
 					// TODO: Landlord cannot pass in the first round? or cannot pass in the
 					// winning round?
 					if(previousCardsList.isEmpty()||room.getLastHandPlayer() == player) {
 						Messenger.print("Cannot pass.");
 						continue;
 					}
-						
+
 					previousCardsList.add(new ArrayList<Card>());
 					if (previousCardsList.size() >= 3)
 						previousCardsList.remove();
 					break;
 				}
-				
+
 				ArrayList<String> inputCardNames = new ArrayList<String>();
 				Scanner cmdScanner = new Scanner(cmd);
 				while (cmdScanner.hasNext()) // TODO: exception handle
@@ -144,7 +144,7 @@ public class Landlord {
 					System.out.println(Messenger.inputErrorMessage());
 					continue;
 				}
-				
+
 				List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
 				if (selectedCards == null) {
 					System.out.println(Messenger.cardsNotOnHandError());
@@ -172,14 +172,14 @@ public class Landlord {
 				}
 			} while (true);
 
-			if (!previousCardsList.getLast().isEmpty()) 
-				Messenger.print(Messenger.printCards(previousCardsList.getLast()));				
-			
+			if (!previousCardsList.getLast().isEmpty())
+				Messenger.print(Messenger.printCards(previousCardsList.getLast()));
+
 			Messenger.waiting();
 			Messenger.clear();
 
 			// check finish
-			if (player.getCards().size() == 0) 
+			if (player.getCards().size() == 0)
 				finishFlag = true;
 
 			// Room info update
@@ -187,11 +187,11 @@ public class Landlord {
 		}
 
 		// Check winner
-		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD) 
+		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD)
 			System.out.println("Landlord wins!");
-		else 
+		else
 			System.out.println("Peasants win!");
-		
+
 		System.out.println("Press ENTER ...");
 		in.next();
 

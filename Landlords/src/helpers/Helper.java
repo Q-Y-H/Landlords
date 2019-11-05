@@ -47,29 +47,48 @@ public class Helper {
 		}
 		return true;
 	}
-	
-	public static List<Card> hintCards(List<Card> cards, List<Card> selectCards, Hand prev,int shartPoint, int length){
+
+	//穷尽后比较，输出满足条件的第一个List.(单牌对子ok,三带一输出为null，怀疑是三带一比较转换出现问题）另，需要添加炸弹识别
+	//need to be modified. ^_^
+	public static List<Card> hintCards(List<Card> cards, Hand prev, int length){
 
 		List<Card> TempCards=new ArrayList<Card>();
-		
-		if(selectCards!=null&&Hand.cards2hand(selectCards).isSmallerThan(prev)==false) {
-			return selectCards; 
-		}
-		
-		for(int i=shartPoint;i<length;i++){
-			TempCards.add(cards.get(i));
-			selectCards=hintCards(cards, TempCards, prev, i+1, length);
-			if(selectCards!=null) {
-				return selectCards;
+		List<List<Card>> workspace =new ArrayList<List<Card>>();
+		combinationSelect(workspace,cards,TempCards,length);
+		for(List<Card> c: workspace) {
+			Hand tempHand=Hand.cards2hand(c);
+			if(prev.isSmallerThan(tempHand)==true) {
+				return c;
 			}
-			TempCards.remove(TempCards.size()-1);
 		}
 		return null;
-		
 	}
-	
+
+	private static void combinationSelect(List<List<Card>> workspace,List<Card> dataList, List<Card> resultList, int length) {
+		List<Card> copyData;
+		List<Card> copyResult;
+
+		if(resultList.size() == length) {
+			workspace.add(resultList);
+		}
+
+		for(int i = 0; i < dataList.size(); i++) {
+			copyData = new ArrayList<Card>(dataList);
+			copyResult = new ArrayList<Card>(resultList);
+
+			copyResult.add(copyData.get(i));
+			for(int j = i; j >=  0; j--)
+				copyData.remove(j);
+			combinationSelect(workspace,copyData, copyResult, length);
+		}
+	}
+
+
+
+
+
 	public static void clearInputStream() {
 		Scanner in = new Scanner(System.in);
 		in.nextLine();
-	}	
+	}
 }

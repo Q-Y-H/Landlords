@@ -3,6 +3,7 @@ package helpers;
 import entities.Player;
 import enums.Rank;
 import entities.Card;
+import entities.Hand;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Messenger {
 	public static String printAskForInput(Scanner sc, String type, String prompt) {
 		System.out.print(prompt);
 		String input;
-		
+
 		while(true) {
 			input=sc.nextLine().toUpperCase();
 			switch(type){
@@ -37,7 +38,7 @@ public class Messenger {
 			}
 			System.out.print("Please input correctly: ");
 		}
-		
+
 	}
 
 	public static void waitForPlayer(Player player) {
@@ -123,9 +124,19 @@ public class Messenger {
 		print(msg);
 	}
 
-	public static String inputHelp() {
+	public static String inputHelp(Player p,List<Card> prev) {
 		// TODO Auto-generated method stub
-		return "";
+		List<Card> selectCards=new ArrayList<Card>();
+		selectCards=Helper.hintCards(p.getCards(),Hand.cards2hand(prev),prev.size() );
+		String message ="";
+		if(selectCards!=null) {
+			message+="We suggest you play: \n";
+			message+=printCards(selectCards);
+		}
+		else {
+			message+="We suggest you pass\n";
+		}
+		return message;
 	}
 
 	public static String inputErrorMessage() {
@@ -147,7 +158,7 @@ public class Messenger {
 			//previousRunForLandlordInfo(players, cursor, info, first);
 			;
 //		else if (infoType.equals("Play"))
-//			previousPlayInfo(players, cursor, info);	
+//			previousPlayInfo(players, cursor, info);
 		return infoType;
 	}
 
@@ -193,18 +204,18 @@ public class Messenger {
 
 		return msg;
 	}
-	
+
 	public static void handleRunForLandlord(List<Player> players, int cursor, List<Boolean> choices, int first) {
 		Player player=players.get(cursor);
-		
+
 		clear();
 		print("\nRound "+ (choices.size()+1) +": Running for the LANDLORD position!\n");
 		waitForPlayer(player);
 		clear();
 		print(Messenger.previousRunForLandlordInfo(players, cursor, choices, first));
 	}
-	
-	/*This method is hard to implement because besides the token, 
+
+	/*This method is hard to implement because besides the token,
 	 * some other parameters, like players, cursor, etc,
 	 * are needed to generate the message
 	 */
@@ -213,7 +224,7 @@ public class Messenger {
 		switch(token) {
 		case "RunForLandlord":
 			clear();
-			
+
 		}
 		return msg;
 	}
