@@ -47,6 +47,7 @@ public class Hand implements Comparable<Hand>{
 	public Rank getPrimal() {
 		return primal;
 	}
+  
 	public String toString() {
 		if(type == HandType.ILLEGAL) return "Illegal "+"\n";
 		String kickersInfo = "";
