@@ -3,6 +3,7 @@ package helpers;
 import entities.Player;
 import enums.Rank;
 import entities.Card;
+import entities.Hand;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,9 +122,19 @@ public class Messenger {
 		print(msg);
 	}
 
-	public static String inputHelp() {
+	public static String inputHelp(Player p,List<Card> prev) {
 		// TODO Auto-generated method stub
-		return "";
+		List<Card> selectCards=new ArrayList<Card>();
+		selectCards=Helper.hintCards(p.getCards(),Hand.cards2hand(prev),prev.size() );
+		String message ="";
+		if(selectCards!=null) {
+			message+="We suggest you play: \n";
+			message+=printCards(selectCards);
+		}
+		else {
+			message+="We suggest you pass\n";
+		}
+		return message;
 	}
 
 	public static String inputErrorMessage() {

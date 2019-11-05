@@ -115,7 +115,7 @@ public class Landlord {
 						"[" + player.getRole() + "] " + player.getNickname() + " >> ");
 
 				if (cmd.equals("HELP")) {
-					Messenger.print(Messenger.inputHelp()); // TODO: need to be implemented
+					Messenger.print(Messenger.inputHelp(player, previousCardsList.getLast())); // TODO: need to be implemented
 					continue;
 				}
 
