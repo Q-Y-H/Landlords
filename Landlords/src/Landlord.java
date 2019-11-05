@@ -124,15 +124,13 @@ public class Landlord {
 				if (cmd.toUpperCase().equals("PASS")) { 
 					// TODO: Landlord cannot pass in the first round? or cannot pass in the
 					// winning round?
-					if(room.getLastHandPlayer()==null) {
+					if(room.getLastHandPlayer()==null || room.getLastHandPlayer() == player) {
 						System.out.println(Messenger.disobeyRulesError());
 						continue;
 					}
 					previousCardsList.add(new ArrayList<Card>());
 					if (previousCardsList.size() >= 3) {
 						previousCardsList.remove();
-						System.out.println(Messenger.disobeyRulesError());
-						continue;
 					}
 					break;
 				}
@@ -174,7 +172,7 @@ public class Landlord {
 					room.setLastHandPlayer(player);
 					previousCardsList.add(selectedCards);
 					if (previousCardsList.size() >= 3)
-						previousCardsList.clear();
+						previousCardsList.remove();
 					break;
 				} else {
 					System.out.println(Messenger.disobeyRulesError());

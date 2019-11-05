@@ -16,30 +16,26 @@ public class Hand implements Comparable<Hand>{
 	private List<Card> cards;
 	
 	public HandType getType() {return type;}
-	public int getLength() {return chainLength;}
-	public Hand[] getKickers() {return kickers;}
-	public Rank getPrimal() {return primal;}
 	
 	private boolean sameCategoryWith(Hand h) {
-		if(type!=h.getType()) 
+		if(type!=h.type) 
 			return false;
-		else if(chainLength!=h.getLength())
+		else if(chainLength!=h.chainLength)
 			return false;
-		
-		Hand[] k = h.getKickers();
-		if(kickers!=null && k!=null) 
-			if(kickers[0].getType()!=k[0].getType())
+
+		if(kickers!=null && h.kickers!=null) 
+			if(kickers[0].type!=h.kickers[0].type)
 				return false;
-		else if(!(kickers==null && k==null))
+		else if(!(kickers==null && h.kickers==null))
 			return false;
 		return true; 
 	}
 	
 	public int compareTo(Hand h) {
 		// TODO Refractory: throw exceptions
-		if(h.getType()==HandType.ILLEGAL || h.getType()==null || type==HandType.ROCKET )
+		if(h.type==HandType.ILLEGAL || h.type==null || type==HandType.ROCKET )
 			return 1;
-		else if( h.getType()==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
+		else if( h.type==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
 			return -1;		
 		else if(!sameCategoryWith(h))
 			return 1;
