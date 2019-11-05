@@ -15,13 +15,17 @@ public class Hand implements Comparable<Hand>{
 	private int chainLength;
 	private List<Card> cards;
 	
+	public HandType getType() {return type;}
+	public Rank getPrimal() {return primal;}
+	
 	private boolean sameCategoryWith(Hand h) {
 		if(type!=h.type) 
 			return false;
 		else if(chainLength!=h.chainLength)
 			return false;
-		else if(kickers!=null && h.kickers!=null) 
-			if(kickers[0].getType()!=h.kickers[0].getType())
+
+		if(kickers!=null && h.kickers!=null) 
+			if(kickers[0].type!=h.kickers[0].type)
 				return false;
 		else if(!(kickers==null && h.kickers==null))
 			return false;
@@ -30,9 +34,9 @@ public class Hand implements Comparable<Hand>{
 	
 	public int compareTo(Hand h) {
 		// TODO Refractory: throw exceptions
-		if(type==HandType.ROCKET || h.getType()==HandType.ILLEGAL || h.getType()==null)
+		if(h.type==HandType.ILLEGAL || h.type==null || type==HandType.ROCKET )
 			return 1;
-		else if( h.getType()==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
+		else if( h.type==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
 			return -1;		
 		else if(!sameCategoryWith(h))
 			return 1;
@@ -41,12 +45,10 @@ public class Hand implements Comparable<Hand>{
 		else if(primal.ordinal()==h.primal.ordinal())
 			return 0;
 		else 
-			return 1;
+			return 1; 
 	}
 	
-	public Rank getPrimal() {
-		return primal;
-	}
+	
 	public String toString() {
 		if(type == HandType.ILLEGAL) return "Illegal "+"\n";
 		String kickersInfo = "";
@@ -68,9 +70,6 @@ public class Hand implements Comparable<Hand>{
 		this(type,primal,null,chainLength);
 	}
 	
-	public Hand(HandType type,Rank primal,Hand[] kickers) {
-		this(type,primal,kickers,1);
-	}
 	
 	public Hand(HandType type,Rank primal) {
 		this(type,primal,null,1);
@@ -80,9 +79,6 @@ public class Hand implements Comparable<Hand>{
 		this(type,null,null,0);
 	}
 	
-	public HandType getType() {
-		return type;
-	}
 
 	public void setType(HandType type) {
 		this.type = type;
@@ -100,7 +96,7 @@ public class Hand implements Comparable<Hand>{
 			int[] start = new int[5];	//stores the first card's rank of different cards combination length i.e. SOLO(1),PAIR(2)
 			int[] count = new int[5];	//stores how many times the card combination of different length occur
 			
-			for(int rank=0; rank<numOfRanks.length; rank++) {
+			for(int rank=3; rank<=17; rank++) {
 				if(numOfRanks[rank] == 0) continue;
 				length++;
 				if(startOfRank == 0) startOfRank = rank;
@@ -135,8 +131,6 @@ public class Hand implements Comparable<Hand>{
 					return new Hand(HandType.PAIR, Rank.getRankByValue(start[2]), length);
 				if(count[3] >= 2 && count[1]+count[2]+count[4] == 0)
 					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), length);
-//				if(count[4] >= 2 && count[1]+count[2]+count[3] == 0)
-//					return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]), length);
 			}
 			
 			if(count[3] != 0 && endOfTrio - start[3] == count[3]-1) {

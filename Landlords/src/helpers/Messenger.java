@@ -1,3 +1,4 @@
+
 package helpers;
 
 import entities.Player;
@@ -106,13 +107,18 @@ public class Messenger {
 		print(msg);
 	}
 
-	public static String inputHelp(Player p,Hand hand) {
+	public static String inputHelp(Player p,List<Card> prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards=new ArrayList<Card>();
-		selectCards=Helper.hintCards(p.getCards(),selectCards,hand, 0,p.getCards().size());
+		selectCards=Helper.hintCards(p.getCards(),Hand.cards2hand(prev),prev.size() );
 		String message ="";
-		message+="We suggest you play: \n";
-		message+=printCards(selectCards);
+		if(selectCards!=null) {
+			message+="We suggest you play: \n";
+			message+=printCards(selectCards);
+		}
+		else {
+			message+="We suggest you pass\n";
+		}
 		return message;
 	}
 
@@ -134,7 +140,7 @@ public class Messenger {
 		if (infoType.equals("RunForLandlord"))
 			previousRunForLandlordInfo(players, cursor, info);
 //		else if (infoType.equals("Play"))
-//			previousPlayInfo(players, cursor, info);	
+//			previousPlayInfo(players, cursor, info);
 		return infoType;
 	}
 
@@ -182,13 +188,13 @@ public class Messenger {
 
 		return msg;
 	}
-	
+
 	public static String getMessageByToken(String token) {
 		String msg = "";
 		switch(token) {
 		case "RunForLandlord":
 			clear();
-			
+
 		}
 		return msg;
 	}

@@ -141,9 +141,9 @@ class testHand extends TestCase {
 
 	@Test //Illegal 333555
 	void test17() {
-		List<Card> cards = Arrays.asList(c[3],c[3],c[3],c[5],c[5],c[5]);
+		List<Card> cards = Arrays.asList();
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 17: " +h.toString());
+		System.out.println(h.toString());
 	}
 	
 	@Test //Illegal 31617
@@ -187,6 +187,7 @@ class testHand extends TestCase {
 		Hand h = Hand.cards2hand(cards);
 		System.out.println("Test 23: " +h.toString());
 	}
+
 	/*
 	 * test method compareTo(Hand)
 	 *
