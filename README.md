@@ -1,6 +1,47 @@
 # Landlords pokercard game
+
+## 记得记Bug Report！
+
+## TODO [Midterm stage form]
+-   [ ] 完整地玩一遍直到程序结束
+-   [ ] 检查Release 1还缺什么元素，如果OK，就发布Release 1（Merge 到 master）
+-   [ ] Class Diagram Version 1 (需要在目前的设计上考虑各种Principles和Patterns，为Release 2做指导)
+-   [ ] 抢地主Refactor以缩减代码
+-   [ ] （Idea）Messenger Refactor为通过Message Token得到message信息
+-   [ ] Rank.alias如果不考虑‘10‘的’x‘'X'和A的‘1’，可以考虑去掉alias并将Helper.isValidInputCardNames()的判断通过toUpperCase来实现
+-   [ ] 将所有Ask for input的部分改写为用Helper.getCheckInput()并通过toUpperCase()来预处理Input
+-   [ ] PASS输出会输出空卡，要判断lastCardList新家的是不是空
+
+## Methods that need to be tested
+
+-   [ ] Helper.checkValidCards()
+-   [ ] Hand.cards2hand()
+-   [ ] Hand.compareTo()
+-   [ ] Player.checkCardOnHand()
+-   [ ] Player.playCards()
+
+## To-Do
+
+-   [ ] 符号输入是否会破坏目前的输入判断？如多个空格 换行符 制表符
+-   [ ] 每次输入前清空输入流？
+-   [ ] 输入Alias直接转换大小写？
+-   [ ] cursor => Room.getNextPlayer(Player p)
+-   [ ] 检查抢地主是否有逻辑错误
+-   [ ] 检查Main.java是否有逻辑错误
+-   [ ] **Principles** & **Pattern**
+-   [ ] Rank: Alias for ‘A’ and ‘a’, etc.
+-   [ ] Player: id是否有用？
+-   [ ] Messager: 不同Players之间的过场动画
+-   [x] Messager: **Card 10** display problem
+-   [ ] Player: checkCardsOnHand有错 need to be fixed
+-   [ ] 完成Main.js里`TODO`代码
+-   [ ] 完成各处auto-generated的method
+
+请求大家帮忙更新README！
+
 ## Collaboration Guide
-We have two main branches in the git repository:
+
+ave two main branches in the git repository:
 - master: for stable version of code
 - dev: for development version of code
 
