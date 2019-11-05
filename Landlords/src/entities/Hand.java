@@ -51,18 +51,6 @@ public class Hand implements Comparable<Hand>{
 			return 1; 
 	}
 	
-//	public int compareTo1(Hand h) {
-//		if(h.getType() == HandType.ILLEGAL) return 1;
-//		else if(type == HandType.ILLEGAL) return -1;
-//		if(type != h.getType()) return 1;
-//		if(chainLength != h.getLength()) return 1;
-//		else if(kickers.length != h.getKickers().length) return 1;
-//		else if(primal.ordinal() > h.getPrimal().ordinal()) return 1;
-//		else if(primal.ordinal() == h.getPrimal().ordinal()) return 0;
-//		else
-//			return -1;
-//	}
-	
 	public String toString() {
 		if(type == HandType.ILLEGAL) return "Illegal "+"\n";
 		String kickersInfo = "";
@@ -145,8 +133,6 @@ public class Hand implements Comparable<Hand>{
 					return new Hand(HandType.PAIR, Rank.getRankByValue(start[2]), length);
 				if(count[3] >= 2 && count[1]+count[2]+count[4] == 0)
 					return new Hand(HandType.TRIO, Rank.getRankByValue(start[3]), length);
-//				if(count[4] >= 2 && count[1]+count[2]+count[3] == 0)
-//					return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]), length);
 			}
 			
 			if(count[3] != 0 && endOfTrio - start[3] == count[3]-1) {

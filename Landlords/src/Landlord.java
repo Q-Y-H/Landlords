@@ -117,7 +117,7 @@ public class Landlord {
 				// Input Processing
 				String cmd = in.nextLine();
 				if (cmd.toUpperCase().equals("HELP")) {
-					Messenger.print(Messenger.inputHelp()); // TODO: need to be implemented
+					Messenger.print(Messenger.inputHelp(player,Hand.cards2hand(previousCardsList.getLast()))); // TODO: need to be implemented
 					continue;
 				}
 				
