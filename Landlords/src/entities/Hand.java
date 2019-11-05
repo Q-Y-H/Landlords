@@ -16,6 +16,7 @@ public class Hand implements Comparable<Hand>{
 	private List<Card> cards;
 	
 	public HandType getType() {return type;}
+	public Rank getPrimal() {return primal;}
 	
 	private boolean sameCategoryWith(Hand h) {
 		if(type!=h.type) 
@@ -46,6 +47,7 @@ public class Hand implements Comparable<Hand>{
 		else 
 			return 1; 
 	}
+	
 	
 	public String toString() {
 		if(type == HandType.ILLEGAL) return "Illegal "+"\n";
