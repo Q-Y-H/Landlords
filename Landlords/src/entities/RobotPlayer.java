@@ -115,24 +115,77 @@ public class RobotPlayer extends Player {
 	
 	public void sparseCards() {		
 		//TO-DO:
-		//1. check if has bomb yes:cut the bomb out;
-		List<List<Card>> bombCollection=new ArrayList<List<Card>>();		
-		List<Card> Temp=new ArrayList<Card>();
-		combinationSelect(bombCollection,cards,Temp, 4);
-		for(List<Card> combine: bombCollection) {
+		List<Card> copyData=new ArrayList<Card>(cards);//copy of handCards
+		List<Card> temp=new ArrayList<Card>();
+		List<List<Card>> tempCollection=new ArrayList<List<Card>>();	
+		
+		//1. check if has bomb yes:cut the bomb out;	
+		
+		combinationSelect(tempCollection,copyData,temp, 4);
+		for(List<Card> combine: tempCollection) {
 			if(Hand.cards2hand(combine).getType()!=HandType.BOMB) {
-				bombCollection.remove(combine);
+				tempCollection.remove(combine);
 			}
 		}
-		for(List<Card> combine:bombCollection) {
+		for(List<Card> combine:tempCollection) {
 			handList.add(Hand.cards2hand(combine));
+			copyData.removeAll(combine);
 		}
+		temp.clear();
+		tempCollection.clear();//generation
+		
 		//2. check if has 2 yes: cut 2s out;
 		
+		List<Card>collectionOf2s=new ArrayList<Card>();
+		combinationSelect(tempCollection,copyData,temp, 1);
+		for(List<Card> combine: tempCollection) {
+			if(Hand.cards2hand(combine).getOrdinal()==2) {
+				collectionOf2s.addAll(combine);
+			}
+		}
+		handList.add(Hand.cards2hand(collectionOf2s));
+		copyData.removeAll(collectionOf2s);
+		
+		temp.clear();
+		tempCollection.clear();//generation
+		
 		//3. check if has plane;
+		int countOf3=cards.size()/3*3;
+		for(int i=countOf3;i>=6;i-=3) {
+			combinationSelect(tempCollection,copyData,temp,i);
+			for(List<Card> combine: tempCollection) {
+				Hand tempHand=Hand.cards2hand(combine);
+				if(tempHand.getType()==HandType.TRIO&&tempHand.getChainLength()==i/3) {
+					handList.add(tempHand);
+					copyData.removeAll(combine);
+				}
+			}
+		}
+		temp.clear();
+		tempCollection.clear();
+		
 		//4. check if has straight of solo(always pick the longest)
-		//5. handle the SOS{
+		List<List<Card>> collectionOfSOS =new ArrayList<List<Card>>();
+		for(int i=cards.size();i>=5;i--) {
+			combinationSelect(tempCollection,copyData,temp,i);
+			for(List<Card> combine: tempCollection) {
+				Hand tempHand=Hand.cards2hand(combine);
+				if(tempHand.getType()==HandType.SOLO) {
+					//handle
+					
+					
+					
+					
+					collectionOfSOS.add(combine);
+					copyData.removeAll(combine);
+				}
+			}
+		}
+		
+		//5. handle the SOS
+			
 		//5.1 若顺子中出现单牌（连续长度不限）且该单牌段长x，与顺子头部长度距离d1，尾部距离d2，满足：d1+x>=5且d2+x>=5，拆为两个顺子
+			
 		//5.2 顺子长度大于5，头/尾存在连对，顺子长度-连对长度>=5,转化为三带加顺子
 		//5.3 顺子长度大于5，头/尾存在单牌，顺子长度-连对长度>=5,转化为对子加顺子
 		//5.4 顺子周围存在多个对子/单牌。计算该区域totalHandCount，选择最小情况}直到无变化
