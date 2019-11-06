@@ -1,15 +1,14 @@
 package helpers;
 
-import entities.Player;
-import enums.Rank;
-import entities.Card;
-import entities.Hand;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+
+import entities.Card;
+import entities.Hand;
+import entities.Player;
 
 public class Messenger {
 
@@ -21,13 +20,13 @@ public class Messenger {
 		System.out.print(prompt);
 		String input;
 
-		while(true) {
-			input=sc.nextLine().toUpperCase();
-			switch(type){
+		while (true) {
+			input = sc.nextLine().toUpperCase();
+			switch (type) {
 			case "name":
 				return input;
 			case "landlord":
-				if(input.equals("Y") || input.equals("N"))
+				if (input.equals("Y") || input.equals("N"))
 					return input;
 				else {
 					System.out.print(prompt);
@@ -50,8 +49,9 @@ public class Messenger {
 	public static void waiting() {
 		print("Press ENTER to continue ...");
 		try {
-			while(System.in.read() != '\n');
-			//Helper.clearInputStream();
+			while (System.in.read() != '\n')
+				;
+			// Helper.clearInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -124,17 +124,16 @@ public class Messenger {
 		print(msg);
 	}
 
-	public static String inputHelp(Player p,List<Card> prev) {
+	public static String inputHelp(Player p, List<Card> prev) {
 		// TODO Auto-generated method stub
-		List<Card> selectCards=new ArrayList<Card>();
-		selectCards=Helper.hintCards(p.getCards(),Hand.cards2hand(prev),prev.size() );
-		String message ="";
-		if(selectCards!=null) {
-			message+="We suggest you play: \n";
-			message+=printCards(selectCards);
-		}
-		else {
-			message+="We suggest you pass\n";
+		List<Card> selectCards = new ArrayList<Card>();
+		selectCards = Helper.hintCards(p.getCards(), Hand.cards2hand(prev), prev.size());
+		String message = "";
+		if (selectCards != null) {
+			message += "We suggest you play: \n";
+			message += printCards(selectCards);
+		} else {
+			message += "We suggest you pass\n";
 		}
 		return message;
 	}
@@ -155,19 +154,20 @@ public class Messenger {
 	// TODO
 	public static String previousInfo(String infoType, List<Player> players, int cursor, List info) {
 		if (infoType.equals("RunForLandlord"))
-			//previousRunForLandlordInfo(players, cursor, info, first);
+			// previousRunForLandlordInfo(players, cursor, info, first);
 			;
 //		else if (infoType.equals("Play"))
 //			previousPlayInfo(players, cursor, info);
 		return infoType;
 	}
 
-	public static String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices, int first) {
-		String msg = "Round "+(choices.size()+1)+":\n";
+	public static String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices,
+			int first) {
+		String msg = "Round " + (choices.size() + 1) + ":\n";
 		int size = choices.size();
 
 		for (int i = 0; i < size; i++) {
-			int index = (first + i ) % 3;
+			int index = (first + i) % 3;
 			msg += ("Player " + players.get(index).getNickname() + ": ");
 			if (choices.get(i))
 				msg += ("Running for LANDLORD.\n\n");
@@ -181,7 +181,8 @@ public class Messenger {
 		return msg;
 	}
 
-	// TODO: As for information security, the whole players list should not be sent into the method
+	// TODO: As for information security, the whole players list should not be sent
+	// into the method
 	public static String playersInfo(List<Player> players, int cursor, LinkedList<List<Card>> previousCardsList) {
 		String msg = "";
 		int size = previousCardsList.size();
@@ -206,22 +207,22 @@ public class Messenger {
 	}
 
 	public static void handleRunForLandlord(List<Player> players, int cursor, List<Boolean> choices, int first) {
-		Player player=players.get(cursor);
+		Player player = players.get(cursor);
 
 		clear();
-		print("\nRound "+ (choices.size()+1) +": Running for the LANDLORD position!\n");
+		print("\nRound " + (choices.size() + 1) + ": Running for the LANDLORD position!\n");
 		waitForPlayer(player);
 		clear();
 		print(Messenger.previousRunForLandlordInfo(players, cursor, choices, first));
 	}
 
-	/*This method is hard to implement because besides the token,
-	 * some other parameters, like players, cursor, etc,
-	 * are needed to generate the message
+	/*
+	 * This method is hard to implement because besides the token, some other
+	 * parameters, like players, cursor, etc, are needed to generate the message
 	 */
 	public static String getMessageByToken(String token) {
 		String msg = "";
-		switch(token) {
+		switch (token) {
 		case "RunForLandlord":
 			clear();
 

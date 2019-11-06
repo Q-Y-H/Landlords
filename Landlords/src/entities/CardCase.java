@@ -7,26 +7,26 @@ import enums.Rank;
 import enums.Suit;
 
 public class CardCase {
-	
+
 	private List<Card> baseCards;
-	
+
 	public CardCase() {
 		this.baseCards = new ArrayList<Card>(54);
-		
-		Rank[] ranks = Rank.values(); 
+
+		Rank[] ranks = Rank.values();
 		Suit[] suits = Suit.values();
 
-		for(Rank rank: ranks) {
-			if(rank == Rank.RANK_BLACK_JOKER) {
-				this.baseCards.add(new Card(rank, Suit.BLANK));
-				continue; 
-			}
-			if(rank == Rank.RANK_RED_JOKER) {
+		for (Rank rank : ranks) {
+			if (rank == Rank.RANK_BLACK_JOKER) {
 				this.baseCards.add(new Card(rank, Suit.BLANK));
 				continue;
 			}
-			for(Suit suit: suits) {
-				if(suit == Suit.BLANK) {
+			if (rank == Rank.RANK_RED_JOKER) {
+				this.baseCards.add(new Card(rank, Suit.BLANK));
+				continue;
+			}
+			for (Suit suit : suits) {
+				if (suit == Suit.BLANK) {
 					continue;
 				}
 				this.baseCards.add(new Card(rank, suit));
@@ -41,6 +41,5 @@ public class CardCase {
 	public void setBaseCards(List<Card> baseCards) {
 		this.baseCards = baseCards;
 	}
-	
-	
+
 }

@@ -1,19 +1,17 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 import entities.Card;
-import entities.CardCase;
+import entities.CardRoom;
+import entities.Hand;
 import entities.Player;
 import enums.HandType;
 import enums.PlayerRole;
 import helpers.Helper;
 import helpers.Messenger;
-import entities.CardRoom;
-import entities.Hand;
 
 public class Landlord {
 	public static void main(String[] args) {
@@ -34,7 +32,7 @@ public class Landlord {
 
 		for (int i = 0; i < 3; ++i) { // TODO: room.distributeCards() ?
 			String nickname = Messenger.printAskForInput(in, "name",
-					"Player " + (i+1) + ": Please Set Your Nickname >> ");
+					"Player " + (i + 1) + ": Please Set Your Nickname >> ");
 			players.add(new Player(nickname, PlayerRole.PEASANT));
 			players.get(i).setCards(cardLists.get(i));
 			Helper.sortCards(players.get(i).getCards());
@@ -51,27 +49,25 @@ public class Landlord {
 		int nWaive = 0;
 
 		for (int i = 0; i < 4; ++i) {
-			if(i == 3)
+			if (i == 3)
 				if (nWaive == 3) { // all waive
 					landlordID = rand.nextInt(3);
 					break;
-				}
-				else if(nWaive == 2) // two players waive
+				} else if (nWaive == 2) // two players waive
 					break;
 				else if (nWaive == 1) // one player waives
-					while(!choices.get((cursor + 3 - first)%3))
-						cursor = (cursor+1)%3;
-				//no player waives
+					while (!choices.get((cursor + 3 - first) % 3))
+						cursor = (cursor + 1) % 3;
+			// no player waives
 
 			Player player = players.get(cursor);
 			Messenger.handleRunForLandlord(players, cursor, choices, first);
-			String cmd = Messenger.printAskForInput(in, "landlord", "Player " + player.getNickname() +
-					": Do you want to run for landlord? [y/n] ");
+			String cmd = Messenger.printAskForInput(in, "landlord",
+					"Player " + player.getNickname() + ": Do you want to run for landlord? [y/n] ");
 			if (cmd.equals("Y")) { // TODO: check invalid input like 'ilsdhcvi'
 				choices.add(true);
 				landlordID = cursor;
-			}
-			else {
+			} else {
 				choices.add(false);
 				nWaive++;
 			}
@@ -87,7 +83,6 @@ public class Landlord {
 		Messenger.print("Landlord cards:");
 		Messenger.print(Messenger.printCards(room.getLandlordCards()));
 		/* ******************** */
-
 
 		/*
 		 * Game start
@@ -111,18 +106,19 @@ public class Landlord {
 				Messenger.print("Please choose the cards to play. Input 'help' for example inputs.\n");
 
 				// Input Processing
-				String cmd = Messenger.printAskForInput(in,"play",
+				String cmd = Messenger.printAskForInput(in, "play",
 						"[" + player.getRole() + "] " + player.getNickname() + " >> ");
 
 				if (cmd.equals("HELP")) {
-					Messenger.print(Messenger.inputHelp(player, previousCardsList.getLast())); // TODO: need to be implemented
+					Messenger.print(Messenger.inputHelp(player, previousCardsList.getLast())); // TODO: need to be
+																								// implemented
 					continue;
 				}
 
 				if (cmd.equals("PASS")) {
 					// TODO: Landlord cannot pass in the first round? or cannot pass in the
 					// winning round?
-					if(previousCardsList.isEmpty()||room.getLastHandPlayer() == player) {
+					if (previousCardsList.isEmpty() || room.getLastHandPlayer() == player) {
 						Messenger.print("Cannot pass.");
 						continue;
 					}
@@ -152,13 +148,13 @@ public class Landlord {
 				}
 
 				Hand currHand = Hand.cards2hand(selectedCards);
-				if(currHand.getType() ==HandType.ILLEGAL) {
+				if (currHand.getType() == HandType.ILLEGAL) {
 					System.out.println(Messenger.disobeyRulesError());
 					continue;
 				}
 				Hand lastHand = room.getLastHand();
 				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-						|| lastHand.isSmallerThan(currHand)==true) {
+						|| lastHand.isSmallerThan(currHand) == true) {
 					player.removeCards(selectedCards);
 					room.setLastHand(currHand);
 					room.setLastHandPlayer(player);

@@ -5,15 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.management.relation.Role;
-
 import enums.PlayerRole;
 import enums.Rank;
 
-
 public class Player {
 
-	private static int idCounter = 0; 
+	private static int idCounter = 0;
 	private int id;
 	private String nickname;
 	private PlayerRole role;
@@ -24,14 +21,14 @@ public class Player {
 		this.nickname = nickname;
 		this.role = role;
 		this.cards = null;
-		
+
 		++Player.idCounter;
 	}
-	
+
 	public Player(String nickname) {
 		this(nickname, null);
 	}
-	
+
 	public Player() {
 		this(null, null);
 	}
@@ -72,35 +69,34 @@ public class Player {
 		int i = 0, j = 0;
 		List<Card> res = new ArrayList<Card>();
 		Collections.sort(cardNames, new Comparator<String>() {
-	        @Override
-	        public int compare(String s1, String s2)
-	        {
-	            return Rank.getRankByName(s1).ordinal() - Rank.getRankByName(s2).ordinal();
-	        }
-	    });
-		
-		while(i < cardNames.size() && j < this.cards.size()) {
+			@Override
+			public int compare(String s1, String s2) {
+				return Rank.getRankByName(s1).ordinal() - Rank.getRankByName(s2).ordinal();
+			}
+		});
+
+		while (i < cardNames.size() && j < this.cards.size()) {
 			if (cardNames.get(i).toUpperCase().equals(this.cards.get(j).getRank().getName())) { // TODO: adapt for a | A
 				res.add(this.cards.get(j));
-				++i; ++j;
-			}
-			else
+				++i;
+				++j;
+			} else
 				++j;
 		}
 		if (res.size() != cardNames.size())
 			return null;
 		return res;
 	}
-	
+
 	public void removeCards(List<Card> handCards) {
-		for(int i=0;i<handCards.size();i++)
-			if(cards.contains(handCards.get(i)))
+		for (int i = 0; i < handCards.size(); i++)
+			if (cards.contains(handCards.get(i)))
 				cards.remove(handCards.get(i));
 	}
 
 	public void playCards(List<Card> cards) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

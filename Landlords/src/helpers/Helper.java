@@ -1,15 +1,13 @@
 package helpers;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+
 import entities.Card;
 import entities.CardCase;
 import entities.Hand;
-import entities.Player;
 import enums.Rank;
 
 public class Helper {
@@ -48,44 +46,41 @@ public class Helper {
 		return true;
 	}
 
-	//穷尽后比较，输出满足条件的第一个List.(单牌对子ok,三带一输出为null，怀疑是三带一比较转换出现问题）另，需要添加炸弹识别
-	//need to be modified. ^_^
-	public static List<Card> hintCards(List<Card> cards, Hand prev, int length){
+	// 穷尽后比较，输出满足条件的第一个List.(单牌对子ok,三带一输出为null，怀疑是三带一比较转换出现问题）另，需要添加炸弹识别
+	// need to be modified. ^_^
+	public static List<Card> hintCards(List<Card> cards, Hand prev, int length) {
 
-		List<Card> TempCards=new ArrayList<Card>();
-		List<List<Card>> workspace =new ArrayList<List<Card>>();
-		combinationSelect(workspace,cards,TempCards,length);
-		for(List<Card> c: workspace) {
-			Hand tempHand=Hand.cards2hand(c);
-			if(prev.isSmallerThan(tempHand)==true) {
+		List<Card> TempCards = new ArrayList<Card>();
+		List<List<Card>> workspace = new ArrayList<List<Card>>();
+		combinationSelect(workspace, cards, TempCards, length);
+		for (List<Card> c : workspace) {
+			Hand tempHand = Hand.cards2hand(c);
+			if (prev.isSmallerThan(tempHand) == true) {
 				return c;
 			}
 		}
 		return null;
 	}
 
-	private static void combinationSelect(List<List<Card>> workspace,List<Card> dataList, List<Card> resultList, int length) {
+	private static void combinationSelect(List<List<Card>> workspace, List<Card> dataList, List<Card> resultList,
+			int length) {
 		List<Card> copyData;
 		List<Card> copyResult;
 
-		if(resultList.size() == length) {
+		if (resultList.size() == length) {
 			workspace.add(resultList);
 		}
 
-		for(int i = 0; i < dataList.size(); i++) {
+		for (int i = 0; i < dataList.size(); i++) {
 			copyData = new ArrayList<Card>(dataList);
 			copyResult = new ArrayList<Card>(resultList);
 
 			copyResult.add(copyData.get(i));
-			for(int j = i; j >=  0; j--)
+			for (int j = i; j >= 0; j--)
 				copyData.remove(j);
-			combinationSelect(workspace,copyData, copyResult, length);
+			combinationSelect(workspace, copyData, copyResult, length);
 		}
 	}
-
-
-
-
 
 	public static void clearInputStream() {
 		Scanner in = new Scanner(System.in);
