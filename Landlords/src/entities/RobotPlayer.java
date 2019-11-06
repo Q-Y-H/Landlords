@@ -40,8 +40,8 @@ public class RobotPlayer extends Player {
 		List<Card> response=null;
 		if(formerCards==null)
 			response=playCardsProactively(formerCards);
-		else
-			response=playCardsPassively(formerCards);
+//		else
+//			response=playCardsPassively(formerCards);
 		this.removeCards(response);
 		return response;
 	}
@@ -55,7 +55,7 @@ public class RobotPlayer extends Player {
 		}
 		return response;
 	}
-	
+	/*
 	public List<Card> playCardsPassively(List<Card> formerCards) {
 		List<Card> response = null;
 		sparseCards();
@@ -114,17 +114,18 @@ public class RobotPlayer extends Player {
 		return response;
 	}
 	
+	*/
 	public void sparseCards() {		
 		//TO-DO:
-		List<List<Card>> cardsCollection=new ArrayList<List<Card>>(20);
 		List<Card>RBJoker= new ArrayList<Card>();
 		int[] numOfRanks = new int[20];
 		for(Card card: cards) {
 			if(card.getRank()==Rank.RANK_BLACK_JOKER||card.getRank()==Rank.RANK_RED_JOKER) {
 				RBJoker.add(card);
 			}
-			numOfRanks[card.getRank().ordinal()+3]++;	
-			cardsCollection.get(card.getRank().ordinal()+3).add(card);
+			else{
+				numOfRanks[card.getRank().ordinal()+3]++;	
+			}
 		}
 		
 		
@@ -135,19 +136,23 @@ public class RobotPlayer extends Player {
 			
 		//0. cut jokers
 		
-		handList.add(Hand.cards2hand(RBJoker));
+		if (!RBJoker.isEmpty()) {
+			handList.add(Hand.cards2hand(RBJoker));
+		}
 		copyData.removeAll(RBJoker);
 		
 		//1. check if has bomb yes:cut the bomb out;
 		
 		for(int i=0;i<numOfRanks.length;i++) {
 			if(numOfRanks[i]==4) {
+				List<Card> tem=new ArrayList<Card>();
 				for(Card card:copyData) {
 					if(card.getRank().ordinal()==i-3) {
 						copyData.remove(card);
+						tem.add(card);
 					}
 				}
-				handList.add(Hand.cards2hand(cardsCollection.get(i)));
+				handList.add(Hand.cards2hand(tem));
 				numOfRanks[i]=0;
 			}
 		}
@@ -217,8 +222,13 @@ public class RobotPlayer extends Player {
 				temp.clear();
 			}
 		}
-		
-		
+		List<StraightOfCards> ListOfSOS = new ArrayList<StraightOfCards>();
+		int t=1;
+		{
+			
+			t=checkSOS(numOfRanks,ListOfSOS);
+			
+		}while(t!=0);
 		/*
 		int countOf3=cards.size()/3*3;
 		for(int i=countOf3;i>=6;i-=3) {
@@ -235,7 +245,8 @@ public class RobotPlayer extends Player {
 		tempCollection.clear();
 		
 		*/
-		//4. check if has straight of solo(always pick the longest)
+	}	//4. check if has straight of solo(always pick the longest)
+	private int checkSOS(int[] numOfRanks,List<StraightOfCards> ListOfSOS) {
 		int maxChain=0;
 		int maxStart=0;
 		int maxEnd=0;
@@ -253,32 +264,36 @@ public class RobotPlayer extends Player {
 			chainLength=0;
 			endPoint=0;
 		}
-		List<StraightOfCards> ListOfSOS=new ArrayList<StraightOfCards>();
-		maxStart=maxEnd-maxChain;
-		for(int i=maxStart;i<=maxEnd;i++) {
-			numOfRanks[i]--;
+		if (chainLength!=0) {
+
+			maxStart = maxEnd - maxChain;
+			for (int i = maxStart; i <= maxEnd; i++) {
+				numOfRanks[i]--;
+			}
+			ListOfSOS.addAll(handlerOfSOS(cards, maxStart, maxEnd, numOfRanks, handList));
 		}
-		ListOfSOS.addAll(handlerOfSOS(cards,maxStart,maxEnd,numOfRanks,handList));
-		/*
-		List<List<Card>> collectionOfSOS =new ArrayList<List<Card>>();
-		for(int i=cards.size();i>=5;i--) {
-			combinationSelect(tempCollection,copyData,temp,i);
-			for(List<Card> combine: tempCollection) {
-				Hand tempHand=Hand.cards2hand(combine);
-				if(tempHand.getType()==HandType.SOLO) {
-					//handle
-					
-					
-					
-					
-					collectionOfSOS.add(combine);
-					copyData.removeAll(combine);
+		return chainLength;
+			
+			/*
+			List<List<Card>> collectionOfSOS =new ArrayList<List<Card>>();
+			for(int i=cards.size();i>=5;i--) {
+				combinationSelect(tempCollection,copyData,temp,i);
+				for(List<Card> combine: tempCollection) {
+					Hand tempHand=Hand.cards2hand(combine);
+					if(tempHand.getType()==HandType.SOLO) {
+						//handle
+						
+						
+						
+						
+						collectionOfSOS.add(combine);
+						copyData.removeAll(combine);
+					}
 				}
 			}
-		}
-		
-		
-		*/
+			
+			
+			*/
 		
 		//5. handle the SOS
 			
@@ -355,13 +370,32 @@ public class RobotPlayer extends Player {
 		}
 		
 		if(maxEnd-point>=3) {
+			for(int t=maxEnd;t>=point;t--) {
+				for(Card card : cards) {
+					if(card.getRank().ordinal()==t-3) {
+						cards.remove(card);
+					}
+				}
+			}
 			temp.add(new StraightOfCards(maxEnd-point,HandType.PAIR,Rank.getRankByValue(maxEnd)));
 			temp.addAll(handlerOfSOS(cards,maxStart,point,numOfRanks,handList));
 			return temp;
+		}else if (point!=maxEnd){
+			for(int t=maxEnd;t>=point;t--) {
+				List<Card> tem=new ArrayList<Card>();
+				for(Card card : cards) {
+					if(card.getRank().ordinal()==t-3) {
+						tem.add(card);
+						cards.remove(card);
+					}
+				}
+				handList.add(Hand.cards2hand(tem));
+			}
+			return handlerOfSOS(cards,maxStart,point,numOfRanks,handList);
 		}
-		for(int t=maxEnd;t>=point;t--) {
-			//////////////////记得往下改！！！！！！
-		}
+		//behind
+		
+		
 		
 		point =maxStart;
 		
@@ -373,9 +407,28 @@ public class RobotPlayer extends Player {
 		}
 		
 		if(point-maxStart>=3) {
+			for(int t=maxStart;t<=point;t++) {
+				for(Card card : cards) {
+					if(card.getRank().ordinal()==t-3) {
+						cards.remove(card);
+					}
+				}
+			}
 			temp.add(new StraightOfCards(point-maxStart,HandType.PAIR,Rank.getRankByValue(point)));
 			temp.addAll(handlerOfSOS(cards,point,maxEnd,numOfRanks,handList));
 			return temp;
+		}else if(point!=maxStart) {
+			for(int t=maxStart;t<=point;t++) {
+				List<Card>tem=new ArrayList<Card>();
+				for(Card card : cards) {
+					if(card.getRank().ordinal()==t-3) {
+						tem.add(card);
+						cards.remove(card);
+					}
+				}
+				handList.add(Hand.cards2hand(tem));
+			}
+			return handlerOfSOS(cards,point,maxEnd,numOfRanks,handList);
 		}
 		
 		
@@ -383,6 +436,10 @@ public class RobotPlayer extends Player {
 		temp.add(new StraightOfCards(maxEnd-maxStart,HandType.SOLO,Rank.getRankByValue(maxEnd)));//无变化
 		return temp;
 	}
+	
+	
+	
+	
 	//穷尽后比较，输出满足条件的第一个List.(单牌对子ok,三带一输出为null，怀疑是三带一比较转换出现问题）另，需要添加炸弹识别
 		//need to be modified. ^_^
 		private static void combinationSelect(List<List<Card>> workspace,List<Card> dataList, List<Card> resultList, int length) {
