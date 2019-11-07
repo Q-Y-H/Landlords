@@ -15,4 +15,11 @@ public class StraightOfCards {
 		type=handType;
 		endRank=EndRank;
 	}
+	public int getChainLength() {
+		return chainLength;
+	}
+	public int getEnd() {
+		return endRank.ordinal()+3;
+	}
+	
 }

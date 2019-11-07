@@ -30,7 +30,7 @@ public class RobotPlayer extends Player {
 	 */
 	private int totalHandCount=0;
 	private int stepsToWin=0;
-	private List<Hand> handList=null;
+	private List<Hand> handList=new ArrayList<Hand>();
 	private boolean hasBomb=false;
 	/*
 	 * Methods
@@ -120,7 +120,7 @@ public class RobotPlayer extends Player {
 		List<Card>RBJoker= new ArrayList<Card>();
 		int[] numOfRanks = new int[20];
 		for(Card card: cards) {
-			if(card.getRank()==Rank.RANK_BLACK_JOKER||card.getRank()==Rank.RANK_RED_JOKER) {
+			if(card.getRank().ordinal()==14||card.getRank().ordinal()==13) {
 				RBJoker.add(card);
 			}
 			else{
@@ -131,121 +131,90 @@ public class RobotPlayer extends Player {
 		
 		
 		
-		List<Card> copyData=new ArrayList<Card>(cards);//copy of handCards
-		List<Card> temp=new ArrayList<Card>();
+		
 			
 		//0. cut jokers
 		
 		if (!RBJoker.isEmpty()) {
-			handList.add(Hand.cards2hand(RBJoker));
+			Hand test=Hand.cards2hand(RBJoker);
+			handList.add(test);
 		}
-		copyData.removeAll(RBJoker);
+		cards.removeAll(RBJoker);
 		
 		//1. check if has bomb yes:cut the bomb out;
 		
 		for(int i=0;i<numOfRanks.length;i++) {
 			if(numOfRanks[i]==4) {
 				List<Card> tem=new ArrayList<Card>();
-				for(Card card:copyData) {
+				for(Card card:cards) {
 					if(card.getRank().ordinal()==i-3) {
-						copyData.remove(card);
 						tem.add(card);
 					}
 				}
+				cards.removeAll(tem);
 				handList.add(Hand.cards2hand(tem));
 				numOfRanks[i]=0;
 			}
 		}
-		/*
-		combinationSelect(tempCollection,copyData,temp, 4);		
-		for(List<Card> combine: tempCollection) {
-			if(Hand.cards2hand(combine).getType()!=HandType.BOMB) {
-				tempCollection.remove(combine);
-			}
-		}
-		for(List<Card> combine:tempCollection) {
-			handList.add(Hand.cards2hand(combine));
-			copyData.removeAll(combine);
-		}
-		temp.clear();
-		tempCollection.clear();//generation
-		
-		
-		*/
-		
-		
+				
 		
 		//2. check if has 2 yes: cut 2s out;
-	
-			for(Card card:copyData) {
-				if(card.getRank()==Rank.RANK_2) {
-					copyData.remove(card);
-					temp.add(card);
-				}
-			}
-			numOfRanks[12]=0;
-			handList.add(Hand.cards2hand(temp));
-			temp.clear();
-		
-		/*
-		List<Card>collectionOf2s=new ArrayList<Card>();
-		combinationSelect(tempCollection,copyData,temp, 1);
-		for(List<Card> combine: tempCollection) {
-			if(Hand.cards2hand(combine).getOrdinal()==2) {
-				collectionOf2s.addAll(combine);
+		List<Card> tem1=new ArrayList<Card>();
+		for(Card card:cards) {
+			if(card.getRank().ordinal()==12) {
+				tem1.add(card);
 			}
 		}
-		handList.add(Hand.cards2hand(collectionOf2s));
-		copyData.removeAll(collectionOf2s);
-		
-		temp.clear();
-		tempCollection.clear();//generation
-		
-		*/
+		numOfRanks[15]=0;
+		cards.removeAll(tem1);
+		handList.add(Hand.cards2hand(tem1));
+		tem1.clear();
 		
 		
 		//3. check if has plane;
 		
 		for(int i=3;i<numOfRanks.length;i++) {
 			if (numOfRanks[i]==3) {
+				List<Card> tem =new ArrayList<Card>();
 				while (numOfRanks[i+1] == 3) {
 					for(Card card:cards) {
 						if(card.getRank().ordinal()==i-3||card.getRank().ordinal()==i-2) {
-							temp.add(card);
-							copyData.remove(card);
+							tem.add(card);
 						}
 				} 
-				numOfRanks[i]=0;
-				i++;
-			}
-				handList.add(Hand.cards2hand(temp));
-				temp.clear();
+					numOfRanks[i]=0;
+					numOfRanks[i+1]=0;
+					i++;
+				}
+				if (!tem.isEmpty()) {
+					cards.removeAll(tem);
+					handList.add(Hand.cards2hand(tem));
+					tem.clear();
+				}
 			}
 		}
 		List<StraightOfCards> ListOfSOS = new ArrayList<StraightOfCards>();
 		int t=1;
-		{
-			
-			t=checkSOS(numOfRanks,ListOfSOS);
-			
-		}while(t!=0);
-		/*
-		int countOf3=cards.size()/3*3;
-		for(int i=countOf3;i>=6;i-=3) {
-			combinationSelect(tempCollection,copyData,temp,i);
-			for(List<Card> combine: tempCollection) {
-				Hand tempHand=Hand.cards2hand(combine);
-				if(tempHand.getType()==HandType.TRIO&&tempHand.getChainLength()==i/3) {
-					handList.add(tempHand);
-					copyData.removeAll(combine);
+		while (t!=0) {
+			t=checkSOS(numOfRanks, ListOfSOS);
+			if (!ListOfSOS.isEmpty()) {
+				for (StraightOfCards zsos : ListOfSOS) {
+					for (int i = zsos.getEnd() - zsos.getChainLength(); i <= zsos.getEnd(); i++) {
+						for (Card card : cards) {
+							if (card.getRank().ordinal() == i - 3) {
+								tem1.add(card);
+								break;
+							}
+						}
+					}
+					cards.removeAll(tem1);
+					tem1.clear();
 				}
-			}
+			} 
 		}
-		temp.clear();
-		tempCollection.clear();
 		
-		*/
-	}	//4. check if has straight of solo(always pick the longest)
+	}	
+	//4. check if has straight of solo(always pick the longest)
 	private int checkSOS(int[] numOfRanks,List<StraightOfCards> ListOfSOS) {
 		int maxChain=0;
 		int maxStart=0;
@@ -260,40 +229,24 @@ public class RobotPlayer extends Player {
 			else if(chainLength>=5&&chainLength>maxChain){
 				maxChain=chainLength;
 				maxEnd=endPoint;
+				chainLength=0;
+				endPoint=0;
+			}else {
+				chainLength=0;
+				endPoint=0;
 			}
-			chainLength=0;
-			endPoint=0;
 		}
-		if (chainLength!=0) {
+		if (maxChain!=0) {
 
-			maxStart = maxEnd - maxChain;
+			maxStart = maxEnd - maxChain+1;
 			for (int i = maxStart; i <= maxEnd; i++) {
 				numOfRanks[i]--;
 			}
+			
 			ListOfSOS.addAll(handlerOfSOS(cards, maxStart, maxEnd, numOfRanks, handList));
 		}
 		return chainLength;
 			
-			/*
-			List<List<Card>> collectionOfSOS =new ArrayList<List<Card>>();
-			for(int i=cards.size();i>=5;i--) {
-				combinationSelect(tempCollection,copyData,temp,i);
-				for(List<Card> combine: tempCollection) {
-					Hand tempHand=Hand.cards2hand(combine);
-					if(tempHand.getType()==HandType.SOLO) {
-						//handle
-						
-						
-						
-						
-						collectionOfSOS.add(combine);
-						copyData.removeAll(combine);
-					}
-				}
-			}
-			
-			
-			*/
 		
 		//5. handle the SOS
 			
@@ -316,44 +269,46 @@ public class RobotPlayer extends Player {
 				additionLength++;
 				additionEnd=i;
 			}
-			else if(additionEnd-maxStart>=5&&additionLength+maxEnd-additionEnd>=5) {
+			else if(additionEnd-maxStart>=4&&additionLength+maxEnd-additionEnd>=5) {
 				int maxS1=maxStart;
 				int maxE1=additionEnd;
-				int maxS2=additionEnd-additionLength;
+				int maxS2=additionEnd-additionLength+1;
 				int maxE2=maxEnd;
 				for(int t=maxS2;t<=maxE1;t++) {
 					numOfRanks[t]--;
 				}
-				temp.add(new StraightOfCards(maxE1-maxS1,HandType.SOLO,Rank.getRankByValue(maxE1)));
+				temp.addAll(handlerOfSOS(cards,maxS2,maxE2,numOfRanks,handList));
 				temp.addAll(handlerOfSOS(cards,maxS1,maxE1,numOfRanks,handList));
 				return temp;//
-			}	
-			additionLength=0;
-			additionEnd=0;
+			}else {	
+				additionLength=0;
+				additionEnd=0;
+			}
 		}
 		
 		//5.2
-		if(numOfRanks[maxStart]>=2&&maxEnd-maxStart>=6) {
+		if(numOfRanks[maxStart]>=2&&maxEnd-maxStart>=5) {
 			numOfRanks[maxStart]=0;
 			List<Card> tem=new ArrayList<Card>();
 			for(Card card :cards) {
 				if(card.getRank().ordinal()==maxStart-3) {
 					tem.add(card);
-					cards.remove(card);
+
 				}
 			}
+			cards.removeAll(tem);
 			handList.add(Hand.cards2hand(cards));
 			return handlerOfSOS(cards,maxStart+1,maxEnd,numOfRanks,handList);			
 		}
-		if(numOfRanks[maxEnd]>=2&&maxEnd-maxStart>=6) {
+		if(numOfRanks[maxEnd]>=2&&maxEnd-maxStart>=5) {
 			numOfRanks[maxEnd]=0;
 			List<Card> tem=new ArrayList<Card>();
 			for(Card card :cards) {
 				if(card.getRank().ordinal()==maxEnd-3) {
 					tem.add(card);
-					cards.remove(card);
 				}
 			}
+			cards.removeAll(tem);
 			handList.add(Hand.cards2hand(cards));
 			return handlerOfSOS(cards,maxStart,maxEnd-1,numOfRanks,handList);			
 		}
@@ -365,18 +320,21 @@ public class RobotPlayer extends Player {
 		int[] addition2=new int[maxEnd-maxStart];
 		if (numOfRanks[point]==1) {
 			{
-				addition1[point-maxStart]=point;
-			} while (numOfRanks[point --] >= 1&&point-maxStart>=6) ;
+				addition1[maxEnd-point]=point;
+			} while (numOfRanks[point --] >= 1&&point-maxStart>=5) ;
+			point++;
 		}
-		
 		if(maxEnd-point>=3) {
 			for(int t=maxEnd;t>=point;t--) {
+				List<Card> tem =new ArrayList<Card>();
 				for(Card card : cards) {
 					if(card.getRank().ordinal()==t-3) {
-						cards.remove(card);
+						tem.add(card);
 					}
 				}
+				cards.removeAll(tem);
 			}
+
 			temp.add(new StraightOfCards(maxEnd-point,HandType.PAIR,Rank.getRankByValue(maxEnd)));
 			temp.addAll(handlerOfSOS(cards,maxStart,point,numOfRanks,handList));
 			return temp;
@@ -386,9 +344,9 @@ public class RobotPlayer extends Player {
 				for(Card card : cards) {
 					if(card.getRank().ordinal()==t-3) {
 						tem.add(card);
-						cards.remove(card);
 					}
 				}
+				cards.removeAll(tem);
 				handList.add(Hand.cards2hand(tem));
 			}
 			return handlerOfSOS(cards,maxStart,point,numOfRanks,handList);
@@ -403,16 +361,19 @@ public class RobotPlayer extends Player {
 		if (numOfRanks[point]==1) {
 			{
 				addition2[point-maxStart]=point;
-			} while (numOfRanks[point ++] >= 1&&maxEnd-point>=6) ;
+			} while (numOfRanks[point ++] >= 1&&maxEnd-point>=5) ;
+			point--;
 		}
-		
+	
 		if(point-maxStart>=3) {
 			for(int t=maxStart;t<=point;t++) {
+				List<Card> tem=new ArrayList<Card>();
 				for(Card card : cards) {
 					if(card.getRank().ordinal()==t-3) {
-						cards.remove(card);
+						tem.add(card);
 					}
 				}
+				cards.removeAll(tem);
 			}
 			temp.add(new StraightOfCards(point-maxStart,HandType.PAIR,Rank.getRankByValue(point)));
 			temp.addAll(handlerOfSOS(cards,point,maxEnd,numOfRanks,handList));
@@ -423,9 +384,9 @@ public class RobotPlayer extends Player {
 				for(Card card : cards) {
 					if(card.getRank().ordinal()==t-3) {
 						tem.add(card);
-						cards.remove(card);
 					}
 				}
+				cards.removeAll(tem);
 				handList.add(Hand.cards2hand(tem));
 			}
 			return handlerOfSOS(cards,point,maxEnd,numOfRanks,handList);
