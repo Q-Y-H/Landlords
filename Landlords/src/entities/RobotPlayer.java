@@ -6,6 +6,7 @@ import java.util.List;
 import enums.HandType;
 import enums.PlayerRole;
 import enums.Rank;
+import helpers.Helper;
 
 
 public class RobotPlayer extends Player {
@@ -40,8 +41,9 @@ public class RobotPlayer extends Player {
 		List<Card> response=null;
 		if(formerCards==null)
 			response=playCardsProactively(formerCards);
-//		else
-//			response=playCardsPassively(formerCards);
+		else {
+			response=playCardsPassively(formerCards);
+		}
 		this.removeCards(response);
 		return response;
 	}
@@ -55,7 +57,7 @@ public class RobotPlayer extends Player {
 		}
 		return response;
 	}
-	/*
+
 	public List<Card> playCardsPassively(List<Card> formerCards) {
 		List<Card> response = null;
 		sparseCards();
@@ -65,56 +67,16 @@ public class RobotPlayer extends Player {
 		for(Card card: cards) numOfCards[card.getRank().ordinal()+3]++;
 		
 		if(totalHandCount==2 && hasBomb) {
-			
+			//Play Bomb
 		}
 		else {
-		switch(lastHandType){
-		case ROCKET:{
-			break;
-		}
-		case BOMB:{
-			for (int i=3;i<18;i++) {
-				if(numOfCards[i]==4 && i>lastHand.getOrdinal())
-					response=
-			}
-		}
-		case SOLO:{
-			if(lastHand.getChainLength()==1) {
-				
-			}
-			else {
-				
-			}
-		}
-		case PAIR:{
-			if(lastHand.getChainLength()==1) {
-				
-			}
-			else {
-				
-			}
-		}
-		case TRIO:{
-			if(lastHand.getChainLength()==1) {
-				
-			}
-			else {
-				
-			}
-		}
-		case QUAD:{
-			
-		}
-		case ILLEGAL:
-			break;
-		default:
-			break;
-		}
+			List<Card> temp=null;
+			response=Helper.hintCards(formerCards, temp, lastHand, 0, formerCards.size());
 		}
 		return response;
 	}
 	
-	*/
+
 	public void sparseCards() {		
 		//TO-DO:
 		List<Card>RBJoker= new ArrayList<Card>();

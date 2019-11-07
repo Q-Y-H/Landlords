@@ -48,17 +48,20 @@ public class Helper {
 		return true;
 	}
 	
-	public static List<Card> hintCards(List<Card> cards, List<Card> selectCards, Hand prev,int shartPoint, int length){
-
+	public static List<Card> hintCards(List<Card> cards, List<Card> selectCards, Hand prev,int startPoint, int length){
+		if( cards.size()-startPoint<length)
+			return null;
+		if(length==0)
+			return null;
 		List<Card> TempCards=new ArrayList<Card>();
 		
-		if(selectCards!=null&&Hand.cards2hand(selectCards).compareTo(prev)>0) {
+		if(selectCards!=null&& prev.compareTo(Hand.cards2hand(selectCards))==-1) {
 			return selectCards;
 		}
 		
-		for(int i=shartPoint;i<length;i++){
+		for(int i=startPoint;i<cards.size();i++){
 			TempCards.add(cards.get(i));
-			selectCards=hintCards(cards, TempCards, prev, i+1, length);
+			selectCards=hintCards(cards, TempCards, prev, i+1, length-1);
 			if(selectCards!=null) {
 				return selectCards;
 			}
