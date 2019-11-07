@@ -14,6 +14,55 @@ public class Hand implements Comparable<Hand>{
 	private Hand[] kickers;
 	private int chainLength;
 	private List<Card> cards;
+	private int weight=0;
+	
+	public int getWeight() {
+		List<Card> response = null;
+		int[] numOfCards = new int[20];
+
+		switch(type){
+		case ROCKET:{
+			return 20;
+		}
+		case BOMB:{
+			return primal.ordinal()+8;
+		}
+		case SOLO:{
+			if(this.getChainLength()!=1) {
+				return primal.ordinal()+chainLength-7;
+			}
+			else {
+				return primal.ordinal()-7;
+			}
+		}
+		case PAIR:{
+			if(this.getChainLength()!=1) {
+				return primal.ordinal()+chainLength;
+			}
+			else {
+				return primal.ordinal()-7;
+			}
+		}
+		case TRIO:{
+			if(this.getChainLength()!=1) {
+				return primal.ordinal()/2;
+			}
+			else {
+				return primal.ordinal()-7;
+			}
+		}
+		case QUAD:{
+			return primal.ordinal()/2;
+		}
+		case ILLEGAL:{
+			return Integer.MIN_VALUE;
+		}
+		default:
+			break;
+		}
+		
+		return weight;
+	}
 	
 	private boolean sameCategoryWith(Hand h) {
 		if(type!=h.type) 

@@ -41,10 +41,11 @@ public class RobotPlayer extends Player {
 	private int stepsToWin=0;
 	private List<Hand> handList=null;
 	private boolean hasBomb=false;
+	
 	/*
 	 * Methods
 	 */
-	
+
 	public List<Card> playCards(List<Card> formerCards) {
 		List<Card> response=null;
 		if(formerCards==null)
