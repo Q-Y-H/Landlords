@@ -32,6 +32,7 @@ public class RobotPlayer extends Player {
 	private int totalHandCount=0;
 	private int stepsToWin=0;
 	private List<Hand> handList=new ArrayList<Hand>();
+	private List<Hand> bombList=null;
 	private boolean hasBomb=false;
 	/*
 	 * Methods
@@ -55,6 +56,7 @@ public class RobotPlayer extends Player {
 			this.removeCards(handList.get(0));
 			return handList.get(0).getCards();
 		}
+		response=handList.get(0).getCards();
 		return response;
 	}
 
@@ -63,11 +65,10 @@ public class RobotPlayer extends Player {
 		sparseCards();
 		Hand lastHand=Hand.cards2hand(formerCards);
 		HandType lastHandType=lastHand.getType();
-		int[] numOfCards = new int[20];
-		for(Card card: cards) numOfCards[card.getRank().ordinal()+3]++;
-		
-		if(totalHandCount==2 && hasBomb) {
-			//Play Bomb
+		totalHandCount=handList.size();
+		if(totalHandCount==2 && !bombList.isEmpty()) {
+			response=bombList.get(0).getCards();
+			bombList.remove(0);
 		}
 		else {
 			List<Card> temp=null;
@@ -115,6 +116,7 @@ public class RobotPlayer extends Player {
 				}
 				cards.removeAll(tem);
 				handList.add(Hand.cards2hand(tem));
+				bombList.add(Hand.cards2hand(tem));
 				numOfRanks[i]=0;
 			}
 		}

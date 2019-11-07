@@ -1,13 +1,13 @@
 package testCases;
 
-import org.junit.Assert;
-
 import java.util.*;
 
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import entities.*;
 import enums.*;
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 class testHand extends TestCase { 

@@ -108,18 +108,13 @@ public class Landlord {
 			List<Card> playerCards = player.getCards();
 			
 //test			
-			RobotPlayer Robot =new RobotPlayer("test");
-			Robot.setCards(playerCards);
-			String msg =Messenger.printCards(Robot.getCards());
-			
-			Messenger.print(msg+"\n");
-			Robot.sparseCards();
-			Messenger.print(Messenger.printCards(Robot.getCards())+"\n");
-			
-			
-			
-			
-			
+//			RobotPlayer Robot =new RobotPlayer("test");
+//			Robot.setCards(playerCards);
+//			String msg =Messenger.printCards(Robot.getCards());
+//			
+//			Messenger.print(msg+"\n");
+//			Robot.sparseCards();
+//			Messenger.print(Messenger.printCards(Robot.getCards())+"\n");			
 			
 			
 			
