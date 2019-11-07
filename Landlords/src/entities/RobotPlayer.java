@@ -55,7 +55,9 @@ public class RobotPlayer extends Player {
 		}
 		return response;
 	}
-	/*
+	
+	
+	
 	public List<Card> playCardsPassively(List<Card> formerCards) {
 		List<Card> response = null;
 		sparseCards();
@@ -114,7 +116,6 @@ public class RobotPlayer extends Player {
 		return response;
 	}
 	
-	*/
 	public void sparseCards() {		
 		//TO-DO:
 		List<Card>RBJoker= new ArrayList<Card>();
