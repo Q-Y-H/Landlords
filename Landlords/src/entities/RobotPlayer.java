@@ -161,20 +161,10 @@ public class RobotPlayer extends Player {
 			t=checkSOS(numOfRanks, ListOfSOS);
 			if (!ListOfSOS.isEmpty()) {
 				for (StraightOfCards zsos : ListOfSOS) {
-					for (int i = zsos.getEnd() - zsos.getChainLength(); i <= zsos.getEnd(); i++) {
-						for (Card card : cards) {
-							if (card.getRank().ordinal() == i - 3) {
-								tem1.add(card);
-								break;
-							}
-						}
-					}
-					cards.removeAll(tem1);
-					tem1.clear();
+					handList.add(Hand.cards2hand(zsos.getCards()));
 				}
 			} 
 		}
-		
 	}	
 	//4. check if has straight of solo(always pick the longest)
 	private int checkSOS(int[] numOfRanks,List<StraightOfCards> ListOfSOS) {
@@ -286,9 +276,9 @@ public class RobotPlayer extends Player {
 			} while (numOfRanks[point --] >= 1&&point-maxStart>=5) ;
 			point++;
 		}
-		if(maxEnd-point>=3) {
+		if(maxEnd-point>=2) {
+			List<Card> tem =new ArrayList<Card>();
 			for(int t=maxEnd;t>=point;t--) {
-				List<Card> tem =new ArrayList<Card>();
 				for(Card card : cards) {
 					if(card.getRank().ordinal()==t-3) {
 						tem.add(card);
@@ -297,7 +287,7 @@ public class RobotPlayer extends Player {
 				cards.removeAll(tem);
 			}
 
-			temp.add(new StraightOfCards(maxEnd-point,HandType.PAIR,Rank.getRankByValue(maxEnd)));
+			temp.add(new StraightOfCards(HandType.PAIR,Rank.getRankByValue(maxEnd),maxEnd-point+1,tem));
 			temp.addAll(handlerOfSOS(cards,maxStart,point,numOfRanks,handList));
 			return temp;
 		}else if (point!=maxEnd){
@@ -327,9 +317,10 @@ public class RobotPlayer extends Player {
 			point--;
 		}
 	
-		if(point-maxStart>=3) {
+		if(point-maxStart>=2) {
+			List<Card> tem=new ArrayList<Card>();
 			for(int t=maxStart;t<=point;t++) {
-				List<Card> tem=new ArrayList<Card>();
+
 				for(Card card : cards) {
 					if(card.getRank().ordinal()==t-3) {
 						tem.add(card);
@@ -337,7 +328,7 @@ public class RobotPlayer extends Player {
 				}
 				cards.removeAll(tem);
 			}
-			temp.add(new StraightOfCards(point-maxStart,HandType.PAIR,Rank.getRankByValue(point)));
+			temp.add(new StraightOfCards(HandType.PAIR,Rank.getRankByValue(point),point-maxStart+1,tem));
 			temp.addAll(handlerOfSOS(cards,point,maxEnd,numOfRanks,handList));
 			return temp;
 		}else if(point!=maxStart) {
@@ -354,33 +345,25 @@ public class RobotPlayer extends Player {
 			return handlerOfSOS(cards,point,maxEnd,numOfRanks,handList);
 		}
 		
-		
-		
-		temp.add(new StraightOfCards(maxEnd-maxStart,HandType.SOLO,Rank.getRankByValue(maxEnd)));//无变化
+		temp.add(new StraightOfCards(HandType.SOLO,Rank.getRankByValue(maxEnd),maxEnd-maxStart,setCard(cards,maxStart+1,maxEnd)));//无变化
 		return temp;
 	}
 	
-	
-	
-	
-	//穷尽后比较，输出满足条件的第一个List.(单牌对子ok,三带一输出为null，怀疑是三带一比较转换出现问题）另，需要添加炸弹识别
-		//need to be modified. ^_^
-		private static void combinationSelect(List<List<Card>> workspace,List<Card> dataList, List<Card> resultList, int length) {
-			List<Card> copyData;
-			List<Card> copyResult;
-
-			if(resultList.size() == length) {
-				workspace.add(resultList);
-			}
-
-			for(int i = 0; i < dataList.size(); i++) {
-				copyData = new ArrayList<Card>(dataList);
-				copyResult = new ArrayList<Card>(resultList);
-
-				copyResult.add(copyData.get(i));
-				for(int j = i; j >=  0; j--)
-					copyData.remove(j);
-				combinationSelect(workspace,copyData, copyResult, length);
+	public static List<Card> setCard(List<Card> cards,int start,int end){
+		List<Card> tem=new ArrayList<Card>();
+		for(int i=start;i<=end;i++) {
+			for(Card card: cards) {
+				if(card.getRank().ordinal()==i-3) {
+					tem.add(card);
+					break;
+				}
 			}
 		}
+		cards.removeAll(tem);
+		return tem;
+	}
 }
+	
+	
+	
+	
