@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.Spring;
+
 import entities.Card;
 import entities.CardCase;
 import entities.Player;
+import entities.RobotPlayer;
 import enums.HandType;
 import enums.PlayerRole;
 import helpers.Helper;
@@ -103,6 +106,33 @@ public class Landlord {
 			/* ******************** Display refresh part */
 			Player player = players.get(cursor);
 			List<Card> playerCards = player.getCards();
+			
+//test			
+			RobotPlayer Robot =new RobotPlayer("test");
+			Robot.setCards(playerCards);
+			String msg =Messenger.printCards(Robot.getCards());
+			
+			Messenger.print(msg+"\n");
+			Robot.sparseCards();
+			Messenger.print(Messenger.printCards(Robot.getCards())+"\n");
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+//*****************************************************************			
+			
 			Messenger.waitForPlayer(player);
 			Messenger.clear();
 			Messenger.print(Messenger.playersInfo(players, cursor, previousCardsList));
