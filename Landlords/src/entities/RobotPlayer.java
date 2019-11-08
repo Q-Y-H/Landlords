@@ -37,7 +37,7 @@ public class RobotPlayer extends Player {
 	/*
 	 * Methods
 	 */
-	
+	@Override
 	public List<Card> playCards(List<Card> formerCards) {
 		List<Card> response=null;
 		if(formerCards==null)
@@ -364,6 +364,7 @@ public class RobotPlayer extends Player {
 		cards.removeAll(tem);
 		return tem;
 	}
+
 }
 	
 	

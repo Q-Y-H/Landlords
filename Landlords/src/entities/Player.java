@@ -11,7 +11,7 @@ import enums.PlayerRole;
 import enums.Rank;
 
 
-public class Player {
+public abstract class Player {
 
 	private static int idCounter = 0; 
 	private int id;
@@ -98,10 +98,7 @@ public class Player {
 		removeCards(hand.getCards());
 	}
 	
-	public List<Card> playCards(List<Card> cards) {
-		List<Card> response = null;		
-		return response;
-	}
+	public abstract List<Card> playCards(List<Card> cards);
 
 	public List<Card> getCards() {
 		return this.cards;

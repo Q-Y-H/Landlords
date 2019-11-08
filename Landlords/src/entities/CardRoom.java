@@ -3,8 +3,12 @@ package entities;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import enums.HandType;
+import enums.PlayerRole;
+import helpers.Helper;
+import helpers.Messenger;
 
 public class CardRoom {
 	
@@ -80,6 +84,74 @@ public class CardRoom {
 		return this.players.get((player.getId()+2)%3);
 	}
 	
+	public void initialize() {
+		for (int i = 0; i < 3; ++i) { // TODO: room.distributeCards() ?
+			String nickname = Messenger.printAskForInput(in, "name", 
+					"Player " + (i+1) + ": Please Set Your Nickname >> ");
+			players.add(new Player(nickname, PlayerRole.PEASANT));
+			players.get(i).setCards(cardLists.get(i));
+			Helper.sortCards(players.get(i).getCards());
+		}
+
+		Helper.shuffleCards(room.getCardCase());
+		// Cut the base cards to 4 folders;
+		List<List<Card>> cardLists = Helper.cutCards(room.getCardCase());
+		// the last one folder for the landlord
+		room.setLandlordCards(cardLists.get(3));
+
+		room.selectLandlord();
+	}
+	
+	public void selectLandlord() {
+		/*
+		 * Landlord election
+		 */
+		Random rand = new Random();
+		int cursor = rand.nextInt(3);
+		int landlordID = 0;
+		List<Boolean> choices = new ArrayList<Boolean>();
+		int nWaive = 0;
+
+		for (int i = 0; i < 4; ++i) {
+			if(i == 3) 
+				if (nWaive == 3) { // all waive
+					landlordID = rand.nextInt(3);
+					break;	
+				} 
+				else if(nWaive == 2) // two players waive
+					break;
+				else if (nWaive == 1) // one player waives
+					do
+						cursor = (cursor+1)%3;
+					while(choices.get(cursor));
+				else if (nWaive == 0)  // all run for landlord
+					cursor = (cursor+1)%3;
+			
+			Player player = players.get(cursor);
+			Messenger.handleRunForLandlord(players, cursor, choices);
+			String cmd = Messenger.printAskForInput(in, "landlord", "Player " + player.getNickname() + 
+					": Do you want to run for landlord? [y/n] ");
+			if (cmd.equals("Y")) { // TODO: check invalid input like 'ilsdhcvi'
+				choices.add(true);
+				landlordID = cursor;
+			} 
+			else {
+				choices.add(false);
+				nWaive++;
+			}
+			cursor = (cursor + 1) % 3;
+		}
+		
+		/* ******************** Default landlord, modify it later */
+		this.setLandlordID(landlordID);
+		players.get(landlordID).setRole(PlayerRole.LANDLORD);
+		players.get(landlordID).getCards().addAll(this.getLandlordCards());
+		Helper.sortCards(players.get(landlordID).getCards());
+		Messenger.print("The landlord is Player " + players.get(landlordID).getNickname());
+		Messenger.print("Landlord cards:");
+		Messenger.print(Messenger.printCards(this.getLandlordCards()));
+		/* ******************** */
+	}
 //	public List<Card> getBaseCards() {
 //		return this.cardCase.getBaseCards();
 //	}
