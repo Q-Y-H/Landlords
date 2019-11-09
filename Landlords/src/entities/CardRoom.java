@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import enums.HandType;
 import enums.PlayerRole;
 import helpers.Helper;
 import helpers.Messenger;
 
-public class CardRoom {
+public abstract class CardRoom {
 	
 	private List<Player> players;
 	private List<Card> landlordCards;
@@ -84,25 +85,10 @@ public class CardRoom {
 		return this.players.get((player.getId()+2)%3);
 	}
 	
-	public void initialize() {
-		for (int i = 0; i < 3; ++i) { // TODO: room.distributeCards() ?
-			String nickname = Messenger.printAskForInput(in, "name", 
-					"Player " + (i+1) + ": Please Set Your Nickname >> ");
-			players.add(new Player(nickname, PlayerRole.PEASANT));
-			players.get(i).setCards(cardLists.get(i));
-			Helper.sortCards(players.get(i).getCards());
-		}
-
-		Helper.shuffleCards(room.getCardCase());
-		// Cut the base cards to 4 folders;
-		List<List<Card>> cardLists = Helper.cutCards(room.getCardCase());
-		// the last one folder for the landlord
-		room.setLandlordCards(cardLists.get(3));
-
-		room.selectLandlord();
-	}
+	public abstract void initialize();
 	
 	public void selectLandlord() {
+		
 		/*
 		 * Landlord election
 		 */
@@ -127,10 +113,17 @@ public class CardRoom {
 				else if (nWaive == 0)  // all run for landlord
 					cursor = (cursor+1)%3;
 			
+			String cmd="";
 			Player player = players.get(cursor);
+			if(player instanceof HumanPlayer) {
 			Messenger.handleRunForLandlord(players, cursor, choices);
-			String cmd = Messenger.printAskForInput(in, "landlord", "Player " + player.getNickname() + 
+			Scanner in = new Scanner(System.in);
+			cmd = Messenger.printAskForInput(in, "landlord", "Player " + player.getNickname() + 
 					": Do you want to run for landlord? [y/n] ");
+			}
+			else {
+				cmd=((RobotPlayer) player).runForLandlord();
+			}
 			if (cmd.equals("Y")) { // TODO: check invalid input like 'ilsdhcvi'
 				choices.add(true);
 				landlordID = cursor;
@@ -139,6 +132,8 @@ public class CardRoom {
 				choices.add(false);
 				nWaive++;
 			}
+			
+			
 			cursor = (cursor + 1) % 3;
 		}
 		
@@ -152,7 +147,5 @@ public class CardRoom {
 		Messenger.print(Messenger.printCards(this.getLandlordCards()));
 		/* ******************** */
 	}
-//	public List<Card> getBaseCards() {
-//		return this.cardCase.getBaseCards();
-//	}
+
 }

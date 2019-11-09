@@ -38,7 +38,7 @@ public class RobotPlayer extends Player {
 	 * Methods
 	 */
 	@Override
-	public List<Card> playCards(List<Card> formerCards) {
+	public ArrayList<String> playCards(List<Card> formerCards) {
 		List<Card> response=null;
 		if(formerCards==null)
 			response=playCardsProactively(formerCards);
@@ -46,7 +46,9 @@ public class RobotPlayer extends Player {
 			response=playCardsPassively(formerCards);
 		}
 		this.removeCards(response);
-		return response;
+		ArrayList<String> ans=null;
+		for(Card card:response) ans.add(card.toString());
+		return ans;
 	}
 	
 	public List<Card> playCardsProactively(List<Card> formerCards) {
@@ -79,7 +81,7 @@ public class RobotPlayer extends Player {
 
 
 	public void sparseCards() {		
-		//TO-DO:
+		
 		List<Card>RBJoker= new ArrayList<Card>();
 		int[] numOfRanks = new int[20];
 		for(Card card: cards) {
@@ -89,18 +91,15 @@ public class RobotPlayer extends Player {
 			else{
 				numOfRanks[card.getRank().ordinal()+3]++;	
 			}
-		}
+		}		
 		
 		
-		
-		
-		
-			
 		//0. cut jokers
 		
 		if (!RBJoker.isEmpty()) {
 			Hand test=Hand.cards2hand(RBJoker);
 			handList.add(test);
+			bombList.add(test);
 		}
 		cards.removeAll(RBJoker);
 		
@@ -364,7 +363,17 @@ public class RobotPlayer extends Player {
 		cards.removeAll(tem);
 		return tem;
 	}
-
+	
+	public String runForLandlord() {
+		int valueSum=0;
+		for(Hand hand: handList) valueSum+=hand.getWeight();
+		if(valueSum>0) {
+			return "Y";
+		}
+		else {
+			return "N";
+		}
+	}
 }
 	
 	

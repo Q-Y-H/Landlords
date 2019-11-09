@@ -98,7 +98,7 @@ public abstract class Player {
 		removeCards(hand.getCards());
 	}
 	
-	public abstract List<Card> playCards(List<Card> cards);
+	public abstract ArrayList<String> playCards(List<Card> cards);
 
 	public List<Card> getCards() {
 		return this.cards;

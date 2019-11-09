@@ -21,36 +21,20 @@ import entities.Hand;
 
 public class LandlordGame {
 	private CardRoom room;
+	Scanner in = new Scanner(System.in);
+	
 	public void initialize(){
-		/*
-		 * Initialize the card room and the players
-		 */
-		Scanner in = new Scanner(System.in);
-		String input="";
-		do {
-			Messenger.print("Do you want to play mutiplayer or solo? M for Multiplayer/ S for solo");
-			input=in.nextLine().toUpperCase();
-		}
-		while(!(input.equals("M")||input.equals("S")));
-		CardRoom room = new CardRoom();
-		LinkedList<List<Card>> previousCardsList = room.getPreviousCardsList();
-		List<Player> players = room.getPlayers();
-		Helper.shuffleCards(room.getCardCase());
-		// Cut the base cards to 4 folders;
-		List<List<Card>> cardLists = Helper.cutCards(room.getCardCase());
-		// the last one folder for the landlord
-		room.setLandlordCards(cardLists.get(3));
-
-		room.selectLandlord();
-
-
+		setRoomType();
+		room.initialize();
 	}
 	
 	public void run() {
 		/*
 		 * Game start
 		 */
-		cursor = landlordID;
+		LinkedList<List<Card>> previousCardsList = room.getPreviousCardsList();
+		List<Player> players = room.getPlayers();
+		int cursor = room.getLandlordID();
 		Messenger.clear();
 		Messenger.print("Game Start!\n");
 		boolean finishFlag = false;
@@ -68,16 +52,7 @@ public class LandlordGame {
 //			
 //			Messenger.print(msg+"\n");
 //			Robot.sparseCards();
-//			Messenger.print(Messenger.printCards(Robot.getCards())+"\n");			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+//			Messenger.print(Messenger.printCards(Robot.getCards())+"\n");					
 			
 			
 	//*****************************************************************			
@@ -88,21 +63,16 @@ public class LandlordGame {
 			/* ******************** */
 			
 			do {
-				Messenger.print("Please choose the cards to play. Input 'help' for example inputs.\n");
-				
-				// Input Processing
-				String cmd = Messenger.printAskForInput(in,"play",
-						"[" + player.getRole() + "] " + player.getNickname() + " >> ");
-				
-				if (cmd.equals("HELP")) {
+				ArrayList<String> anwser=player.playCards(room.getLastHand().getCards());
+				if (anwser.equals("HELP")) {
 					Messenger.print(Messenger.inputHelp()); // TODO: need to be implemented
 					continue;
 				}
 				
-				if (cmd.equals("PASS")) { 
+				if (anwser.equals("PASS")) { 
 					// TODO: Landlord cannot pass in the first round? or cannot pass in the
 					// winning round?
-					if(previousCardsList.isEmpty()) {
+					if(room.getLastHandPlayer() == null ) {
 						Messenger.print("Cannot pass in first round");
 						continue;
 					}
@@ -113,19 +83,12 @@ public class LandlordGame {
 					break;
 				}
 				
-				ArrayList<String> inputCardNames = new ArrayList<String>();
-				Scanner cmdScanner = new Scanner(cmd);
-				while (cmdScanner.hasNext()) // TODO: exception handle
-					inputCardNames.add(cmdScanner.next());
-				cmdScanner.close();
-
-				// TODO: if input nothing, PASS or re-input?
-				if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
+				if (anwser.size() == 0 || !Helper.isValidInputCardNames(anwser)) {
 					System.out.println(Messenger.inputErrorMessage());
 					continue;
 				}
 				
-				List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
+				List<Card> selectedCards = player.checkCardsOnHand(anwser); // check if cards are on hand
 				if (selectedCards == null) {
 					System.out.println(Messenger.cardsNotOnHandError());
 					continue;
@@ -136,6 +99,7 @@ public class LandlordGame {
 					System.out.println(Messenger.disobeyRulesError());
 					continue;
 				}
+				
 				Hand lastHand = room.getLastHand();
 				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
 						|| lastHand.compareTo(currHand) < 0) {
@@ -178,7 +142,23 @@ public class LandlordGame {
 		in.close();
 	}
 	
-
+	public void setRoomType() {
+		/*
+		 * Prompt for user type
+		 */		
+		String input="";
+		do {
+			Messenger.print("Do you want to play mutiplayer or solo? M for Multiplayer/ S for solo");
+			input=in.nextLine().toUpperCase();
+		}
+		while(!(input.equals("M")||input.equals("S")));
+		if(input.equals("M")) {
+			this.room = new MultiPlayerRoom();
+		}
+		else {
+			this.room=new SinglePlayerRoom();
+		}
+	}
 	
 	
 
