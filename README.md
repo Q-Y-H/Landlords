@@ -8,9 +8,9 @@ Release 2 的目标主要是：
 
 1.  重构目前的代码。
 2.  添加Robot，可能分为三种等级的“智商”。比如，
-    -   只出手中最大的牌
-    -   只出对手中牌的Total Score减少最少的牌
-    -   记牌高手？？
+    -   [dumb]只出手中最大的牌
+    -   [xyf&hgm]只出对手中牌的Total Score减少最少的牌
+    -   [先知]记牌高手
 3.  画Class Diagram
 4.  准备各种Documentation
 
@@ -23,11 +23,13 @@ Release 2 的目标主要是：
 -   [ ] 添加Robot
 -   [ ] 游戏中输入exmaple打印示例input，输入suggest打印suggestion（当前输入的help功能）
 -   [ ] 【探讨】关于出牌suggestion（即托管），目前即使有也不会推荐炸弹，是否要推荐？
+-   [ ] notifyAll,rememberCardList, strategy for different role
 -   [ ] ……etc 等着大家来加进去
 
 ## Bug Notes
 
 -   [ ] PASS输出会输出空卡 => 要判断lastCardList新家的是不是空
+-   [ ] Enter需要输入两次（hgm制造）
 
 ## TODO [Midterm stage form]
 
