@@ -148,7 +148,7 @@ public class LandlordGame {
 		 */		
 		String input="";
 		do {
-			Messenger.print("Do you want to play mutiplayer or solo? M for Multiplayer/ S for solo");
+			Messenger.print("Do you want to play mutiplayer or solo?[M/S]");
 			input=in.nextLine().toUpperCase();
 		}
 		while(!(input.equals("M")||input.equals("S")));

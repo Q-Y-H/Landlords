@@ -39,7 +39,6 @@ public class SinglePlayerRoom extends CardRoom {
 			Helper.sortCards(getPlayers().get(i).getCards());
 		}
 
-		in.close();
 		this.selectLandlord();
 	}
 	
