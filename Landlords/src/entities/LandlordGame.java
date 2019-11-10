@@ -43,19 +43,7 @@ public class LandlordGame {
 			
 			/* ******************** Display refresh part */
 			Player player = players.get(cursor);
-			List<Card> playerCards = player.getCards();
-			
-	//test			
-//			RobotPlayer Robot =new RobotPlayer("test");
-//			Robot.setCards(playerCards);
-//			String msg =Messenger.printCards(Robot.getCards());
-//			
-//			Messenger.print(msg+"\n");
-//			Robot.sparseCards();
-//			Messenger.print(Messenger.printCards(Robot.getCards())+"\n");					
-			
-			
-	//*****************************************************************			
+			List<Card> playerCards = player.getCards();	
 			
 			Messenger.waitForPlayer(player);
 			Messenger.clear();
@@ -70,8 +58,7 @@ public class LandlordGame {
 				}
 				
 				if (anwser.equals("PASS")) { 
-					// TODO: Landlord cannot pass in the first round? or cannot pass in the
-					// winning round?
+					// TODO: Landlord  cannot pass in the winning round?
 					if(room.getLastHandPlayer() == null ) {
 						Messenger.print("Cannot pass in first round");
 						continue;
