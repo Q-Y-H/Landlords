@@ -1,5 +1,34 @@
 # Landlords pokercard game
 
+### 11.14 (Thur)
+
+-   [ ] Robot v1.0
+-   [ ] Refactor the whole project following the **Class Diagram**
+
+### 11.21 (Thur)
+
+-   [ ] Release 2
+    -   [ ] Class Diagram
+    -   [ ] Sequence Diagram
+    -   [ ] Robot v2.0
+    -   [ ] Refactor log & 记录下来！！
+    -   [ ] Bug Report v1.0
+    -   [ ] Test case大爆肝 ==> 提高Coverage到80%以上
+
+### 11.27 (Wed)
+
+-   [ ] Slides准备完好
+
+### 11.29 (Fri)
+
+-   [ ] Presentation 14:00-14:30 20min + 5min Q&A
+
+## Nov.10 Pre-discussion notes
+
+-   采用EventListener的机制轮换Player（这可以用什么pattern？）— 事件处理机制
+-   Testing架构？ Bottom Up？
+-   
+
 ## Release 2 Notes
 
 如果你发现了Bug值得Report，就到[Our Bug Report](http://cs3343.cs.cityu.edu.hk/bugzilla/enter_bug.cgi?product=Bro_Doudizhu)登记一下吧！最后的Documentation要用到！
@@ -27,12 +56,12 @@ Release 2 的目标主要是：
 
 ## Bug Notes
 
--   [ ] PASS输出会输出空卡 => 要判断lastCardList新家的是不是空
+-   [x] PASS输出会输出空卡 => 要判断lastCardList新家的是不是空
 
 ## TODO [Midterm stage form]
 
 -   [x] 完整地玩一遍直到程序结束
--   [ ] 检查Release 1还缺什么元素，如果OK，就发布Release 1（Merge 到 master）
+-   [x] 检查Release 1还缺什么元素，如果OK，就发布Release 1（Merge 到 master）
 -   [ ] ~~Class Diagram Version 1 (需要在目前的设计上考虑各种Principles和Patterns，为Release 2做指导)~~
 -   [x] 抢地主Refactor以缩减代码
 -   [x] （Idea）Messenger Refactor为通过Message Token得到message信息
