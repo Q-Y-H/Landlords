@@ -17,7 +17,10 @@ public abstract class Player {
 	private int id;
 	private String nickname;
 	private PlayerRole role;
+	protected List<Card> player1Cards = new ArrayList<Card>();
+	protected List<Card> player2Cards = new ArrayList<Card>();
 	protected List<Card> cards = new ArrayList<Card>();
+	protected int landlordPosition=0;
 
 	public Player(String nickname, PlayerRole role) {
 		this.setId(idCounter);

@@ -32,7 +32,7 @@ public class RobotPlayer extends Player {
 	private int totalHandCount=0;
 	private int stepsToWin=0;
 	private List<Hand> handList=new ArrayList<Hand>();
-	private List<Hand> bombList=null;
+	private List<Hand> bombList=new ArrayList<Hand>();
 	private boolean hasBomb=false;
 	/*
 	 * Methods
