@@ -27,7 +27,7 @@
 
 -   采用EventListener的机制轮换Player（这可以用什么pattern？）— 事件处理机制
 -   Testing架构？ Bottom Up？
--   
+-   [Class Diagram](https://www.lucidchart.com/invitations/accept/dc3f6473-78cc-4aad-8414-632aee8b41dc)
 
 ## Release 2 Notes
 
