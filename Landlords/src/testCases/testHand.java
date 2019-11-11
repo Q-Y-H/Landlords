@@ -71,14 +71,14 @@ class testHand extends TestCase {
 
 	@Test // 555666
 	void test07() {
-		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[5]);
+		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[5], c[6],c[6]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}
 
 	@Test // 5553
 	void test08() {
-		List<Card> cards = Arrays.asList(c[8], c[8], c[8], c[3]);
+		List<Card> cards = Arrays.asList(c[5], c[5], c[5], c[3]);
 		Hand h = Hand.cards2hand(cards);
 		System.out.println(h.toString());
 	}

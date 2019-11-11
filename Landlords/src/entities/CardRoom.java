@@ -19,7 +19,7 @@ public class CardRoom {
 	public CardRoom() {
 		this.players = new ArrayList<Player>();
 		this.landlordCards = null;
-		this.lastHand = new Hand(HandType.ILLEGAL);
+		this.lastHand = new Hand(HandType.ILLEGAL,null,null,0,null);
 		this.lastHandPlayer = null;
 		this.cardCase = new CardCase();
 		this.setPreviousCardsList(new LinkedList<List<Card>>());
