@@ -1,5 +1,11 @@
 # Landlords pokercard game
 
+## Notes
+
+-   [ ] GameDisplay要不要用抽象类实现GUI和CMD？
+
+## Timeline
+
 ### 11.14 (Thur)
 
 -   [ ] Robot v1.0
