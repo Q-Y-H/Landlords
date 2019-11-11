@@ -101,13 +101,13 @@ public class Hand {
 		this.type = type;
 	}
 
-	
-	//convert cards into Hand
 	private static int sumOfArr(int arr[], int start, int end) {
 		int sum=0;
 		for(int i=start; i<=end; i++) sum += arr[i];
 		return sum;
 	}
+	
+	//convert cards into Hand
 	public static Hand cards2hand(List<Card> cards) {
 		if(cards != null && !cards.isEmpty()) {
 			Helper.sortCards(cards);
@@ -172,10 +172,4 @@ public class Hand {
 		}
 		return new Hand(HandType.ILLEGAL,null, null, 0, cards);//illegal
 	}
-
-	public boolean over(Hand lastHand) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

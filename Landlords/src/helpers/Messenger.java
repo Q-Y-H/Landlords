@@ -40,6 +40,38 @@ public class Messenger {
 
 	}
 
+	public static String askForInput(String prompt, String[] inputSet, boolean isCaseSensitive) {
+		Scanner in = new Scanner(System.in);
+		String input = "";
+		boolean hasInput = false;
+
+		while (!hasInput) {
+			print(prompt);
+			input = in.nextLine();
+			if (input.isBlank()) {
+			} else if (inputSet.length == 0) {
+				hasInput = true;
+			} else {
+				for (String s : inputSet) {
+					if (isCaseSensitive) {
+						if (input.equals(s)) {
+							hasInput = true;
+						}
+					} else {
+						if (input.toUpperCase().equals(s.toUpperCase())) {
+							hasInput = true;
+						}
+					}
+				}
+			}
+			if(!hasInput) {				
+				print("Please input correctly.\n");
+			}
+		}
+		in.close();
+		return input;
+	}
+
 	public static void waitForPlayer(Player player) {
 		String msg = "It's player " + player.getNickname() + "'s turn!\n";
 		print(msg);
@@ -156,8 +188,8 @@ public class Messenger {
 		if (infoType.equals("RunForLandlord"))
 			// previousRunForLandlordInfo(players, cursor, info, first);
 			;
-//		else if (infoType.equals("Play"))
-//			previousPlayInfo(players, cursor, info);
+		// else if (infoType.equals("Play"))
+		// previousPlayInfo(players, cursor, info);
 		return infoType;
 	}
 
