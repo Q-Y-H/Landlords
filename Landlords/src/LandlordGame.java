@@ -1,36 +1,34 @@
 import entities.CardRoom;
+import enums.RoomType;
+import helpers.Messenger;
 
 public class LandlordGame {
+	private GameBoard gameBoard;
+	
 	public LandlordGame() {
-		initGame();
-	}
-	
-	public void initGame() {
 		CardRoom room = new CardRoom();
-		GameBoard gameBoard = new GameBoard(room);
-		gameBoard.run();
-	}
+		askForRoomType(room);
+		gameBoard = new GameBoard(room);
+	}	
 	
-	public void setRoomType() {
-		/*
-		 * Prompt for user type
-		 */		
-		String input="";
-		do {
-			Messenger.print("Do you want to play mutiplayer or solo?[M/S]");
-			input=in.nextLine().toUpperCase();
-		}
-		while(!(input.equals("M")||input.equals("S")));
-		if(input.equals("M")) {
-			this.room = new MultiPlayerRoom();
-		}
-		else {
-			this.room=new SinglePlayerRoom();
-		}
+	public void askForRoomType(CardRoom room) {
+		String prompt = "Please select the game mode:\n";
+		prompt += "1. Player v.s. Player (PvP)\n";
+		prompt += "2. Player v.s. Environment(Robot) (PvE)\n";
+		prompt += "Your choice: ";
+		String input = Messenger.askForInput(prompt, new String[] {"1", "2"}, false);
+		if (input.equals("1"))
+			room.setType(RoomType.PVP);
+		else if(input.equals("2"))
+			room.setType(RoomType.PVE);
+	}
+
+	public void start() {
+		gameBoard.run();
 	}
 	
 	public static void main(String args[]) {
 		LandlordGame game = new LandlordGame();
-		
+		game.start();
 	}
 }

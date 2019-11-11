@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import enums.HandType;
+import enums.RoomType;
 
 public class CardRoom {
 
@@ -15,6 +16,7 @@ public class CardRoom {
 	private int landlordID;
 	private CardCase cardCase;
 	private LinkedList<List<Card>> previousCardsList;
+	private RoomType type;
 
 	public CardRoom() {
 		this.players = new ArrayList<Player>();
@@ -23,6 +25,7 @@ public class CardRoom {
 		this.lastHandPlayer = null;
 		this.cardCase = new CardCase();
 		this.setPreviousCardsList(new LinkedList<List<Card>>());
+		this.setType(null);
 	}
 
 	public List<Player> getPlayers() {
@@ -83,6 +86,14 @@ public class CardRoom {
 
 	public Player getPrePlayer(Player player) {
 		return this.players.get((player.getId() + 2) % 3);
+	}
+
+	public RoomType getType() {
+		return type;
+	}
+
+	public void setType(RoomType type) {
+		this.type = type;
 	}
 
 //	public List<Card> getBaseCards() {

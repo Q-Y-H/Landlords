@@ -65,7 +65,7 @@ public class Messenger {
 				}
 			}
 			if(!hasInput) {				
-				print("Please input correctly.\n");
+				print("Invalid input.\n");
 			}
 		}
 		in.close();

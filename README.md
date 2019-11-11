@@ -1,5 +1,7 @@
 # Landlords pokercard game
 
+[TOC]
+
 ## Notes
 
 -   [ ] GameDisplay要不要用抽象类实现GUI和CMD？
@@ -59,6 +61,9 @@ Release 2 的目标主要是：
 -   [ ] 游戏中输入exmaple打印示例input，输入suggest打印suggestion（当前输入的help功能）
 -   [ ] 【探讨】关于出牌suggestion（即托管），目前即使有也不会推荐炸弹，是否要推荐？
 -   [ ] notifyAll,rememberCardList, strategy for different role
+-   [ ] Functions重构的改写
+    -   [ ] Messenger.printAskForInput() => askForInput() 改写所有Occurence。参考LandlordGame。
+    -   [ ] 
 -   [ ] ……etc 等着大家来加进去
 
 ## Bug Notes
