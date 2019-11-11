@@ -1,4 +1,4 @@
-import entities.CardRoom;
+package entities;
 
 public class GameBoard {
 	private CardRoom room;
@@ -6,8 +6,8 @@ public class GameBoard {
 	public GameBoard(CardRoom room) {
 		this.room = room;
 	}
-	
+
 	public void run() {
-		
+
 	}
 }
