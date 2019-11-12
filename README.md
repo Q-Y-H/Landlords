@@ -67,6 +67,8 @@ Release 2 的目标主要是：
     -   [ ] Command Pattern
     -   [ ] Command Pattern好像不怎么行的通 没办法获取回传数据，未来应该还要改
     -   [ ] storeAndPrint
+    -   [ ] 正则表达式检查input
+    -   [ ] 计时功能
 -   [ ] ……etc 等着大家来加进去
 
 ## Bug Notes
