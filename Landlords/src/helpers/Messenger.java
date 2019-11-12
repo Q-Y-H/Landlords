@@ -2,51 +2,67 @@ package helpers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 import entities.Card;
+import entities.CardRoom;
 import entities.Hand;
 import entities.Player;
 
-public class Messenger {
+public final class Messenger {
+	
+	private static final Messenger INSTANCE = new Messenger();
+	
+	final Scanner in = new Scanner(System.in);
+
+    private Messenger() {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				in.close();
+			}
+		});
+    }
+
+    public static Messenger getInstance() {
+        return INSTANCE;
+    }
 
 	public static void print(String msg) {
 		System.out.println(msg);
 	}
 
-	public static String printAskForInput(Scanner sc, String type, String prompt) {
-		System.out.print(prompt);
-		String input;
+//	public static String printAskForInput(Scanner sc, String type, String prompt) {
+//		System.out.print(prompt);
+//		String input;
+//
+//		while (true) {
+//			input = sc.nextLine().toUpperCase();
+//			switch (type) {
+//			case "name":
+//				return input;
+//			case "landlord":
+//				if (input.equals("Y") || input.equals("N"))
+//					return input;
+//				else {
+//					System.out.print(prompt);
+//					break;
+//				}
+//			case "play":
+//				return input;
+//			}
+//			System.out.print("Please input correctly: ");
+//		}
+//
+//	}
 
-		while (true) {
-			input = sc.nextLine().toUpperCase();
-			switch (type) {
-			case "name":
-				return input;
-			case "landlord":
-				if (input.equals("Y") || input.equals("N"))
-					return input;
-				else {
-					System.out.print(prompt);
-					break;
-				}
-			case "play":
-				return input;
-			}
-			System.out.print("Please input correctly: ");
-		}
-
-	}
-
-	public static String askForInput(String prompt, String[] inputSet, boolean isCaseSensitive) {
-		Scanner in = new Scanner(System.in);
+	public String askForInput(String prompt, String[] inputSet, boolean isCaseSensitive) {
 		String input = "";
 		boolean hasInput = false;
 
 		while (!hasInput) {
-			print(prompt);
+			System.out.print(prompt);
 			input = in.nextLine();
 			if (input.isBlank()) {
 			} else if (inputSet.length == 0) {
@@ -68,7 +84,7 @@ public class Messenger {
 				print("Invalid input.\n");
 			}
 		}
-		in.close();
+
 		return input;
 	}
 
@@ -213,20 +229,24 @@ public class Messenger {
 		return msg;
 	}
 
-	// TODO: As for information security, the whole players list should not be sent
-	// into the method
-	public static String playersInfo(List<Player> players, int cursor, LinkedList<List<Card>> previousCardsList) {
-		String msg = "";
-		int size = previousCardsList.size();
+	public static String playersInfo(int cursor, CardRoom room) {
+		List<Player> players = room.getPlayers();
+		List<Hand> handHistory = room.getHandHistoty();
+		
+		int size = handHistory.size();
+		if(size > 2) {
+			handHistory = handHistory.subList(size - 2, size);
+		}
 
+		String msg = "";
 		for (int i = 2; i >= 1; --i) {
 			if (size >= i) {
 				Player player = players.get((cursor + 3 - i) % 3);
 				int remainCards = player.getCards().size();
 				msg += ("[" + player.getRole() + "] " + player.getNickname() + ": " + remainCards
 						+ " cards remaining.\n");
-				if (previousCardsList.get(size - i).size() != 0)
-					msg += (printCards(previousCardsList.get(size - i)));
+				if (handHistory.get(size - i).getCards().size() != 0)
+					msg += (printCards(handHistory.get(size - i).getCards()));
 				else
 					msg += ("PASS\n");
 			}
@@ -260,5 +280,9 @@ public class Messenger {
 
 		}
 		return msg;
+	}
+	
+	public void clearInputStream() {
+		in.nextLine();
 	}
 }

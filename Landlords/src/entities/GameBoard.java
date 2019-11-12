@@ -108,7 +108,7 @@ public class GameBoard {
 			List<Card> playerCards = player.getCards();
 			Messenger.waitForPlayer(player);
 			Messenger.clear();
-			Messenger.print(Messenger.playersInfo(players, cursor, previousCardsList)); // TODO: Modification
+			Messenger.print(Messenger.playersInfo(cursor, this.room)); // TODO: Modification
 
 			while (true) {
 				Command<String> playChoiceCommand = new PlayChoiceCommand();

@@ -22,9 +22,16 @@ public class RobotPlayer extends Player{
 	}
 
 	@Override
-	public void decideRunForLandlord() {
+	public Boolean decideRunForLandlord() {
+		return null;
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getPlayChoice() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -69,6 +69,9 @@ Release 2 的目标主要是：
     -   [ ] storeAndPrint
     -   [ ] 正则表达式检查input
     -   [ ] 计时功能
+    -   [ ] History要用Card还是Hand（没想清楚）
+    -   [ ] 改写Singleton的Messenger
+        -   [ ] Method都不用static
 -   [ ] ……etc 等着大家来加进去
 
 ## Bug Notes

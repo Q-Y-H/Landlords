@@ -81,9 +81,4 @@ public class Helper {
 			combinationSelect(workspace, copyData, copyResult, length);
 		}
 	}
-
-	public static void clearInputStream() {
-		Scanner in = new Scanner(System.in);
-		in.nextLine();
-	}
 }

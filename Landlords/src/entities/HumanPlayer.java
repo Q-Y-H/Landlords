@@ -23,7 +23,7 @@ public class HumanPlayer extends Player {
 	public void askForNickname() {
 		// TODO Auto-generated method stub
 		String prompt = "[Player " + this.getId() + "] Please Set Your Nickname >> ";
-		String nickname = Messenger.askForInput(prompt, new String[] {}, true);
+		String nickname = Messenger.getInstance().askForInput(prompt, new String[] {}, true);
 		this.setNickname(nickname);
 	}
 
@@ -41,7 +41,7 @@ public class HumanPlayer extends Player {
 
 		while(true) {
 			String prompt = "[" + this.getRole() + "] " + this.getNickname() + " >> ";
-			cmd = Messenger.askForInput(prompt, new String[] {}, false);
+			cmd = Messenger.getInstance().askForInput(prompt, new String[] {}, false);
 			
 			if (cmd.toUpperCase().equals("HELP")) {
 				// TODO
