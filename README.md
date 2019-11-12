@@ -63,7 +63,10 @@ Release 2 的目标主要是：
 -   [ ] notifyAll,rememberCardList, strategy for different role
 -   [ ] Functions重构的改写
     -   [ ] Messenger.printAskForInput() => askForInput() 改写所有Occurence。参考LandlordGame。
-    -   [ ] 
+    -   [ ] Player Constructor
+    -   [ ] Command Pattern
+    -   [ ] Command Pattern好像不怎么行的通 没办法获取回传数据，未来应该还要改
+    -   [ ] storeAndPrint
 -   [ ] ……etc 等着大家来加进去
 
 ## Bug Notes

@@ -94,7 +94,7 @@ public class Hand {
 		this.primal=primal;
 		this.kickers=kickers; 
 		this.chainLength=chainLength;
-		this.cards=cards;
+		this.setCards(cards);
 	}
 
 	public void setType(HandType type) {
@@ -171,5 +171,13 @@ public class Hand {
 			}
 		}
 		return new Hand(HandType.ILLEGAL,null, null, 0, cards);//illegal
+	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
 	}
 }

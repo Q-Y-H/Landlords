@@ -16,7 +16,7 @@ public class LandlordGame {
 		String prompt = "Please select the game mode:\n";
 		prompt += "1. Player v.s. Player (PvP)\n";
 		prompt += "2. Player v.s. Environment(Robot) (PvE)\n";
-		prompt += "Your choice: ";
+		prompt += "Your choice >> ";
 		String input = Messenger.askForInput(prompt, new String[] { "1", "2" }, false);
 		if (input.equals("1"))
 			room.setType(RoomType.PVP);

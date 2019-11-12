@@ -4,28 +4,58 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import enums.HandType;
+import enums.PlayerRole;
 import enums.RoomType;
+import helpers.Helper;
 
 public class CardRoom {
 
 	private List<Player> players;
 	private List<Card> landlordCards;
-	private Hand lastHand;
 	private Player lastHandPlayer;
 	private int landlordID;
 	private CardCase cardCase;
-	private LinkedList<List<Card>> previousCardsList;
+	private LinkedList<Hand> handHistoty;
 	private RoomType type;
 
 	public CardRoom() {
 		this.players = new ArrayList<Player>();
 		this.landlordCards = null;
-		this.lastHand = new Hand(HandType.ILLEGAL,null,null,0,null);
+//		this.lastHand = new Hand(HandType.ILLEGAL,null,null,0,null);
 		this.lastHandPlayer = null;
 		this.cardCase = new CardCase();
-		this.setPreviousCardsList(new LinkedList<List<Card>>());
-		this.setType(null);
+		this.handHistoty = new LinkedList<Hand>();
+		this.type = null;
+	}
+
+	public void setup() {
+		Helper.shuffleCards(this.cardCase);
+
+		// Cut the base cards into 4 portions;
+		List<List<Card>> cardLists = Helper.cutCards(this.cardCase);
+
+		// Sort cards
+		for (List<Card> cards : cardLists) {
+			Helper.sortCards(cards);
+		}
+		
+		// The last one portion for the landlord
+		this.landlordCards = cardLists.get(3);
+		
+		if(this.type == RoomType.PVP) {
+			for(int i = 0; i<3; ++i) 
+				this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT));
+		} else if (this.type == RoomType.PVE) {
+			this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT));
+			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT));
+			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT));
+		} else {
+			// TODO: implement in exception case such as null
+		}
+		
+		for(Player player:this.players) {
+			player.setCards(cardLists.get(player.getId()));
+		}
 	}
 
 	public List<Player> getPlayers() {
@@ -42,14 +72,6 @@ public class CardRoom {
 
 	public void setLandlordCards(List<Card> landlordCards) {
 		this.landlordCards = landlordCards;
-	}
-
-	public Hand getLastHand() {
-		return lastHand;
-	}
-
-	public void setLastHand(Hand lastHand) {
-		this.lastHand = lastHand;
 	}
 
 	public int getLandlordID() {
@@ -72,14 +94,6 @@ public class CardRoom {
 		return this.cardCase;
 	}
 
-	public LinkedList<List<Card>> getPreviousCardsList() {
-		return previousCardsList;
-	}
-
-	public void setPreviousCardsList(LinkedList<List<Card>> previousCardsList) {
-		this.previousCardsList = previousCardsList;
-	}
-
 	public Player getNextPlayer(Player player) {
 		return this.players.get((player.getId() + 1) % 3);
 	}
@@ -96,7 +110,12 @@ public class CardRoom {
 		this.type = type;
 	}
 
-//	public List<Card> getBaseCards() {
-//		return this.cardCase.getBaseCards();
-//	}
+	public LinkedList<Hand> getHandHistoty() {
+		return handHistoty;
+	}
+
+	public void setHandHistoty(LinkedList<Hand> handHistoty) {
+		this.handHistoty = handHistoty;
+	}
+
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import enums.PlayerRole;
 import enums.Rank;
 
-public class Player {
+public abstract class Player {
 
 	private static int idCounter = 0;
 	private int id;
@@ -98,5 +98,11 @@ public class Player {
 		// TODO Auto-generated method stub
 
 	}
+
+	public abstract void askForNickname();
+
+	public abstract Boolean decideRunForLandlord();
+
+	public abstract String getPlayChoice();
 
 }
