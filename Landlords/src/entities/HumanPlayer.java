@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import enums.PlayerRole;
@@ -34,7 +35,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public String getPlayChoice() {
+	public String getPlayChoice(List<Card> formerCards) {
 		// TODO Auto-generated method stub
 		Messenger.print("Please choose the cards to play. Input 'help' for more information.\n");
 		String cmd = "";

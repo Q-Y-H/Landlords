@@ -14,7 +14,7 @@ public abstract class Player {
 	private int id;
 	private String nickname;
 	private PlayerRole role;
-	private List<Card> cards = new ArrayList<Card>();
+	protected List<Card> cards = new ArrayList<Card>();
 
 	public Player(String nickname, PlayerRole role) {
 		this.setId(idCounter);
@@ -89,11 +89,13 @@ public abstract class Player {
 	}
 
 	public void removeCards(List<Card> handCards) {
-		for (int i = 0; i < handCards.size(); i++)
-			if (cards.contains(handCards.get(i)))
-				cards.remove(handCards.get(i));
+		System.out.println(cards);
+		cards.removeAll(handCards);
 	}
-
+	public void removeCards(Hand hand) {		
+		this.removeCards(hand.getCards());
+	}
+	
 	public void playCards(List<Card> cards) {
 		// TODO Auto-generated method stub
 
@@ -103,6 +105,6 @@ public abstract class Player {
 
 	public abstract Boolean decideRunForLandlord();
 
-	public abstract String getPlayChoice();
+	public abstract String getPlayChoice(List<Card> formerCards);
 
 }

@@ -59,7 +59,7 @@ public class Helper {
 				return c;
 			}
 		}
-		return null;
+		return null;	
 	}
 
 	private static void combinationSelect(List<List<Card>> workspace, List<Card> dataList, List<Card> resultList,
