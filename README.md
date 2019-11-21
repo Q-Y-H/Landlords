@@ -1,4 +1,4 @@
-# Landlords pokercard game
+# Landlord
 
   * [Timeline](#timeline)
     + [11.14 (Thur)](#1114--thur-)
@@ -28,6 +28,9 @@
     -   [ ] Refactor log & 记录下来！！
     -   [ ] Bug Report v1.0
     -   [ ] Test case大爆肝 ==> 提高Coverage到80%以上
+    -   [ ] `Player.getPlayChoice()`直接让Robot获取previousCards，不用改参数
+    -   [ ] `HumanPlayer.getPlayChoice().suggest` => Helper.getLeastHand()
+    -   [ ] `HumanPlayer.getPlayChoice().suggest` => Messenger.getHelpInfo()
 
 ### 11.27 (Wed)
 
