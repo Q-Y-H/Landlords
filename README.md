@@ -1,16 +1,46 @@
 # Landlord
 
-  * [Timeline](#timeline)
-    + [11.14 (Thur)](#1114--thur-)
-    + [11.21 (Thur)](#1121--thur-)
-    + [11.27 (Wed)](#1127--wed-)
-    + [11.29 (Fri)](#1129--fri-)
-  * [Nov.10 Pre-discussion notes](#nov10-pre-discussion-notes)
-  * [Release 2 Notes](#release-2-notes)
-    + [TODO: Release 2](#todo--release-2)
-  * [Bug Notes](#bug-notes)
-  * [TODO [Midterm stage form]](#todo--midterm-stage-form-)
-  * [Collaboration Guide](#collaboration-guide)
+Dou Di Zhu game in the terminal verison.
+
+## Catalogue
+
+- [Submission Folder Structure](#submission-folder-structure)
+- [Timeline](#timeline)
+  * [11.14 (Thur)](#1114--thur-)
+  * [11.21 (Thur)](#1121--thur-)
+  * [11.27 (Wed)](#1127--wed-)
+  * [11.29 (Fri)](#1129--fri-)
+- [Nov.10 Pre-discussion notes](#nov10-pre-discussion-notes)
+- [Release 2 Notes](#release-2-notes)
+  * [TODO: Release 2](#todo--release-2)
+- [Bug Notes](#bug-notes)
+- [TODO [Midterm stage form]](#todo--midterm-stage-form-)
+- [Collaboration Guide](#collaboration-guide)
+
+## Submission Folder Structure
+
+```
+- Group09_Project
+	- Docs
+		- Presentation.pptx
+		- Bug Report.docx
+		- Analysis and Design Report.docx
+		- Project Plan.docx
+		- Release Summary.docx
+		- Self Assessment Report.docx
+		- Class Diagram
+		- Sequence Diagram
+		- *User Manual
+		- *Installation Guide
+		- *Javadoc
+	- Release
+		- LandlordGame.jar
+	- Source
+		- landlord
+		- test
+	- Readme.txt
+	- ActivityLog.xlsx
+```
 
 ## Timeline
 
