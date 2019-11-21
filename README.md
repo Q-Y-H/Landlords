@@ -1,10 +1,16 @@
 # Landlords pokercard game
 
-[TOC]
-
-## Notes
-
--   [ ] GameDisplay要不要用抽象类实现GUI和CMD？
+  * [Timeline](#timeline)
+    + [11.14 (Thur)](#1114--thur-)
+    + [11.21 (Thur)](#1121--thur-)
+    + [11.27 (Wed)](#1127--wed-)
+    + [11.29 (Fri)](#1129--fri-)
+  * [Nov.10 Pre-discussion notes](#nov10-pre-discussion-notes)
+  * [Release 2 Notes](#release-2-notes)
+    + [TODO: Release 2](#todo--release-2)
+  * [Bug Notes](#bug-notes)
+  * [TODO [Midterm stage form]](#todo--midterm-stage-form-)
+  * [Collaboration Guide](#collaboration-guide)
 
 ## Timeline
 
