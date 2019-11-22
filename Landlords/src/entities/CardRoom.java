@@ -44,11 +44,11 @@ public class CardRoom {
 		
 		if(this.type == RoomType.PVP) {
 			for(int i = 0; i<3; ++i) 
-				this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT));
+				this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT,handHistoty));
 		} else if (this.type == RoomType.PVE) {
-			this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT));
-			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT));
-			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT));
+			this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT,handHistoty));
+			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT,handHistoty));
+			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT,handHistoty));
 		} else {
 			// TODO: implement in exception case such as null
 		}

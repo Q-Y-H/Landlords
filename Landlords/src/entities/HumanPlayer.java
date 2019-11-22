@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,8 +10,8 @@ import helpers.Messenger;
 
 public class HumanPlayer extends Player {
 
-	public HumanPlayer(String nickname, PlayerRole role) {
-		super(nickname, role);
+	public HumanPlayer(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
+		super(nickname, role,handHistory);
 	}
 
 	public HumanPlayer(String nickname) {
@@ -35,7 +36,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public String getPlayChoice(List<Card> formerCards) {
+	public String getPlayChoice() {
 		// TODO Auto-generated method stub
 		Messenger.print("Please choose the cards to play. Input 'help' for more information.\n");
 		String cmd = "";

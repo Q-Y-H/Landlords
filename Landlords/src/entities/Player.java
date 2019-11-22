@@ -3,6 +3,7 @@ package entities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 import enums.PlayerRole;
@@ -15,22 +16,23 @@ public abstract class Player {
 	private String nickname;
 	private PlayerRole role;
 	protected List<Card> cards = new ArrayList<Card>();
-
-	public Player(String nickname, PlayerRole role) {
+	protected LinkedList<Hand> handHistroy=new LinkedList<Hand>();
+	
+	public Player(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
 		this.setId(idCounter);
 		this.nickname = nickname;
 		this.role = role;
 		this.cards = null;
-
+		this.handHistroy=handHistory;
 		++Player.idCounter;
 	}
 
 	public Player(String nickname) {
-		this(nickname, null);
+		this(nickname, null,null);
 	}
 
 	public Player() {
-		this(null, null);
+		this(null, null,null);
 	}
 
 	public PlayerRole getRole() {
@@ -89,7 +91,6 @@ public abstract class Player {
 	}
 
 	public void removeCards(List<Card> handCards) {
-		System.out.println(cards);
 		cards.removeAll(handCards);
 	}
 	public void removeCards(Hand hand) {		
@@ -105,6 +106,6 @@ public abstract class Player {
 
 	public abstract Boolean decideRunForLandlord();
 
-	public abstract String getPlayChoice(List<Card> formerCards);
+	public abstract String getPlayChoice();
 
 }

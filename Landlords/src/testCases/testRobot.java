@@ -1,12 +1,15 @@
 package testCases;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import entities.Card;
+import entities.Hand;
 import entities.RobotPlayer;
 import enums.Rank;
 import enums.Suit;
@@ -24,9 +27,18 @@ public class testRobot extends TestCase{
 	
 	@Test
 	public void test1() {
-		RobotPlayer robotplayer1=new RobotPlayer();
-		robotplayer1.setCards(Arrays.asList(c[5],c[5]));
-		List<Card> cards = Arrays.asList(c[3], c[3]);
-		System.out.println(robotplayer1.getPlayChoice(cards));
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
+		robotplayer1.getPlayChoice();
+	}
+	
+	public void test2() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
+		robotplayer1.getPlayChoice();
 	}
 }
