@@ -258,7 +258,7 @@ public class RobotPlayer extends Player{
 		List<StraightOfCards> temp=new ArrayList<StraightOfCards>();
 		
 		
-		//5.1鑻ラ『瀛愪腑鍑虹幇鍗曠墝锛堣繛缁暱搴︿笉闄愶級涓旇鍗曠墝娈甸暱x锛屼笌椤哄瓙澶撮儴闀垮害璺濈d1锛屽熬閮ㄨ窛绂籨2锛屾弧瓒筹細d1+x>=5涓攄2+x>=5锛屾媶涓轰袱涓『瀛�	
+		//5.1若顺子中出现单牌（连续长度不限）且该单牌段长x，与顺子头部长度距离d1，尾部距离d2，满足：d1+x>=5且d2+x>=5，拆为两个顺子
 		int additionLength=0;
 		int additionEnd=0;
 		for(int i=maxStart;i<=maxEnd;i++) {
@@ -283,7 +283,7 @@ public class RobotPlayer extends Player{
 			}
 		}
 		
-		//5.2 椤哄瓙闀垮害澶т簬5锛屽ご/灏惧瓨鍦ㄨ繛瀵癸紝椤哄瓙闀垮害-杩炲闀垮害>=5,杞寲涓轰笁甯﹀姞椤哄瓙
+		//5.2 顺子长度大于5，头/尾存在连对，顺子长度-连对长度>=5,转化为三带加顺子
 		if(numOfRanks[maxStart]>=2&&maxEnd-maxStart>=5) {
 			numOfRanks[maxStart]=0;
 			List<Card> tem=new ArrayList<Card>();
@@ -310,7 +310,7 @@ public class RobotPlayer extends Player{
 			return handlerOfSOS(copyCards,maxStart,maxEnd-1,numOfRanks,handList);			
 		}
 		
-		//5.3 椤哄瓙闀垮害澶т簬5锛屽ご/灏惧瓨鍦ㄥ崟鐗岋紝椤哄瓙闀垮害-杩炲闀垮害>=5,杞寲涓哄瀛愬姞椤哄瓙
+		//5.3 顺子长度大于5，头/尾存在单牌，顺子长度-连对长度>=5,转化为对子加顺子
 		
 		int point =maxEnd;
 		int[] addition1=new int[maxEnd-maxStart];
