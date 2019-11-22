@@ -4,6 +4,7 @@ import enums.PlayerRole;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import enums.HandType;
@@ -27,15 +28,16 @@ public class RobotPlayer extends Player{
 	/*
 	 * Constructor
 	 */
-	public RobotPlayer(String nickname, PlayerRole role) {
-		super(nickname, role);
+	public RobotPlayer(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
+		super(nickname, role,handHistory);
 	}
 
 	public RobotPlayer(String nickname) {
-		super(nickname);
+		super(nickname,null,null);
 	}
 
 	public RobotPlayer() {
+		super(null,null,null);
 	}
 
 	/*
@@ -63,7 +65,8 @@ public class RobotPlayer extends Player{
 	}
 
 	@Override
-	public String getPlayChoice(List<Card> formerCards) {
+	public String getPlayChoice( ) {
+		List<Card> formerCards=handHistroy.getLast().getCards();
 		List<Card> response=new ArrayList<Card>();
 		calculateCombinationList();
 		if(formerCards==null)
@@ -71,13 +74,14 @@ public class RobotPlayer extends Player{
 		else {
 			response=playCardsPassively(formerCards);
 		}
-		if("".equals(response)&& !cards.isEmpty()) {
+		if("".equals(response)) {
 			response=playBruteForce(formerCards);
 		}
-		System.out.println(response);
 		this.removeCards(response);
 		String ans="";
 		for(Card card:response) ans+=(card.toString()+" ");
+		if("".equals(ans))
+			ans="PASS";
 		return ans;
 	}
 	
@@ -254,7 +258,7 @@ public class RobotPlayer extends Player{
 		List<StraightOfCards> temp=new ArrayList<StraightOfCards>();
 		
 		
-		//5.1若顺子中出现单牌（连续长度不限）且该单牌段长x，与顺子头部长度距离d1，尾部距离d2，满足：d1+x>=5且d2+x>=5，拆为两个顺子	
+		//5.1若顺子中出现单牌（连续长度不限）且该单牌段长x，与顺子头部长度距离d1，尾部距离d2，满足：d1+x>=5且d2+x>=5，拆为两个顺子
 		int additionLength=0;
 		int additionEnd=0;
 		for(int i=maxStart;i<=maxEnd;i++) {
@@ -386,7 +390,7 @@ public class RobotPlayer extends Player{
 			return handlerOfSOS(copyCards,point,maxEnd,numOfRanks,handList);
 		}
 		
-		temp.add(new StraightOfCards(HandType.SOLO,Rank.getRankByValue(maxEnd),maxEnd-maxStart,setCard(copyCards,maxStart+1,maxEnd)));//无变化
+		temp.add(new StraightOfCards(HandType.SOLO,Rank.getRankByValue(maxEnd),maxEnd-maxStart,setCard(copyCards,maxStart+1,maxEnd)));//鏃犲彉鍖�
 
 		return temp;
 	}
