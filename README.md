@@ -1,3 +1,5 @@
+
+
 # Landlord
 
 Dou Di Zhu game in the terminal verison.
@@ -42,12 +44,22 @@ Dou Di Zhu game in the terminal verison.
 	- ActivityLog.xlsx
 ```
 
+[Analysis and Design Report](https://www.dropbox.com/scl/fi/293uo96jlm9lgnu3ejf2f/Analysis-and-Design-Report.paper?dl=0&rlkey=voho8kkgfowb6rl8qwazsb2dj)
+
+[Bug Report](https://www.dropbox.com/scl/fi/3gam1e2y6v3jjm0rpf7si/Bug-Report.paper?dl=0&rlkey=m48qk98dn6z2yua274v1teg8b)
+
+[Project Plan](https://www.dropbox.com/scl/fi/9jyenegyxnlue63nyuhuu/Project-Plan.paper?dl=0&rlkey=lrpbhhmi3p4z11titgea4exsa)
+
+[Release Summary](https://www.dropbox.com/scl/fi/llxp8gr68lcpqjlxc6bgh/Release-Summary.paper?dl=0&rlkey=mm5zzx0kkikb3rgla3ucr94u9)
+
+[Self Assessment Report](https://www.dropbox.com/scl/fi/oxg115m77bl8mwsp7rf7v/Self-Assessment-Report.paper?dl=0&rlkey=fz4mt9z3gnwbs89j8ic98itpa)
+
 ## Timeline
 
 ### 11.14 (Thur)
 
--   [ ] Robot v1.0
--   [ ] Refactor the whole project following the **Class Diagram**
+-   [x] Robot v1.0
+-   [x] Refactor the whole project following the **Class Diagram**
 
 ### 11.21 (Thur)
 
@@ -65,6 +77,12 @@ Dou Di Zhu game in the terminal verison.
 ### 11.27 (Wed)
 
 -   [ ] Slides准备完好
+
+### 11.28 (Thu)
+
+**讨论**：
+
+-   Messenger应该是用Singleton还是静态类？Singleton怎么保证线程安全？
 
 ### 11.29 (Fri)
 
@@ -131,7 +149,8 @@ Release 2 的目标主要是：
 
 ## Collaboration Guide
 
-ave two main branches in the git repository:
+We have two main branches in the git repository:
+
 - master: for stable version of code
 - dev: for development version of code
 

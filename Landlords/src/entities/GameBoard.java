@@ -95,6 +95,7 @@ public class GameBoard {
 		Messenger.print("The landlord is Player " + players.get(landlordID).getNickname());
 		Messenger.print("Landlord cards:");
 		Messenger.print(Messenger.printCards(this.room.getLandlordCards()));
+		Messenger.waiting();
 	}
 
 	public void gameStart() {
@@ -113,9 +114,9 @@ public class GameBoard {
 			Messenger.clear();
 			Messenger.print(Messenger.playersInfo(cursor, this.room)); // TODO: Modification
 
-			try {
-				while (true) {
-					Command<String> playChoiceCommand = new PlayChoiceCommand();
+			while (true) {
+				try {
+					Command<String> playChoiceCommand = new PlayChoiceCommand(player);
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo" 
 					if (cmd.toUpperCase().equals("PASS")) {
@@ -140,7 +141,6 @@ public class GameBoard {
 //				}
 					if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
 						throw new InputInvalidException();
-//						continue;
 					}
 
 					List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
@@ -150,7 +150,6 @@ public class GameBoard {
 //				}
 					if (selectedCards == null) {
 						throw new CardsNotOnHandException();
-//						continue;
 					}
 
 					Hand currHand = Hand.cards2hand(selectedCards);
@@ -160,26 +159,26 @@ public class GameBoard {
 //				}
 					if (currHand.getType() == HandType.ILLEGAL) {
 						throw new DisobeyRulesException();
-//						continue;
 					}
 					
-					Hand lastHand = handHistoty.getLast();
 					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-							|| lastHand.isSmallerThan(currHand) == true) {
+							|| handHistoty.isEmpty() || handHistoty.getLast().isSmallerThan(currHand) == true) {
 						player.removeCards(selectedCards);
 						room.setLastHandPlayer(player);
 						handHistoty.add(currHand);
+						break;
 					} else {
-						System.out.println(Messenger.disobeyRulesError());
-						continue;
+//					System.out.println(Messenger.disobeyRulesError());
+//					continue;
+						throw new DisobeyRulesException();
 					}
+				} catch (InputInvalidException e1) {
+					Messenger.print(e1.getMessage());
+				} catch (CardsNotOnHandException e2) {
+					Messenger.print(e2.getMessage());
+				} catch (DisobeyRulesException e3) {
+					Messenger.print(e3.getMessage());
 				}
-			} catch (InputInvalidException e1) {
-				Messenger.print(e1.getMessage());
-			} catch (CardsNotOnHandException e2) {
-				Messenger.print(e2.getMessage());
-			} catch (DisobeyRulesException e3) {
-				Messenger.print(e3.getMessage());
 			}
 
 			if (!handHistoty.getLast().getCards().isEmpty())

@@ -59,8 +59,12 @@ public enum Rank {
 		return aliasSet;
 	}
 
-	public static boolean aliasContains(String key) {
+	public static boolean aliasSetContains(String key) {
 		return getAliasSet().contains(key);
+	}
+	
+	public boolean hasAlias(String key) {
+		return Arrays.asList(this.alias).contains(key);
 	}
 
 	public static Rank getRankByValue(int value) {
