@@ -67,8 +67,7 @@ public abstract class Player {
 		this.id = id;
 	}
 
-	public List<Card> checkCardsOnHand(ArrayList<String> cardNames) { // TODO: cardNames should be sorted
-		int i = 0, j = 0;
+	public List<Card> checkCardsOnHand(ArrayList<String> cardNames) {
 		List<Card> res = new ArrayList<Card>();
 		Collections.sort(cardNames, new Comparator<String>() {
 			@Override
@@ -77,13 +76,13 @@ public abstract class Player {
 			}
 		});
 
+		int i = 0, j = 0;
 		while (i < cardNames.size() && j < this.cards.size()) {
-			if (cardNames.get(i).toUpperCase().equals(this.cards.get(j).getRank().getName())) { // TODO: adapt for a | A
+			if (this.cards.get(j).getRank().hasAlias(cardNames.get(i))) {
 				res.add(this.cards.get(j));
 				++i;
-				++j;
-			} else
-				++j;
+			}
+			++j;
 		}
 		if (res.size() != cardNames.size())
 			return null;
@@ -93,6 +92,7 @@ public abstract class Player {
 	public void removeCards(List<Card> handCards) {
 		cards.removeAll(handCards);
 	}
+	
 	public void removeCards(Hand hand) {		
 		this.removeCards(hand.getCards());
 	}

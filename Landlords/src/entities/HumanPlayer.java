@@ -1,9 +1,6 @@
 package entities;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
 
 import enums.PlayerRole;
 import helpers.Messenger;
@@ -31,8 +28,14 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public Boolean decideRunForLandlord() {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO
+		// Messenger.handleRunForLandlord(players, cursor, choices, first);
+		String prompt = "Player " + this.getNickname() + ": Do you want to run for landlord? [y/n] ";
+		String input = Messenger.getInstance().askForInput(prompt, new String[] { "Y", "N" }, false);
+		if (input.toUpperCase().equals("Y"))
+			return true;
+		else 
+			return false;
 	}
 
 	@Override

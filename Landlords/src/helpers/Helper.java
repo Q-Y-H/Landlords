@@ -40,7 +40,7 @@ public class Helper {
 
 	public static boolean isValidInputCardNames(ArrayList<String> cardNames) {
 		for (String cardName : cardNames) {
-			if (!Rank.aliasContains(cardName))
+			if (!Rank.aliasSetContains(cardName))
 				return false;
 		}
 		return true;

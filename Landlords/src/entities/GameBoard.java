@@ -92,6 +92,7 @@ public class GameBoard {
 		Messenger.print("The landlord is Player " + players.get(landlordID).getNickname());
 		Messenger.print("Landlord cards:");
 		Messenger.print(Messenger.printCards(this.room.getLandlordCards()));
+		Messenger.waiting();
 	}
 
 	public void gameStart() {
@@ -111,7 +112,7 @@ public class GameBoard {
 			Messenger.print(Messenger.playersInfo(cursor, this.room)); // TODO: Modification
 
 			while (true) {
-				Command<String> playChoiceCommand = new PlayChoiceCommand();
+				Command<String> playChoiceCommand = new PlayChoiceCommand(player);
 				this.playerController.storeAndExecute(playChoiceCommand);
 				String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo" 
 				if (cmd.toUpperCase().equals("PASS")) {
@@ -147,12 +148,12 @@ public class GameBoard {
 					continue;
 				}
 				
-				Hand lastHand = handHistoty.getLast();
 				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-						|| lastHand.isSmallerThan(currHand) == true) {
+						|| handHistoty.isEmpty() || handHistoty.getLast().isSmallerThan(currHand) == true) {
 					player.removeCards(selectedCards);
 					room.setLastHandPlayer(player);
 					handHistoty.add(currHand);
+					break;
 				} else {
 					System.out.println(Messenger.disobeyRulesError());
 					continue;
