@@ -15,7 +15,7 @@ public class CardRoom {
 	private Player lastHandPlayer;
 	private int landlordID;
 	private CardCase cardCase;
-	private LinkedList<Hand> handHistoty;
+	private LinkedList<Hand> handHistory;
 	private RoomType type;
 
 	public CardRoom() {
@@ -24,7 +24,7 @@ public class CardRoom {
 //		this.lastHand = new Hand(HandType.ILLEGAL,null,null,0,null);
 		this.lastHandPlayer = null;
 		this.cardCase = new CardCase();
-		this.handHistoty = new LinkedList<Hand>();
+		this.handHistory = new LinkedList<Hand>();
 		this.type = null;
 	}
 
@@ -44,11 +44,11 @@ public class CardRoom {
 		
 		if(this.type == RoomType.PVP) {
 			for(int i = 0; i<3; ++i) 
-				this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT,handHistoty));
+				this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT,handHistory));
 		} else if (this.type == RoomType.PVE) {
-			this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT,handHistoty));
-			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT,handHistoty));
-			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT,handHistoty));
+			this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT,handHistory));
+			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT,handHistory));
+			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT,handHistory));
 		} else {
 			// TODO: implement in exception case such as null
 		}
@@ -110,12 +110,12 @@ public class CardRoom {
 		this.type = type;
 	}
 
-	public LinkedList<Hand> getHandHistoty() {
-		return handHistoty;
+	public LinkedList<Hand> getHandHistory() {
+		return handHistory;
 	}
 
-	public void setHandHistoty(LinkedList<Hand> handHistoty) {
-		this.handHistoty = handHistoty;
+	public void setHandHistory(LinkedList<Hand> handHistory) {
+		this.handHistory = handHistory;
 	}
 
 }

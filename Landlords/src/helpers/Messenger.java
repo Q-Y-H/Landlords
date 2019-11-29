@@ -173,10 +173,10 @@ public final class Messenger {
 		print(msg);
 	}
 
-	public static String inputHelp(Player p, List<Card> prev) {
+	public static String inputHelp(Player p, Hand prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards = new ArrayList<Card>();
-		selectCards = Helper.hintCards(p.getCards(), Hand.cards2hand(prev), prev.size());
+		selectCards = Helper.hintCards(p.getCards(), prev, prev.getCards().size());
 		String message = "";
 		if (selectCards != null) {
 			message += "We suggest you play: \n";
@@ -232,7 +232,7 @@ public final class Messenger {
 
 	public static String playersInfo(int cursor, CardRoom room) {
 		List<Player> players = room.getPlayers();
-		List<Hand> handHistory = room.getHandHistoty();
+		List<Hand> handHistory = room.getHandHistory();
 		
 		int size = handHistory.size();
 		if(size > 2) {

@@ -102,7 +102,7 @@ public class GameBoard {
 		boolean isFinish = false;
 		int cursor = room.getLandlordID();
 		List<Player> players = this.room.getPlayers();
-		LinkedList<Hand> handHistoty = this.room.getHandHistoty();
+		LinkedList<Hand> handHistory = this.room.getHandHistory();
 
 		Messenger.clear();
 		Messenger.print("Game Start!\n");
@@ -119,12 +119,20 @@ public class GameBoard {
 					Command<String> playChoiceCommand = new PlayChoiceCommand(player);
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo" 
+					
+					if(cmd.toUpperCase().equals("SUGGEST")) {
+						Messenger.inputHelp(player, handHistory.getLast());
+					}
+					
+					
+					
+					
 					if (cmd.toUpperCase().equals("PASS")) {
-						if (handHistoty.isEmpty() || room.getLastHandPlayer() == player) {
+						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {
 							Messenger.print("Cannot pass.");
 							continue;
 						} else {
-							handHistoty.add(new Hand(null, null, null, 0, new ArrayList<Card>()));
+							handHistory.add(new Hand(null, null, null, 0, new ArrayList<Card>()));
 							break;
 						}
 					}
@@ -162,10 +170,10 @@ public class GameBoard {
 					}
 					
 					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-							|| handHistoty.isEmpty() || handHistoty.getLast().isSmallerThan(currHand) == true) {
+							|| handHistory.isEmpty() || handHistory.getLast().isSmallerThan(currHand) == true) {
 						player.removeCards(selectedCards);
 						room.setLastHandPlayer(player);
-						handHistoty.add(currHand);
+						handHistory.add(currHand);
 						break;
 					} else {
 //					System.out.println(Messenger.disobeyRulesError());
@@ -181,8 +189,8 @@ public class GameBoard {
 				}
 			}
 
-			if (!handHistoty.getLast().getCards().isEmpty())
-				Messenger.print(Messenger.printCards(handHistoty.getLast().getCards()));
+			if (!handHistory.getLast().getCards().isEmpty())
+				Messenger.print(Messenger.printCards(handHistory.getLast().getCards()));
 
 			Messenger.waiting();
 			Messenger.clear();
