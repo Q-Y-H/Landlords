@@ -33,15 +33,15 @@ public class GameBoard {
 		electLandlord();
 		gameStart();
 		checkWinner();
-		Messenger.waiting();
+		Messenger.getInstance().waiting();
 	}
 
 	private void checkWinner() {
 		// TODO Auto-generated method stub
 		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD)
-			Messenger.print("Landlord wins!");
+			Messenger.getInstance().print("Landlord wins!");
 		else
-			Messenger.print("Peasants win!");
+			Messenger.getInstance().print("Peasants win!");
 	}
 
 	private void setNickName() {
@@ -92,10 +92,10 @@ public class GameBoard {
 		players.get(landlordID).getCards().addAll(this.room.getLandlordCards());
 		Helper.sortCards(players.get(landlordID).getCards());
 
-		Messenger.print("The landlord is Player " + players.get(landlordID).getNickname());
-		Messenger.print("Landlord cards:");
-		Messenger.print(Messenger.printCards(this.room.getLandlordCards()));
-		Messenger.waiting();
+		Messenger.getInstance().print("The landlord is Player " + players.get(landlordID).getNickname());
+		Messenger.getInstance().print("Landlord cards:");
+		Messenger.getInstance().print(Messenger.getInstance().printCards(this.room.getLandlordCards()));
+		Messenger.getInstance().waiting();
 	}
 
 	public void gameStart() {
@@ -104,15 +104,15 @@ public class GameBoard {
 		List<Player> players = this.room.getPlayers();
 		LinkedList<Hand> handHistoty = this.room.getHandHistoty();
 
-		Messenger.clear();
-		Messenger.print("Game Start!\n");
+		Messenger.getInstance().clear();
+		Messenger.getInstance().print("Game Start!\n");
 
 		while (!isFinish) {
 			Player player = players.get(cursor);
 			List<Card> playerCards = player.getCards();
-			Messenger.waitForPlayer(player);
-			Messenger.clear();
-			Messenger.print(Messenger.playersInfo(cursor, this.room)); // TODO: Modification
+			Messenger.getInstance().waitForPlayer(player);
+			Messenger.getInstance().clear();
+			Messenger.getInstance().print(Messenger.getInstance().playersInfo(cursor, this.room)); // TODO: Modification
 
 			while (true) {
 				try {
@@ -121,7 +121,7 @@ public class GameBoard {
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo" 
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (handHistoty.isEmpty() || room.getLastHandPlayer() == player) {
-							Messenger.print("Cannot pass.");
+							Messenger.getInstance().print("Cannot pass.");
 							continue;
 						} else {
 							handHistoty.add(new Hand(null, null, null, 0, new ArrayList<Card>()));
@@ -136,7 +136,7 @@ public class GameBoard {
 					cmdScanner.close();
 
 //				if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
-//					Messenger.print(Messenger.inputErrorMessage()); // TODO: Exception Handler
+//					Messenger.getInstance().print(Messenger.getInstance().inputErrorMessage()); // TODO: Exception Handler
 //					continue;
 //				}
 					if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
@@ -145,7 +145,7 @@ public class GameBoard {
 
 					List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
 //				if (selectedCards == null) {
-//					Messenger.print(Messenger.cardsNotOnHandError());
+//					Messenger.getInstance().print(Messenger.getInstance().cardsNotOnHandError());
 //					continue;
 //				}
 					if (selectedCards == null) {
@@ -154,7 +154,7 @@ public class GameBoard {
 
 					Hand currHand = Hand.cards2hand(selectedCards);
 //				if (currHand.getType() == HandType.ILLEGAL) {
-//					Messenger.print(Messenger.disobeyRulesError());
+//					Messenger.getInstance().print(Messenger.getInstance().disobeyRulesError());
 //					continue;
 //				}
 					if (currHand.getType() == HandType.ILLEGAL) {
@@ -168,24 +168,24 @@ public class GameBoard {
 						handHistoty.add(currHand);
 						break;
 					} else {
-//					System.out.println(Messenger.disobeyRulesError());
+//					System.out.println(Messenger.getInstance().disobeyRulesError());
 //					continue;
 						throw new DisobeyRulesException();
 					}
 				} catch (InputInvalidException e1) {
-					Messenger.print(e1.getMessage());
+					Messenger.getInstance().print(e1.getMessage());
 				} catch (CardsNotOnHandException e2) {
-					Messenger.print(e2.getMessage());
+					Messenger.getInstance().print(e2.getMessage());
 				} catch (DisobeyRulesException e3) {
-					Messenger.print(e3.getMessage());
+					Messenger.getInstance().print(e3.getMessage());
 				}
 			}
 
 			if (!handHistoty.getLast().getCards().isEmpty())
-				Messenger.print(Messenger.printCards(handHistoty.getLast().getCards()));
+				Messenger.getInstance().print(Messenger.getInstance().printCards(handHistoty.getLast().getCards()));
 
-			Messenger.waiting();
-			Messenger.clear();
+			Messenger.getInstance().waiting();
+			Messenger.getInstance().clear();
 
 			// check finish
 			if (player.getCards().size() == 0)
