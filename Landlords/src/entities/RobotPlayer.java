@@ -270,7 +270,7 @@ public class RobotPlayer extends Player{
 				additionLength++;
 				additionEnd=i;
 			}
-			else if(additionEnd-maxStart>=4&&additionLength+maxEnd-additionEnd>=5) {
+			else if(additionEnd-maxStart>=4&&additionLength+maxEnd-additionEnd>=4) {
 				int maxS1=maxStart;
 				int maxE1=additionEnd;
 				int maxS2=additionEnd-additionLength+1;
@@ -288,7 +288,7 @@ public class RobotPlayer extends Player{
 		}
 		
 		//5.2 顺子长度大于5，头/尾存在连对，顺子长度-连对长度>=5,转化为三带加顺子
-		if(numOfRanks[maxStart]>=2&&maxEnd-maxStart>=5) {
+		if(numOfRanks[maxStart]>=2&&maxEnd-maxStart>=4) {
 			numOfRanks[maxStart]=0;
 			List<Card> tem=new ArrayList<Card>();
 			for(Card card :copyCards) {
@@ -298,7 +298,7 @@ public class RobotPlayer extends Player{
 				}
 			}
 			copyCards.removeAll(tem);
-			handList.add(Hand.cards2hand(copyCards));
+			handList.add(Hand.cards2hand(tem));
 			return handlerOfSOS(copyCards,maxStart+1,maxEnd,numOfRanks,handList);			
 		}
 		if(numOfRanks[maxEnd]>=2&&maxEnd-maxStart>=5) {
@@ -310,7 +310,7 @@ public class RobotPlayer extends Player{
 				}
 			}
 			copyCards.removeAll(tem);
-			handList.add(Hand.cards2hand(copyCards));
+			handList.add(Hand.cards2hand(tem));
 			return handlerOfSOS(copyCards,maxStart,maxEnd-1,numOfRanks,handList);			
 		}
 		
@@ -320,12 +320,14 @@ public class RobotPlayer extends Player{
 		int[] addition1=new int[maxEnd-maxStart];
 		int[] addition2=new int[maxEnd-maxStart];
 		if (numOfRanks[point]==1) {
-			{
+			while (numOfRanks[point --] >= 1&&point-maxStart>4){
 				addition1[maxEnd-point]=point;
-			} while (numOfRanks[point --] >= 1&&point-maxStart>=5) ;
+			}  ;
 			point++;
+		}else {
+			point=0;
 		}
-		if(maxEnd-point>=2) {
+		if(point!=0&&maxEnd-point>=2) {
 			List<Card> tem =new ArrayList<Card>();
 			for(int t=maxEnd;t>=point;t--) {
 				for(Card card : copyCards) {
@@ -333,13 +335,14 @@ public class RobotPlayer extends Player{
 						tem.add(card);
 					}
 				}
+				numOfRanks[point]--;
 				copyCards.removeAll(tem);
 			}
 
 			temp.add(new StraightOfCards(HandType.PAIR,Rank.getRankByValue(maxEnd),maxEnd-point+1,tem));
-			temp.addAll(handlerOfSOS(copyCards,maxStart,point,numOfRanks,handList));
+			temp.addAll(handlerOfSOS(copyCards,maxStart,point-1,numOfRanks,handList));
 			return temp;
-		}else if (point!=maxEnd){
+		}else if (point!=0){
 			for(int t=maxEnd;t>=point;t--) {
 				List<Card> tem=new ArrayList<Card>();
 				for(Card card : copyCards) {
@@ -347,10 +350,11 @@ public class RobotPlayer extends Player{
 						tem.add(card);
 					}
 				}
+				numOfRanks[point]--;
 				copyCards.removeAll(tem);
 				handList.add(Hand.cards2hand(tem));
 			}
-			return handlerOfSOS(copyCards,maxStart,point,numOfRanks,handList);
+			return handlerOfSOS(copyCards,maxStart,point-1,numOfRanks,handList);
 		}
 		//behind
 		
@@ -360,16 +364,18 @@ public class RobotPlayer extends Player{
 		
 		
 		if (numOfRanks[point]==1) {
-			{
+			while (numOfRanks[point ++] >= 1&&maxEnd-point>4){
 				addition2[point-maxStart]=point;
-			} while (numOfRanks[point ++] >= 1&&maxEnd-point>=5) ;
+			}  ;
 			point--;
+		}else {
+			point=0;
 		}
 	
-		if(point-maxStart>=2) {
+		if(point!=0&&point-maxStart>=2) {
 			List<Card> tem=new ArrayList<Card>();
 			for(int t=maxStart;t<=point;t++) {
-
+				numOfRanks[point]--;
 				for(Card card : copyCards) {
 					if(card.getRank().ordinal()==t-3) {
 						tem.add(card);
@@ -378,9 +384,9 @@ public class RobotPlayer extends Player{
 				copyCards.removeAll(tem);
 			}
 			temp.add(new StraightOfCards(HandType.PAIR,Rank.getRankByValue(point),point-maxStart+1,tem));
-			temp.addAll(handlerOfSOS(copyCards,point,maxEnd,numOfRanks,handList));
+			temp.addAll(handlerOfSOS(copyCards,point+1,maxEnd,numOfRanks,handList));
 			return temp;
-		}else if(point!=maxStart) {
+		}else if(point!=0) {
 			for(int t=maxStart;t<=point;t++) {
 				List<Card>tem=new ArrayList<Card>();
 				for(Card card : copyCards) {
@@ -388,10 +394,11 @@ public class RobotPlayer extends Player{
 						tem.add(card);
 					}
 				}
+				numOfRanks[point]--;
 				copyCards.removeAll(tem);
 				handList.add(Hand.cards2hand(tem));
 			}
-			return handlerOfSOS(copyCards,point,maxEnd,numOfRanks,handList);
+			return handlerOfSOS(copyCards,point+1,maxEnd,numOfRanks,handList);
 		}
 		
 		temp.add(new StraightOfCards(HandType.SOLO,Rank.getRankByValue(maxEnd),maxEnd-maxStart,setCard(copyCards,maxStart+1,maxEnd)));//鏃犲彉鍖�
