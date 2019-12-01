@@ -117,8 +117,8 @@ public class Hand {
 			int[] numOfRanks = new int[20];
 			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;		//numOfRanks stores how many times a rank occurs
 			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;	//length stores number of different ranks
-			int[] start = new int[5];	//stores the first card's rank of different cards combination length i.e. SOLO(1),PAIR(2)
-			int[] count = new int[5];	//stores how many times the card combination of different length occur
+			int[] start = new int[30];	//stores the first card's rank of different cards combination length i.e. SOLO(1),PAIR(2)
+			int[] count = new int[30];	//stores how many times the card combination of different length occur
 			
 			for(int rank=0; rank<numOfRanks.length; rank++) {
 				if(numOfRanks[rank] == 0) continue;
