@@ -23,7 +23,7 @@ public class RobotPlayer extends Player{
 	private List<Hand> bombList=new ArrayList<Hand>();
 	private List<Hand> combinationList=new ArrayList<Hand>();
 	private List<Card> copyCards=new ArrayList<Card>();
-	
+	private List<Card> playedCards=new ArrayList<Card>();
 	/*
 	 * Constructor
 	 */
@@ -68,11 +68,12 @@ public class RobotPlayer extends Player{
 		List<Card> formerCards=handHistroy.getLast().getCards();
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();
-		System.out.println(handList);
+		System.out.println("handlist"+handList);
 		calculateCombinationList();
-		
+		System.out.println("bombList"+bombList);
+		System.out.println("combinationList"+combinationList);
 		//Strategies
-		if(formerCards==null)
+		if(handHistroy.isEmpty()||handHistroy.size()>1 && handHistroy.get(handHistroy.size()-1).getType()==null&&handHistroy.get(handHistroy.size()-1).getType()==null)
 			response=playCardsProactively(formerCards);
 		else {
 			response=playCardsPassively(formerCards);
@@ -82,7 +83,8 @@ public class RobotPlayer extends Player{
 		if(response.isEmpty()) {
 			response=Helper.hintCards(cards, Hand.cards2hand(formerCards), formerCards.size());
 		}
-		
+		this.playedCards.clear();
+		this.playedCards.addAll(response);
 		//Convert response to answer
 		if(response.isEmpty())
 			return "pass";
