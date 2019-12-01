@@ -8,10 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import enums.HandType;
-import enums.PlayerRole;
 import enums.Rank;
 import helpers.Helper;
-import helpers.Messenger;
 
 public class RobotPlayer extends Player{
 	
@@ -65,24 +63,36 @@ public class RobotPlayer extends Player{
 	@Override
 	public String getPlayChoice( ) {
 		//Initialization
-		List<Card> formerCards=handHistroy.getLast().getCards();
+
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();
-		System.out.println("handlist"+handList);
+		System.out.println("Handlist:");
+		System.out.println(handList);
 		calculateCombinationList();
-		System.out.println("bombList"+bombList);
-		System.out.println("combinationList"+combinationList);
+		System.out.println("BombList:");
+		System.out.println(bombList);				
+		System.out.println("combinationList:");
+		System.out.println(combinationList);
+		System.out.println("Hand history:");
 		//Strategies
-		if(handHistroy.isEmpty()||handHistroy.size()>1 && handHistroy.get(handHistroy.size()-1).getType()==null&&handHistroy.get(handHistroy.size()-1).getType()==null)
-			response=playCardsProactively(formerCards);
+		for(int i=0;i<handHistroy.size();i++) {
+			if(handHistroy.get(i).getType()!=null)				
+				System.out.println(handHistroy.get(i));
+			else {
+				System.out.println("null");
+			}
+		}
+		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
+			System.out.println("play proactively");
+			response=playCardsProactively();
+		}
 		else {
+			List<Card> formerCards=handHistroy.getLast().getCards();
+			System.out.println("play passively");
 			response=playCardsPassively(formerCards);
+			System.out.println("Passive answer:"+response);
 		}
 		
-		//Check on response
-		if(response.isEmpty()) {
-			response=Helper.hintCards(cards, Hand.cards2hand(formerCards), formerCards.size());
-		}
 		this.playedCards.clear();
 		this.playedCards.addAll(response);
 		//Convert response to answer
@@ -93,7 +103,7 @@ public class RobotPlayer extends Player{
 		return ans;
 	}
 	
-	public List<Card> playCardsProactively(List<Card> formerCards) {
+	public List<Card> playCardsProactively() {
 		List<Card> response = new ArrayList<Card>();
 		if(totalHandCount==1) {	//Situation where you could win directly
 			return handList.get(0).getCards();
@@ -104,16 +114,39 @@ public class RobotPlayer extends Player{
 
 	public List<Card> playCardsPassively(List<Card> formerCards) {
 		List<Card> response = new ArrayList<Card>();
-		Hand lastHand=Hand.cards2hand(formerCards);
+		Hand formerHand=Hand.cards2hand(formerCards);
 		totalHandCount=handList.size();
+		System.out.println(formerHand);
 		if(totalHandCount==2 && !bombList.isEmpty()) {
 			response=bombList.get(0).getCards();
 			bombList.remove(0);
+			return response;
 		}
-		else {
-			response=chooseCard(lastHand);
+		if(formerHand.getType()==HandType.ROCKET){
+			System.out.println("a");
+			return new ArrayList<Card>();
 		}
-		return response;
+		for(Hand hand:handList) {
+			if(formerHand.isSmallerThan(hand)==true) {
+				System.out.println(hand);
+				System.out.println("b");
+				return hand.getCards();
+			}				
+		}
+		for(Hand hand:combinationList) {
+			if(formerHand.isSmallerThan(hand)==true) {
+				System.out.println("c");
+				return hand.getCards();
+			}
+		}
+		for(Hand hand:bombList) {
+			if(formerHand.isSmallerThan(hand)==true) {
+				System.out.println("d");
+				return hand.getCards();
+			}
+		}		
+		return Helper.hintCards(cards, formerHand, formerHand.getCards().size());
+
 	}
 
 
@@ -420,31 +453,6 @@ public class RobotPlayer extends Player{
 		return tem;
 	}
 	
-	
-	
-	private List<Card> chooseCard(Hand formerHand){
-		calculateCombinationList();
-		if(formerHand.getType()==HandType.ROCKET){
-			return null;
-		}
-		for(Hand hand:handList) {
-			if(formerHand.isSmallerThan(hand)==true) {
-				return hand.getCards();
-			}
-			
-		}
-		for(Hand hand:combinationList) {
-			if(formerHand.isSmallerThan(hand)==true) {
-				return hand.getCards();
-			}
-		}
-		for(Hand hand:bombList) {
-			if(formerHand.isSmallerThan(hand)==true) {
-				return hand.getCards();
-			}
-		}		
-		return Helper.hintCards(cards, formerHand, formerHand.getCards().size());
-	}
 	
 	private void calculateCombinationList() {
 		Hand temp1Hand;

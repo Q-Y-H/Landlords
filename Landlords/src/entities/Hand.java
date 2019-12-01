@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Hand {
 	private Rank primal;
 	private Hand[] kickers;
 	private int chainLength;
-	private List<Card> cards;
+	private List<Card> cards=new ArrayList<Card>();
 	private int weight=0;
 	
 	public HandType getType() {
@@ -84,7 +85,7 @@ public class Hand {
 			return "Illegal " + "\n";
 		String kickersInfo = "";
 		kickersInfo = (kickers == null) ? "null " : kickers[0].getInfo();
-		return type + " " + primal.getName() + " Kickers: " + kickersInfo + chainLength + "\n";
+		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + "cards:"+this.cards+"\n";
 	}
 
 	public String getInfo() {
