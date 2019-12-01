@@ -121,7 +121,8 @@ public class GameBoard {
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo" 
 					
 					if(cmd.toUpperCase().equals("SUGGEST")) {
-						Messenger.inputHelp(player, handHistory.getLast());
+						Messenger.inputSuggest(player, handHistory.getLast());
+						continue;
 					}
 					
 					
