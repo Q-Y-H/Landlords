@@ -121,7 +121,7 @@ public class GameBoard {
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo"
 
 					if(cmd.toUpperCase().equals("SUGGEST")) {
-						Messenger.inputSuggest(player, handHistory.getLast());
+						Messenger.getInstance().inputSuggest(player, handHistory.getLast());
 						continue;
 					}
 
@@ -190,8 +190,8 @@ public class GameBoard {
 				}
 			}
 
-			if (!handHisroty.getLast().getCards().isEmpty())
-				Messenger.getInstance().print(Messenger.getInstance().printCards(handHisroty.getLast().getCards()));
+			if (!handHistory.getLast().getCards().isEmpty())
+				Messenger.getInstance().print(Messenger.getInstance().printCards(handHistory.getLast().getCards()));
 
 			Messenger.getInstance().waiting();
 			Messenger.getInstance().clear();

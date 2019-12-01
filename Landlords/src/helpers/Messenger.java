@@ -173,7 +173,7 @@ public final class Messenger {
 		print(msg);
 	}
 
-	public  String inputHelp(Player p, List<Card> prev) {
+	public  String inputSuggest(Player p, Hand prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards = new ArrayList<Card>();
 		selectCards = Helper.hintCards(p.getCards(), prev, prev.getCards().size());
