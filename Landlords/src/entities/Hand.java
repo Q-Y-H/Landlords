@@ -35,7 +35,7 @@ public class Hand {
 	public boolean isSmallerThan(Hand h) {
 		if (h.type == HandType.ILLEGAL || type == HandType.ROCKET)
 			return false;
-		if (type == HandType.ILLEGAL || h.type == HandType.ROCKET)
+		if (type == null || type == HandType.ILLEGAL || h.type == HandType.ROCKET)
 			return true;
 		if (type == h.type) {
 			if (chainLength != h.chainLength)
