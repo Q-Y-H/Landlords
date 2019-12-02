@@ -64,7 +64,7 @@ public final class Messenger {
 		while (!hasInput) {
 			System.out.print(prompt);
 			input = in.nextLine();
-			if (true) {
+			if (input.isBlank()) {
 				hasInput = true;
 			} else if (inputSet.length == 0) {
 				hasInput = true;

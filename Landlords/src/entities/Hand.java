@@ -85,7 +85,7 @@ public class Hand {
 			return "Illegal " + "\n";
 		String kickersInfo = "";
 		kickersInfo = (kickers == null) ? "null " : kickers[0].getInfo();
-		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + "cards:"+this.cards+"\n";
+		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + " cards:"+this.cards+"\n";
 	}
 
 	public String getInfo() {

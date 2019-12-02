@@ -33,7 +33,7 @@ public class testRobot extends TestCase{
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
 		robotplayer1.getPlayChoice();
 	}
-	
+	@Test
 	public void test2() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
@@ -41,4 +41,14 @@ public class testRobot extends TestCase{
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
 		robotplayer1.getPlayChoice();
 	}
+	
+	// Test for SparseCard
+//	@Test
+//	public void test3() {
+//		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+//		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+//		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3],c[2])));
+//		robotplayer1.sparseCards();
+//		System.out.println(robotplayer1.getSparsedList());
+//	}
 }

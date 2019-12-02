@@ -161,8 +161,16 @@ public class GameBoard {
 						throw new DisobeyRulesException();
 					}
 					
+					Hand lastValidHand=null;
+					for(int i=handHistoty.size()-1;i>=0;i--) {
+						if(handHistoty.get(i).getType()!=null) {
+							lastValidHand=handHistoty.get(i);
+							break;
+						}					
+					}
+					
 					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-							|| handHistoty.isEmpty() || handHistoty.getLast().isSmallerThan(currHand) == true) {
+							|| handHistoty.isEmpty() || lastValidHand.isSmallerThan(currHand) == true) {
 						player.removeCards(selectedCards);
 						room.setLastHandPlayer(player);
 						handHistoty.add(currHand);
