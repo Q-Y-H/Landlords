@@ -54,7 +54,7 @@ public class GameBoard {
 	public void electLandlord() {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
-		int cursor = new Random().nextInt(3);
+		int cursor = new Random().nextInt(3);//range: 0, 1, 2
 		int landlordID = 0;
 		int nWaive = 0;
 
@@ -63,10 +63,11 @@ public class GameBoard {
 				if (nWaive == 3) { // all waive
 					landlordID = new Random().nextInt(3);
 					break;
-				} else if (nWaive == 2) // two players waive
+				} 
+				else if (nWaive == 2) // two players waive
 					break;
 				else if (nWaive == 1) // one player waives
-					while (!choices.get(cursor)) cursor = (cursor + 1) % 3;
+					if(!choices.get(0)) cursor = (cursor + 1) % 3;
 				else if (nWaive == 0) ;// all run for landlord: give the chance to the first player
 			}
 
