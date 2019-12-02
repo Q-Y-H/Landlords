@@ -6,15 +6,17 @@ public class PlayChoiceCommand implements Command<String> {
 	private Player player;
 	private String result;
 	
+	public PlayChoiceCommand(Player player) {
+		this.player = player;
+	}
+	
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 		this.result = player.getPlayChoice();
 	}
 
 	@Override
 	public String getResult() {
-		// TODO Auto-generated method stub
 		return result;
 	}
 

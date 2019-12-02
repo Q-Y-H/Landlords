@@ -10,6 +10,9 @@ import Commands.Command;
 import Commands.DecideRunForLandlordCommand;
 import Commands.PlayChoiceCommand;
 import Commands.SetNicknameCommand;
+import Exceptions.CardsNotOnHandException;
+import Exceptions.DisobeyRulesException;
+import Exceptions.InputInvalidException;
 import enums.HandType;
 import enums.PlayerRole;
 import helpers.Helper;
@@ -63,11 +66,8 @@ public class GameBoard {
 				} else if (nWaive == 2) // two players waive
 					break;
 				else if (nWaive == 1) // one player waives
-					do
-						cursor = (cursor + 1) % 3;
-					while (choices.get(cursor));
-				else if (nWaive == 0) // all run for landlord
-					cursor = (cursor + 1) % 3;
+					while (!choices.get(cursor)) cursor = (cursor + 1) % 3;
+				else if (nWaive == 0) ;// all run for landlord: give the chance to the first player
 			}
 
 			Player player = players.get(cursor);
@@ -92,6 +92,7 @@ public class GameBoard {
 		Messenger.print("The landlord is Player " + players.get(landlordID).getNickname());
 		Messenger.print("Landlord cards:");
 		Messenger.print(Messenger.printCards(this.room.getLandlordCards()));
+		Messenger.waiting();
 	}
 
 	public void gameStart() {
@@ -111,51 +112,69 @@ public class GameBoard {
 			Messenger.print(Messenger.playersInfo(cursor, this.room)); // TODO: Modification
 
 			while (true) {
-				Command<String> playChoiceCommand = new PlayChoiceCommand();
-				this.playerController.storeAndExecute(playChoiceCommand);
-				String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo" 
-				if (cmd.toUpperCase().equals("PASS")) {
-					if (handHistoty.isEmpty() || room.getLastHandPlayer() == player) {
-						Messenger.print("Cannot pass.");
-						continue;
-					} else {
-						handHistoty.add(new Hand(null, null, null, 0, new ArrayList<Card>()));
-						break;
+				try {
+					Command<String> playChoiceCommand = new PlayChoiceCommand(player);
+					this.playerController.storeAndExecute(playChoiceCommand);
+					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo" 
+					if (cmd.toUpperCase().equals("PASS")) {
+						if (handHistoty.isEmpty() || room.getLastHandPlayer() == player) {
+							Messenger.print("Cannot pass.");
+							continue;
+						} else {
+							handHistoty.add(new Hand(null, null, null, 0, new ArrayList<Card>()));
+							break;
+						}
 					}
-				}
-				
-				ArrayList<String> inputCardNames = new ArrayList<String>();
-				Scanner cmdScanner = new Scanner(cmd);
-				while (cmdScanner.hasNext()) // TODO: exception handle
-					inputCardNames.add(cmdScanner.next());
-				cmdScanner.close();
+					
+					ArrayList<String> inputCardNames = new ArrayList<String>();
+					Scanner cmdScanner = new Scanner(cmd);
+					while (cmdScanner.hasNext()) // TODO: exception handle
+						inputCardNames.add(cmdScanner.next());
+					cmdScanner.close();
 
-				if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
-					Messenger.print(Messenger.inputErrorMessage()); // TODO: Exception Handler
-					continue;
-				}
+//				if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
+//					Messenger.print(Messenger.inputErrorMessage()); // TODO: Exception Handler
+//					continue;
+//				}
+					if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
+						throw new InputInvalidException();
+					}
 
-				List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
-				if (selectedCards == null) {
-					Messenger.print(Messenger.cardsNotOnHandError());
-					continue;
-				}
+					List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
+//				if (selectedCards == null) {
+//					Messenger.print(Messenger.cardsNotOnHandError());
+//					continue;
+//				}
+					if (selectedCards == null) {
+						throw new CardsNotOnHandException();
+					}
 
-				Hand currHand = Hand.cards2hand(selectedCards);
-				if (currHand.getType() == HandType.ILLEGAL) {
-					Messenger.print(Messenger.disobeyRulesError());
-					continue;
-				}
-				
-				Hand lastHand = handHistoty.getLast();
-				if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-						|| lastHand.isSmallerThan(currHand) == true) {
-					player.removeCards(selectedCards);
-					room.setLastHandPlayer(player);
-					handHistoty.add(currHand);
-				} else {
-					System.out.println(Messenger.disobeyRulesError());
-					continue;
+					Hand currHand = Hand.cards2hand(selectedCards);
+//				if (currHand.getType() == HandType.ILLEGAL) {
+//					Messenger.print(Messenger.disobeyRulesError());
+//					continue;
+//				}
+					if (currHand.getType() == HandType.ILLEGAL) {
+						throw new DisobeyRulesException();
+					}
+					
+					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
+							|| handHistoty.isEmpty() || handHistoty.getLast().isSmallerThan(currHand) == true) {
+						player.removeCards(selectedCards);
+						room.setLastHandPlayer(player);
+						handHistoty.add(currHand);
+						break;
+					} else {
+//					System.out.println(Messenger.disobeyRulesError());
+//					continue;
+						throw new DisobeyRulesException();
+					}
+				} catch (InputInvalidException e1) {
+					Messenger.print(e1.getMessage());
+				} catch (CardsNotOnHandException e2) {
+					Messenger.print(e2.getMessage());
+				} catch (DisobeyRulesException e3) {
+					Messenger.print(e3.getMessage());
 				}
 			}
 

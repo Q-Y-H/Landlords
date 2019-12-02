@@ -65,6 +65,7 @@ public final class Messenger {
 			System.out.print(prompt);
 			input = in.nextLine();
 			if (input.equals("")) {
+				hasInput = true;
 			} else if (inputSet.length == 0) {
 				hasInput = true;
 			} else {
@@ -236,6 +237,7 @@ public final class Messenger {
 		int size = handHistory.size();
 		if(size > 2) {
 			handHistory = handHistory.subList(size - 2, size);
+			size = 2; // TODO: refactor
 		}
 
 		String msg = "";

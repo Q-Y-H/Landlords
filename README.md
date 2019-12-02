@@ -1,3 +1,5 @@
+
+
 # Landlord
 
 Dou Di Zhu game in the terminal verison.
@@ -46,8 +48,8 @@ Dou Di Zhu game in the terminal verison.
 
 ### 11.14 (Thur)
 
--   [ ] Robot v1.0
--   [ ] Refactor the whole project following the **Class Diagram**
+-   [x] Robot v1.0
+-   [x] Refactor the whole project following the **Class Diagram**
 
 ### 11.21 (Thur)
 
@@ -65,6 +67,12 @@ Dou Di Zhu game in the terminal verison.
 ### 11.27 (Wed)
 
 -   [ ] Slides准备完好
+
+### 11.28 (Thu)
+
+**讨论**：
+
+-   Messenger应该是用Singleton还是静态类？Singleton怎么保证线程安全？
 
 ### 11.29 (Fri)
 
@@ -131,7 +139,8 @@ Release 2 的目标主要是：
 
 ## Collaboration Guide
 
-ave two main branches in the git repository:
+We have two main branches in the git repository:
+
 - master: for stable version of code
 - dev: for development version of code
 
