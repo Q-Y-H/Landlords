@@ -46,8 +46,7 @@ public class Helper {
 		return true;
 	}
 
-	// 穷尽后比较，输出满足条件的第一个List.(单牌对子ok,三带一输出为null，怀疑是三带一比较转换出现问题）另，需要添加炸弹识别
-	// need to be modified. ^_^
+	
 	public static List<Card> hintCards(List<Card> cards, Hand prev, int length) {
 
 		List<Card> TempCards = new ArrayList<Card>();
@@ -59,6 +58,7 @@ public class Helper {
 				return c;
 			}
 		}
+		
 		return null;	
 	}
 

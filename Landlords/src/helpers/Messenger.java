@@ -11,9 +11,9 @@ import entities.Hand;
 import entities.Player;
 
 public final class Messenger {
-	
+
 	private static final Messenger INSTANCE = new Messenger();
-	
+
 	final Scanner in = new Scanner(System.in);
 
     private Messenger() {
@@ -29,11 +29,11 @@ public final class Messenger {
         return INSTANCE;
     }
 
-	public static void print(String msg) {
+	public  void print(String msg) {
 		System.out.println(msg);
 	}
 
-//	public static String printAskForInput(Scanner sc, String type, String prompt) {
+//	public  String printAskForInput(Scanner sc, String type, String prompt) {
 //		System.out.print(prompt);
 //		String input;
 //
@@ -81,7 +81,7 @@ public final class Messenger {
 					}
 				}
 			}
-			if(!hasInput) {				
+			if(!hasInput) {
 				print("Invalid input.\n");
 			}
 		}
@@ -89,13 +89,13 @@ public final class Messenger {
 		return input;
 	}
 
-	public static void waitForPlayer(Player player) {
+	public  void waitForPlayer(Player player) {
 		String msg = "It's player " + player.getNickname() + "'s turn!\n";
 		print(msg);
 		waiting();
 	}
 
-	public static void waiting() {
+	public  void waiting() {
 		print("Press ENTER to continue ...");
 		try {
 			while (System.in.read() != '\n')
@@ -106,12 +106,12 @@ public final class Messenger {
 		}
 	}
 
-	public static void RunforLandlordMsg(Player player) {
+	public  void RunforLandlordMsg(Player player) {
 		print("\nRunning for the LANDLORD position!\n");
 		waitForPlayer(player);
 	}
 
-	public static String printCards(List<Card> cards) {
+	public  String printCards(List<Card> cards) {
 		String message = "┌";
 		int len = cards.size();
 		for (int i = 0; i < len; i++) {
@@ -144,7 +144,7 @@ public final class Messenger {
 		return message;
 	}
 
-	public static String printPreviousPokers(List<Card> nextPokers, List<Card> previousPokers, Player nextP,
+	public  String printPreviousPokers(List<Card> nextPokers, List<Card> previousPokers, Player nextP,
 			Player previousP) {
 		String message = "";
 		if (nextPokers.size() == 0)
@@ -162,21 +162,21 @@ public final class Messenger {
 		return message;
 	}
 
-	public static void clear() {
+	public  void clear() {
 		clear(300);
 	}
 
-	public static void clear(int times) {
+	public  void clear(int times) {
 		String msg = "";
 		for (int i = 0; i < times; ++i)
 			msg += "\n";
 		print(msg);
 	}
 
-	public static String inputHelp(Player p, List<Card> prev) {
+	public  String inputSuggest(Player p, Hand prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards = new ArrayList<Card>();
-		selectCards = Helper.hintCards(p.getCards(), Hand.cards2hand(prev), prev.size());
+		selectCards = Helper.hintCards(p.getCards(), prev, prev.getCards().size());
 		String message = "";
 		if (selectCards != null) {
 			message += "We suggest you play: \n";
@@ -187,21 +187,21 @@ public final class Messenger {
 		return message;
 	}
 
-	public static String inputErrorMessage() {
+	public  String inputErrorMessage() {
 		return "Input should only contain numbers from 2 to 10 and J, Q, K, A, B, R!";
 	}
 
-	public static String cardsNotOnHandError() {
+	public  String cardsNotOnHandError() {
 		return "You should select the cards in your hand!";
 	}
 
-	public static String disobeyRulesError() {
+	public  String disobeyRulesError() {
 		return "Your input doesn't meet the rules!";
 	}
 
 	@SuppressWarnings("unchecked")
 	// TODO
-	public static String previousInfo(String infoType, List<Player> players, int cursor, List info) {
+	public String previousInfo(String infoType, List<Player> players, int cursor, List info) {
 		if (infoType.equals("RunForLandlord"))
 			// previousRunForLandlordInfo(players, cursor, info, first);
 			;
@@ -210,7 +210,7 @@ public final class Messenger {
 		return infoType;
 	}
 
-	public static String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices,
+	public String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices,
 			int first) {
 		String msg = "Round " + (choices.size() + 1) + ":\n";
 		int size = choices.size();
@@ -230,10 +230,10 @@ public final class Messenger {
 		return msg;
 	}
 
-	public static String playersInfo(int cursor, CardRoom room) {
+	public String playersInfo(int cursor, CardRoom room) {
 		List<Player> players = room.getPlayers();
-		List<Hand> handHistory = room.getHandHistoty();
-		
+		List<Hand> handHistory = room.getHandHistory();
+
 		int size = handHistory.size();
 		if(size > 2) {
 			handHistory = handHistory.subList(size - 2, size);
@@ -260,21 +260,21 @@ public final class Messenger {
 		return msg;
 	}
 
-	public static void handleRunForLandlord(List<Player> players, int cursor, List<Boolean> choices, int first) {
+	public void handleRunForLandlord(List<Player> players, int cursor, List<Boolean> choices, int first) {
 		Player player = players.get(cursor);
 
 		clear();
 		print("\nRound " + (choices.size() + 1) + ": Running for the LANDLORD position!\n");
 		waitForPlayer(player);
 		clear();
-		print(Messenger.previousRunForLandlordInfo(players, cursor, choices, first));
+		print(Messenger.getInstance().previousRunForLandlordInfo(players, cursor, choices, first));
 	}
 
 	/*
 	 * This method is hard to implement because besides the token, some other
 	 * parameters, like players, cursor, etc, are needed to generate the message
 	 */
-	public static String getMessageByToken(String token) {
+	public String getMessageByToken(String token) {
 		String msg = "";
 		switch (token) {
 		case "RunForLandlord":
@@ -283,7 +283,7 @@ public final class Messenger {
 		}
 		return msg;
 	}
-	
+
 	public void clearInputStream() {
 		in.nextLine();
 	}

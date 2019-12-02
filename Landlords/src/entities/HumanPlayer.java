@@ -22,16 +22,16 @@ public class HumanPlayer extends Player {
 	public void askForNickname() {
 		// TODO Auto-generated method stub
 		String prompt = "[Player " + this.getId() + "] Please Set Your Nickname >> ";
-		String nickname = Messenger.getInstance().askForInput(prompt, new String[] {}, true);
+		String nickname = Messenger.getInstance().getInstance().askForInput(prompt, new String[] {}, true);
 		this.setNickname(nickname);
 	}
 
 	@Override
 	public Boolean decideRunForLandlord() {
 		// TODO
-		// Messenger.handleRunForLandlord(players, cursor, choices, first);
+		// Messenger.getInstance().handleRunForLandlord(players, cursor, choices, first);
 		String prompt = "Player " + this.getNickname() + ": Do you want to run for landlord? [y/n] ";
-		String input = Messenger.getInstance().askForInput(prompt, new String[] { "Y", "N" }, false);
+		String input = Messenger.getInstance().getInstance().askForInput(prompt, new String[] { "Y", "N" }, false);
 		if (input.toUpperCase().equals("Y"))
 			return true;
 		else 
@@ -41,12 +41,12 @@ public class HumanPlayer extends Player {
 	@Override
 	public String getPlayChoice() {
 		// TODO Auto-generated method stub
-		Messenger.print("Please choose the cards to play. Input 'help' for more information.\n");
+		Messenger.getInstance().print("Please choose the cards to play. Input 'help' for more information.\n");
 		String cmd = "";
 
 		while(true) {
 			String prompt = "[" + this.getRole() + "] " + this.getNickname() + " >> ";
-			cmd = Messenger.getInstance().askForInput(prompt, new String[] {}, false);
+			cmd = Messenger.getInstance().getInstance().askForInput(prompt, new String[] {}, false);
 			
 			if (cmd.toUpperCase().equals("HELP")) {
 				// TODO
