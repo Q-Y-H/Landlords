@@ -47,21 +47,19 @@ public class RobotPlayer extends Player{
 
 	@Override
 	public Boolean decideRunForLandlord() {
-		int valueSum=0;
-		for(Hand hand: handList) valueSum+=hand.getWeight();
-		if(valueSum>0) {
+		int weightSum=calWeightSum();
+		if(weightSum>0)
 			return true;
-		}
 		else {
 			return false;
-		}		
+		}
 	}
 
 	@Override
 	public String getPlayChoice( ) {
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
-		sparseCards();
+		sparseCards();	
 		System.out.println("Handlist:");
 		System.out.println(handList);
 		calculateCombinationList();
@@ -507,6 +505,10 @@ public class RobotPlayer extends Player{
 		return this.handList;
 	}
 	
+	public int calWeightSum() {
+		int weightSum=0;
+		return weightSum;
+	}
 }
 
 
