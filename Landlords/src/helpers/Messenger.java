@@ -9,6 +9,7 @@ import entities.Card;
 import entities.CardRoom;
 import entities.Hand;
 import entities.Player;
+import enums.HandType;
 
 public final class Messenger {
 
@@ -173,6 +174,17 @@ public final class Messenger {
 		print(msg);
 	}
 
+	
+	public String inputHelp(Hand prev) {
+		String message="";
+		if(prev.getType()!=HandType.ILLEGAL) {
+			message+="We suggest to play a ";
+			message+=prev.getType();
+			message+="\nYou can input “SUGGEST” for help.\n";
+		}	
+
+		return message;
+	}
 	public  String inputSuggest(Player p, Hand prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards = new ArrayList<Card>();

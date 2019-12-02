@@ -123,8 +123,10 @@ public class GameBoard {
 						continue;
 					}
 
-
-
+					if(cmd.toUpperCase().equals("HELP")) {
+						Messenger.getInstance().inputHelp(handHistory.getLast());
+						continue;
+					}
 
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {
