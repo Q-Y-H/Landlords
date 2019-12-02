@@ -168,13 +168,26 @@ public class GameBoard {
 						throw new DisobeyRulesException();
 					}
 
-					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-							|| handHistory.isEmpty() || handHistory.getLast().isSmallerThan(currHand) == true) {
+					/*compare lastHnad with currHand*/
+					Hand lastHand;
+					if(room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
+							|| handHistory.isEmpty()) //create a fake hand
+						lastHand = new Hand(HandType.ILLEGAL,null, null, 0, new ArrayList<Card>());
+					else
+						lastHand = handHistory.getLast();
+					//if the last player "PASS"
+					if(lastHand.getType() == null) {
+						int index = handHistory.size()-2;
+						lastHand = handHistory.get(index);
+					}
+					
+					if(lastHand.isSmallerThan(currHand) == true) {
 						player.removeCards(selectedCards);
 						room.setLastHandPlayer(player);
 						handHistory.add(currHand);
 						break;
-					} else {
+					}
+					else {
 //					System.out.println(Messenger.getInstance().disobeyRulesError());
 //					continue;
 						throw new DisobeyRulesException();
