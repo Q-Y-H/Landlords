@@ -191,6 +191,12 @@ class testHand extends TestCase {
 		System.out.println("Test 23: " + h.toString());
 	}
 
+	@Test // Illegal 345
+	void test24() {
+		List<Card> cards = Arrays.asList(c[8], c[4], c[8]);
+		Hand h = Hand.cards2hand(cards);
+		System.out.println("Test 24: " + h.toString());
+	}
 	/*
 	 * test method compareTo(Hand)
 	 *

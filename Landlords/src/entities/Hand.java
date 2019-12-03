@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Hand {
 	private Rank primal;
 	private Hand[] kickers;
 	private int chainLength;
-	private List<Card> cards;
+	private List<Card> cards=new ArrayList<Card>();
 	private int weight=0;
 
 	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength,List<Card> cards) {
@@ -62,7 +63,7 @@ public class Hand {
 			return "Illegal " + "\n";
 		String kickersInfo = "";
 		kickersInfo = (kickers == null) ? "null " : kickers[0].getInfo();
-		return type + " " + primal.getName() + " Kickers: " + kickersInfo + chainLength + "\n";
+		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + " cards:"+this.cards+ " weight: "+this.getWeight()+"\n";
 	}
 
 	public String getInfo() {
@@ -87,8 +88,8 @@ public class Hand {
 			int[] numOfRanks = new int[20];
 			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;		//numOfRanks stores how many times a rank occurs
 			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;	//length stores number of different ranks
-			int[] start = new int[5];	//stores the first card's rank of different cards combination length i.e. SOLO(1),PAIR(2)
-			int[] count = new int[5];	//stores how many times the card combination of different length occur
+			int[] start = new int[30];	//stores the first card's rank of different cards combination length i.e. SOLO(1),PAIR(2)
+			int[] count = new int[30];	//stores how many times the card combination of different length occur
 			
 			for(int rank=0; rank<numOfRanks.length; rank++) {
 				if(numOfRanks[rank] == 0) continue;
@@ -150,7 +151,8 @@ public class Hand {
 	}
 
 	public void setCards(List<Card> cards) {
-		this.cards = cards;
+		this.cards.clear();
+		this.cards.addAll(cards);
 	}
 	public static Comparator<Hand> handComparator = new Comparator<Hand>() {
 
@@ -173,7 +175,7 @@ public class Hand {
 		}
 		case SOLO:{
 			if(this.getChainLength()!=1) {
-				return primal.ordinal()+chainLength-7;
+				return primal.ordinal()-chainLength-7;
 			}
 			else {
 				return primal.ordinal()-7;
@@ -181,7 +183,7 @@ public class Hand {
 		}
 		case PAIR:{
 			if(this.getChainLength()!=1) {
-				return primal.ordinal()+chainLength;
+				return primal.ordinal()-chainLength;
 			}
 			else {
 				return primal.ordinal()-7;
@@ -192,14 +194,11 @@ public class Hand {
 				return primal.ordinal()/2;
 			}
 			else {
-				return primal.ordinal()-7;
+				return primal.ordinal()-8;
 			}
 		}
 		case QUAD:{
 			return primal.ordinal()/2;
-		}
-		case ILLEGAL:{
-			return Integer.MIN_VALUE;
 		}
 		default:
 			break;

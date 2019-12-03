@@ -85,7 +85,7 @@ public class Helper {
 		if(RBJoker.size()==2) {
 			return RBJoker;
 		}
-		return null;	
+		return new ArrayList<Card>();	
 	}
 
 	private static void combinationSelect(List<List<Card>> workspace, List<Card> dataList, List<Card> resultList,
