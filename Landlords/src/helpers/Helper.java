@@ -58,7 +58,33 @@ public class Helper {
 				return c;
 			}
 		}
-		
+		//check bombs
+		List<Card>RBJoker= new ArrayList<Card>();
+		int[] numOfRanks = new int[20];
+		for(Card card: cards) {
+			if(card.getRank().ordinal()==14||card.getRank().ordinal()==13) {
+				RBJoker.add(card);
+			}
+			else{
+				numOfRanks[card.getRank().ordinal()+3]++;	
+			}
+		}			
+		for(int i=0;i<numOfRanks.length;i++) {
+			if(numOfRanks[i]==4) {
+				List<Card> tem=new ArrayList<Card>();
+				for(Card card:cards) {
+					if(card.getRank().ordinal()==i-3) {
+						tem.add(card);
+					}
+				}
+				numOfRanks[i]=0;
+				return tem;
+			}
+		}
+		//Rocket
+		if(RBJoker.size()==2) {
+			return RBJoker;
+		}
 		return null;	
 	}
 
