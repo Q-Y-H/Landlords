@@ -223,9 +223,11 @@ public class RobotPlayer extends Player{
 			}
 		}
 		numOfRanks[15]=0;
-		copyCards.removeAll(tem1);
-		handList.add(Hand.cards2hand(tem1));
-		tem1.clear();
+		if (!tem1.isEmpty()) {
+			copyCards.removeAll(tem1);
+			handList.add(Hand.cards2hand(tem1));
+		}
+		
 		
 		
 		//3. check if has plane;
@@ -246,7 +248,6 @@ public class RobotPlayer extends Player{
 				if (!tem.isEmpty()) {
 					copyCards.removeAll(tem);
 					handList.add(Hand.cards2hand(tem));
-					tem.clear();
 				}
 			}
 		}
@@ -325,7 +326,7 @@ public class RobotPlayer extends Player{
 				additionLength++;
 				additionEnd=i;
 			}
-			else if(additionEnd-maxStart>=4&&additionLength+maxEnd-additionEnd>=4) {
+			else if(additionEnd-maxStart>=4&&additionLength+maxEnd-additionEnd>=5) {
 				int maxS1=maxStart;
 				int maxE1=additionEnd;
 				int maxS2=additionEnd-additionLength+1;
@@ -397,7 +398,7 @@ public class RobotPlayer extends Player{
 			temp.add(new StraightOfCards(HandType.PAIR,Rank.getRankByValue(maxEnd),maxEnd-point+1,tem));
 			temp.addAll(handlerOfSOS(copyCards,maxStart,point-1,numOfRanks,handList));
 			return temp;
-		}else if (point!=0){
+		}else if (point!=0&&point-maxStart>4){
 			for(int t=maxEnd;t>=point;t--) {
 				List<Card> tem=new ArrayList<Card>();
 				for(Card card : copyCards) {
@@ -441,7 +442,7 @@ public class RobotPlayer extends Player{
 			temp.add(new StraightOfCards(HandType.PAIR,Rank.getRankByValue(point),point-maxStart+1,tem));
 			temp.addAll(handlerOfSOS(copyCards,point+1,maxEnd,numOfRanks,handList));
 			return temp;
-		}else if(point!=0) {
+		}else if(point!=0&&maxEnd-point>4) {
 			for(int t=maxStart;t<=point;t++) {
 				List<Card>tem=new ArrayList<Card>();
 				for(Card card : copyCards) {
@@ -456,7 +457,7 @@ public class RobotPlayer extends Player{
 			return handlerOfSOS(copyCards,point+1,maxEnd,numOfRanks,handList);
 		}
 		
-		temp.add(new StraightOfCards(HandType.SOLO,Rank.getRankByValue(maxEnd),maxEnd-maxStart,setCard(copyCards,maxStart+1,maxEnd)));//鏃犲彉鍖�
+		temp.add(new StraightOfCards(HandType.SOLO,Rank.getRankByValue(maxEnd),maxEnd-maxStart,setCard(copyCards,maxStart,maxEnd)));//鏃犲彉鍖�
 
 		return temp;
 	}
