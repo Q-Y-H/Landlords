@@ -9,11 +9,12 @@ import entities.Card;
 import entities.CardRoom;
 import entities.Hand;
 import entities.Player;
+import enums.HandType;
 
 public final class Messenger {
-	
+
 	private static final Messenger INSTANCE = new Messenger();
-	
+
 	final Scanner in = new Scanner(System.in);
 
     private Messenger() {
@@ -64,7 +65,7 @@ public final class Messenger {
 		while (!hasInput) {
 			System.out.print(prompt);
 			input = in.nextLine();
-			if (input.isBlank()) {
+			if (input.equals("")) {
 				hasInput = true;
 			} else if (inputSet.length == 0) {
 				hasInput = true;
@@ -81,7 +82,7 @@ public final class Messenger {
 					}
 				}
 			}
-			if(!hasInput) {				
+			if(!hasInput) {
 				print("Invalid input.\n");
 			}
 		}
@@ -173,10 +174,21 @@ public final class Messenger {
 		print(msg);
 	}
 
-	public  String inputHelp(Player p, List<Card> prev) {
+	
+	public String inputHelp(Hand prev) {
+		String message="";
+		if(prev.getType()!=HandType.ILLEGAL) {
+			message+="We suggest to play a ";
+			message+=prev.getType();
+			message+="\nYou can input “SUGGEST” for help.\n";
+		}	
+
+		return message;
+	}
+	public  String inputSuggest(Player p, Hand prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards = new ArrayList<Card>();
-		selectCards = Helper.hintCards(p.getCards(), Hand.cards2hand(prev), prev.size());
+		selectCards = Helper.hintCards(p.getCards(), prev, prev.getCards().size());
 		String message = "";
 		if (selectCards != null) {
 			message += "We suggest you play: \n";
@@ -232,8 +244,8 @@ public final class Messenger {
 
 	public String playersInfo(int cursor, CardRoom room) {
 		List<Player> players = room.getPlayers();
-		List<Hand> handHistory = room.getHandHistoty();
-		
+		List<Hand> handHistory = room.getHandHistory();
+
 		int size = handHistory.size();
 		if(size > 2) {
 			handHistory = handHistory.subList(size - 2, size);
@@ -283,7 +295,7 @@ public final class Messenger {
 		}
 		return msg;
 	}
-	
+
 	public void clearInputStream() {
 		in.nextLine();
 	}
