@@ -4,6 +4,7 @@ import enums.PlayerRole;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,7 +48,11 @@ public class RobotPlayer extends Player{
 
 	@Override
 	public Boolean decideRunForLandlord() {
-		int weightSum=calWeightSum();
+		sparseCards();	
+		int weightSum=0;
+		for(Hand hand:handList) {
+			weightSum+=hand.getWeight();
+		}
 		if(weightSum>0)
 			return true;
 		else {
@@ -60,9 +65,12 @@ public class RobotPlayer extends Player{
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();	
+		calculateCombinationList();		
+		System.out.println("combinationList:");
+		System.out.println(combinationList);
+		clearInvalidHand();
 		System.out.println("Handlist:");
 		System.out.println(handList);
-		calculateCombinationList();
 		System.out.println("BombList:");
 		System.out.println(bombList);				
 		System.out.println("combinationList:");
@@ -77,8 +85,6 @@ public class RobotPlayer extends Player{
 			}
 		}
 		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
-			System.out.println("Handlist:");
-			System.out.println(handList);
 			System.out.println("play proactively");
 			response=playCardsProactively();
 			System.out.println("proactive answer:"+response);
@@ -105,7 +111,6 @@ public class RobotPlayer extends Player{
 	}
 	
 	public List<Card> playCardsProactively() {
-		List<Card> response = new ArrayList<Card>();
 		for(Hand hand:handList) {
 			System.out.println("a");
 			if(hand.getType()!=HandType.ILLEGAL)
@@ -473,13 +478,18 @@ public class RobotPlayer extends Player{
 	
 	private void calculateCombinationList() {
 		combinationList.clear();
-		Hand temp1Hand;
-		Hand temp2Hand;
+		List<Card> copyCards=new ArrayList<Card>();
+		for(Card card: copyCards) {
+			copyCards.clear();
+			copyCards.add(card);
+			combinationList.add(Hand.cards2hand(copyCards));
+		}	
+		Hand temp1Hand=null;
+		Hand temp2Hand=null;
 		List<Card> temp1Cards=new ArrayList<Card>();
 		List<Card> temp2Cards=new ArrayList<Card>();
 		
 		for(int i=0;i<handList.size()-1;i++) {
-
 			for(int j=i+1;j<handList.size();j++) {
 				temp2Cards.clear();
 				temp1Cards.clear();
@@ -504,10 +514,35 @@ public class RobotPlayer extends Player{
 	public List<Hand> getSparsedList(){
 		return this.handList;
 	}
-	
-	public int calWeightSum() {
-		int weightSum=0;
-		return weightSum;
+
+	public void clearInvalidHand() {
+		if(!handList.isEmpty()) {
+
+			Iterator<Hand> handIterator=handList.iterator();
+
+			while(handIterator.hasNext()) {
+				Hand checkingHand=(Hand)handIterator.next();
+				if(checkingHand.getCards().isEmpty()||checkingHand.getType()==HandType.ILLEGAL)
+					handIterator.remove();
+			}
+		}
+		if(!bombList.isEmpty()) {
+			Iterator<Hand> handIterator2=combinationList.iterator();
+			while(handIterator2.hasNext()) {
+				Hand checkingHand=(Hand)handIterator2.next();
+				if(checkingHand.getCards().isEmpty()||checkingHand.getType()==HandType.ILLEGAL)
+					handIterator2.remove();
+			}	
+		}	
+		if(!combinationList.isEmpty()) {
+
+			Iterator<Hand> handIterator3=bombList.iterator();
+			while(handIterator3.hasNext()) {
+				Hand checkingHand=(Hand)handIterator3.next();
+				if(checkingHand.getCards().isEmpty()||checkingHand.getType()==HandType.ILLEGAL)
+					handIterator3.remove();
+			}	
+		}
 	}
 }
 

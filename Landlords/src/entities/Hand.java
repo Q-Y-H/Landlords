@@ -85,7 +85,7 @@ public class Hand {
 			return "Illegal " + "\n";
 		String kickersInfo = "";
 		kickersInfo = (kickers == null) ? "null " : kickers[0].getInfo();
-		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + " cards:"+this.cards+"\n";
+		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + " cards:"+this.cards+ " weight: "+this.getWeight()+"\n";
 	}
 
 	public String getInfo() {
@@ -204,7 +204,7 @@ public class Hand {
 		}
 		case SOLO:{
 			if(this.getChainLength()!=1) {
-				return primal.ordinal()+chainLength-7;
+				return primal.ordinal()-chainLength-7;
 			}
 			else {
 				return primal.ordinal()-7;
@@ -212,7 +212,7 @@ public class Hand {
 		}
 		case PAIR:{
 			if(this.getChainLength()!=1) {
-				return primal.ordinal()+chainLength;
+				return primal.ordinal()-chainLength;
 			}
 			else {
 				return primal.ordinal()-7;
@@ -223,14 +223,11 @@ public class Hand {
 				return primal.ordinal()/2;
 			}
 			else {
-				return primal.ordinal()-7;
+				return primal.ordinal()-8;
 			}
 		}
 		case QUAD:{
 			return primal.ordinal()/2;
-		}
-		case ILLEGAL:{
-			return Integer.MIN_VALUE;
 		}
 		default:
 			break;
