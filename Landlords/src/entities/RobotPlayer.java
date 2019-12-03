@@ -478,13 +478,15 @@ public class RobotPlayer extends Player{
 	
 	
 	private void calculateCombinationList() {
+		System.out.println("Cal combination list");
 		combinationList.clear();
 		List<Card> copyCards=new ArrayList<Card>();
-		for(Card card: copyCards) {
+		for(Card card: cards) {
 			copyCards.clear();
 			copyCards.add(card);
 			combinationList.add(Hand.cards2hand(copyCards));
 		}	
+		List<Hand> tempList=new ArrayList<Hand>();
 		Hand temp1Hand=null;
 		Hand temp2Hand=null;
 		List<Card> temp1Cards=new ArrayList<Card>();
@@ -505,10 +507,14 @@ public class RobotPlayer extends Player{
 				temp1Cards.addAll(temp2Cards);
 				Hand combinationHand=Hand.cards2hand(temp1Cards);
 				if(combinationHand.getType()!=HandType.ILLEGAL) {
-					combinationList.add(combinationHand);
+					tempList.add(combinationHand);
+					System.out.println(temp1Cards);
+					System.out.println(combinationHand);
+					System.out.println(tempList);
 				}
 			}
 		}
+		combinationList.addAll(tempList);
 		Collections.sort(combinationList, Hand.handComparator);
 	}
 	
