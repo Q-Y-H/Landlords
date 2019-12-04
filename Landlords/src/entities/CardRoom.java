@@ -54,7 +54,7 @@ public class CardRoom {
 		}
 		
 		for(Player player:this.players) {
-			player.setCards(cardLists.get(player.getId()));
+			player.setCards(cardLists.get(player.getId()%3));
 		}
 	}
 
