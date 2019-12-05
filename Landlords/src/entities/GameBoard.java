@@ -184,15 +184,15 @@ public class GameBoard {
 					}
 					
 					Hand lastValidHand=null;
-					for(int i=handHistoty.size()-1;i>=0;i--) {
-						if(handHistoty.get(i).getType()!=null) {
-							lastValidHand=handHistoty.get(i);
+					for(int i=handHistory.size()-1;i>=0;i--) {
+						if(handHistory.get(i).getType()!=null) {
+							lastValidHand=handHistory.get(i);
 							break;
 						}					
 					}
 					
 					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-							|| handHistoty.isEmpty() || lastValidHand.isSmallerThan(currHand) == true) {
+							|| handHistory.isEmpty() || lastValidHand.isSmallerThan(currHand) == true) {
 						player.removeCards(selectedCards);
 						room.setLastHandPlayer(player);
 						handHistory.add(currHand);

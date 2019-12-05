@@ -43,7 +43,7 @@ public class RobotPlayer extends Player{
 	
 	@Override
 	public void askForNickname() {
-		this.setNickname("Robot " + getId());
+		this.setNickname("Robot " + getId()%3);
 	}
 
 	@Override

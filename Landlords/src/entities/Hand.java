@@ -62,8 +62,12 @@ public class Hand {
 		if (type == HandType.ILLEGAL)
 			return "Illegal " + "\n";
 		String kickersInfo = "";
-		kickersInfo = (kickers == null) ? "null " : kickers[0].getInfo();
-		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + " cards:"+this.cards+ " weight: "+this.getWeight()+"\n";
+		if (kickers == null) 
+			kickersInfo= "null ";
+		else 
+			for(int i = 0;i < kickers.length;i++)
+				kickersInfo += kickers[i].getInfo();
+		return type + " " +primal.getName() + " Kickers: " + kickersInfo +chainLength + "\n";
 	}
 
 	public String getInfo() {
@@ -152,7 +156,8 @@ public class Hand {
 
 	public void setCards(List<Card> cards) {
 		this.cards.clear();
-		this.cards.addAll(cards);
+		if(cards != null)
+			this.cards.addAll(cards);
 	}
 	public static Comparator<Hand> handComparator = new Comparator<Hand>() {
 
