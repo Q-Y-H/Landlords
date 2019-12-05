@@ -189,7 +189,35 @@ public class testHelper {
 	}
 	
 	@Test // hintCards
-	public void hintCards_34567_5789XJQKAAAA() {
+	public void hintCards_34567_5789XJQKAAA() {
+		cards = Arrays.asList(all[3],all[4],all[5],all[6],all[7]);
+		List<Card> actul = Arrays.asList(all[5],all[7],all[8],all[9],all[10],all[11],all[12],all[13],all[14],all[14],all[14]);
+		List<Card> excepted=Helper.hintCards(actul,Hand.cards2hand(cards),5);
 		
+		assertEquals(Hand.cards2hand(cards).isSmallerThan(Hand.cards2hand(excepted)),true);
+	}
+	@Test // hintCards
+	public void hintCards_34567_5789JQKAAAAB() {
+		cards = Arrays.asList(all[3],all[4],all[5],all[6],all[7]);
+		List<Card> actul = Arrays.asList(all[5],all[7],all[8],all[9],all[11],all[12],all[13],all[14],all[14],all[14],all[14],all[16]);
+		List<Card> excepted=Helper.hintCards(actul,Hand.cards2hand(cards),5);
+		
+		assertEquals(Hand.cards2hand(cards).isSmallerThan(Hand.cards2hand(excepted)),true);
+	}
+	@Test // hintCards
+	public void hintCards_34567_5789JQKBR() {
+		cards = Arrays.asList(all[3],all[4],all[5],all[6],all[7]);
+		List<Card> actul = Arrays.asList(all[5],all[7],all[8],all[9],all[11],all[12],all[13],all[16],all[17]);
+		List<Card> excepted=Helper.hintCards(actul,Hand.cards2hand(cards),5);
+		
+		assertEquals(Hand.cards2hand(cards).isSmallerThan(Hand.cards2hand(excepted)),true);
+	}
+	@Test // hintCards
+	public void hintCards_34567_5789XQKR() {
+		cards = Arrays.asList(all[3],all[4],all[5],all[6],all[7]);
+		List<Card> actul = Arrays.asList(all[5],all[7],all[8],all[9],all[10],all[12],all[13],all[17]);
+		List<Card> excepted=Helper.hintCards(actul,Hand.cards2hand(cards),5);
+		
+		assertEquals(Hand.cards2hand(cards).isSmallerThan(Hand.cards2hand(excepted)),false);
 	}
 }
