@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import entities.Card;
+import entities.CardCase;
 import entities.CardRoom;
 import entities.Hand;
 import entities.RobotPlayer;
@@ -46,6 +47,96 @@ public class testRobot extends TestCase{
 		System.out.println(robotplayer1.getPlayChoice());
 	}
 	
+	@Test
+	public void test3() {
+		CardCase cardCase = new CardCase();
+		Helper.shuffleCards(cardCase);
+		List<List<Card>> cardLists = Helper.cutCards(cardCase);
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(cardLists.get(0));
+		System.out.println(cardLists.get(0));
+		System.out.println(robotplayer1.decideRunForLandlord());
+		System.out.println(robotplayer1.getPlayChoice());
+	}
+	
+	@Test
+	public void test4() {
+		CardCase cardCase = new CardCase();
+		Helper.shuffleCards(cardCase);
+		List<List<Card>> cardLists = Helper.cutCards(cardCase);
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(cardLists.get(0));
+		System.out.println(cardLists.get(0));
+		System.out.println(robotplayer1.decideRunForLandlord());
+		System.out.println(robotplayer1.getPlayChoice());
+	}
+	
+	@Test
+	public void test5() {
+		CardCase cardCase = new CardCase();
+		Helper.shuffleCards(cardCase);
+		List<List<Card>> cardLists = Helper.cutCards(cardCase);
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(cardLists.get(0));
+		System.out.println(cardLists.get(0));
+		System.out.println(robotplayer1.decideRunForLandlord());
+		System.out.println(robotplayer1.getPlayChoice());
+	}
+	
+	@Test
+	public void test6() {
+		CardCase cardCase = new CardCase();
+		Helper.shuffleCards(cardCase);
+		List<List<Card>> cardLists = Helper.cutCards(cardCase);
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(cardLists.get(0));
+		System.out.println(cardLists.get(0));
+		System.out.println(robotplayer1.decideRunForLandlord());
+		System.out.println(robotplayer1.getPlayChoice());
+	}
+	
+	@Test
+	public void test7() {
+		CardCase cardCase = new CardCase();
+		Helper.shuffleCards(cardCase);
+		List<List<Card>> cardLists = Helper.cutCards(cardCase);
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(cardLists.get(0));
+		System.out.println(cardLists.get(0));
+		System.out.println(robotplayer1.decideRunForLandlord());
+		System.out.println(robotplayer1.getPlayChoice());
+	}
+	
+	@Test
+	public void test8() {
+		CardCase cardCase = new CardCase();
+		Helper.shuffleCards(cardCase);
+		List<List<Card>> cardLists = Helper.cutCards(cardCase);
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(cardLists.get(0));
+		System.out.println(cardLists.get(0));
+		System.out.println(robotplayer1.decideRunForLandlord());
+		System.out.println(robotplayer1.getPlayChoice());
+	}
+	
+	@Test
+	public void test9() {
+		CardCase cardCase = new CardCase();
+		Helper.shuffleCards(cardCase);
+		List<List<Card>> cardLists = Helper.cutCards(cardCase);
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		robotplayer1.setCards(cardLists.get(0));
+		System.out.println(cardLists.get(0));
+		System.out.println(robotplayer1.decideRunForLandlord());
+		System.out.println(robotplayer1.getPlayChoice());
+	}
 	// Test for SparseCard
 //	@Test
 //	public void test3() {
@@ -57,10 +148,10 @@ public class testRobot extends TestCase{
 //	}
 	
 	//Test for landlord Selection
-	@Test
-	public void test100() {
-		CardRoom cardRoom=new CardRoom();
-		cardRoom.setup();
-		System.out.println(cardRoom.getPlayers().get(0).getCards());
-	}
+//	@Test
+//	public void test100() {
+//		CardRoom cardRoom=new CardRoom();
+//		cardRoom.setup();
+//		System.out.println(cardRoom.getPlayers().get(0).getCards());
+//	}
 }

@@ -66,28 +66,10 @@ public class RobotPlayer extends Player{
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();	
 		calculateCombinationList();		
-		System.out.println("combinationList:");
-		System.out.println(combinationList);
 		clearInvalidHand();
-		System.out.println("Handlist:");
-		System.out.println(handList);
-		System.out.println("BombList:");
-		System.out.println(bombList);				
-		System.out.println("combinationList:");
-		System.out.println(combinationList);
-		System.out.println("Hand history:");
 		//Strategies
-		for(int i=0;i<handHistroy.size();i++) {
-			if(handHistroy.get(i).getType()!=null)				
-				System.out.println(handHistroy.get(i));
-			else {
-				System.out.println("null");
-			}
-		}
 		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
-			System.out.println("play proactively");
 			response=playCardsProactively();
-			System.out.println("proactive answer:"+response);
 		}
 		else {
 			Hand lastValidHand=null;
@@ -98,9 +80,7 @@ public class RobotPlayer extends Player{
 				}					
 			}
 			List<Card> formerCards=lastValidHand.getCards();	//get last valid cards
-			System.out.println("play passively");
 			response=playCardsPassively(formerCards);
-			System.out.println("Passive answer:"+response);
 		}
 		//Convert response to answer
 		if(response.isEmpty())
@@ -112,17 +92,14 @@ public class RobotPlayer extends Player{
 	
 	public List<Card> playCardsProactively() {
 		for(Hand hand:handList) {
-			System.out.println("a");
 			if(hand.getType()!=HandType.ILLEGAL)
 				return hand.getCards();
 		}
 		for(Hand hand:combinationList) {
-			System.out.println("b");
 			if(hand.getType()!=HandType.ILLEGAL)
 				return hand.getCards();
 		}
 		for(Hand hand:bombList) {
-			System.out.println("c");
 			if(hand.getType()!=HandType.ILLEGAL)
 				return hand.getCards();
 		}
@@ -133,33 +110,25 @@ public class RobotPlayer extends Player{
 		List<Card> response = new ArrayList<Card>();
 		Hand formerHand=Hand.cards2hand(formerCards);
 		totalHandCount=handList.size();
-		System.out.println("formerHand"+formerHand);
 		if(totalHandCount==2 && !bombList.isEmpty()) {
 			response=bombList.get(0).getCards();
 			return response;
 		}
 		if(formerHand.getType()==HandType.ROCKET){
-			System.out.println("a");
 			return new ArrayList<Card>();
 		}
 		for(Hand hand:handList) {
 			if(formerHand.isSmallerThan(hand)==true) {
-				System.out.println("outHand"+hand);
-				System.out.println("b");
 				return hand.getCards();
 			}				
 		}
 		for(Hand hand:combinationList) {
 			if(formerHand.isSmallerThan(hand)==true) {
-				System.out.println("outHand"+hand);
-				System.out.println("c");
 				return hand.getCards();
 			}
 		}
 		for(Hand hand:bombList) {
 			if(formerHand.isSmallerThan(hand)==true) {
-				System.out.println("outHand"+hand);
-				System.out.println("d");
 				return hand.getCards();
 			}
 		}		
@@ -478,7 +447,6 @@ public class RobotPlayer extends Player{
 	
 	
 	private void calculateCombinationList() {
-		System.out.println("Cal combination list");
 		combinationList.clear();
 		List<Card> copyCards=new ArrayList<Card>();
 		for(Card card: cards) {
@@ -508,9 +476,6 @@ public class RobotPlayer extends Player{
 				Hand combinationHand=Hand.cards2hand(temp1Cards);
 				if(combinationHand.getType()!=HandType.ILLEGAL) {
 					tempList.add(combinationHand);
-					System.out.println(temp1Cards);
-					System.out.println(combinationHand);
-					System.out.println(tempList);
 				}
 			}
 		}
