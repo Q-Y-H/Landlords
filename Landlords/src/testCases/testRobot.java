@@ -139,7 +139,6 @@ public class testRobot extends TestCase{
 	}
 	@Test
 	public void test10() {
-		CardCase cardCase = new CardCase();
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[3], c[4], c[4], c[4], c[4], c[5], c[5], c[5], c[5], c[15], c[16], c[17]);
@@ -151,7 +150,6 @@ public class testRobot extends TestCase{
 	}
 	@Test
 	public void test11() {
-		CardCase cardCase = new CardCase();
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4], c[4], c[4], c[5], c[5], c[5], c[7], c[13], c[16]);
@@ -167,20 +165,10 @@ public class testRobot extends TestCase{
 		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[5], c[6], c[7], c[17]);
 		robotplayer1.setCards(cards1);
 		System.out.println(cards1);
-
 		robotplayer1.sparseCards();
 		System.out.println(robotplayer1.getHandList());
 	}
-	@Test
-	public void test13() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[3], c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
-	}
+	
 	@Test
 	public void test14() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
