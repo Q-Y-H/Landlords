@@ -13,7 +13,7 @@ public class PlayerController {
 	};
 
 	public void storeAndExecute(Command cmd) {
-		this.history.add(cmd); // optional
+		this.history.add(cmd);
 		cmd.execute();
 	}
 }

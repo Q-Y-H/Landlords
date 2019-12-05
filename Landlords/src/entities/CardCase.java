@@ -38,13 +38,4 @@ public class CardCase {
 	public List<Card> getBaseCards() {
 		return baseCards;
 	}
-
-	public void setBaseCards(List<Card> baseCards) {
-		this.baseCards = baseCards;
-	}
-	
-	public static void sortCards(List<Card> cards) {
-		Collections.sort(cards, Card.cardComparator);
-	}
-
 }

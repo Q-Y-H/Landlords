@@ -1,7 +1,7 @@
 import entities.CardRoom;
 import entities.GameBoard;
+import entities.Messenger;
 import enums.RoomType;
-import helpers.Messenger;
 
 public class LandlordGame {
 	private GameBoard gameBoard;

@@ -15,8 +15,9 @@ public abstract class Player {
 	private int id;
 	private String nickname;
 	private PlayerRole role;
-	protected List<Card> cards = new ArrayList<Card>();
-	protected LinkedList<Hand> recentHands = new LinkedList<Hand>();
+	protected Messenger messenger;
+	protected List<Card> cards;
+	protected LinkedList<Hand> recentHands;
 
 	public Player(String nickname, PlayerRole role, LinkedList<Hand> recentHands) {
 		this.setId(idCounter);
@@ -24,6 +25,7 @@ public abstract class Player {
 		this.role = role;
 		this.cards = null;
 		this.recentHands = recentHands;
+		this.messenger = Messenger.getInstance();
 		++Player.idCounter;
 	}
 

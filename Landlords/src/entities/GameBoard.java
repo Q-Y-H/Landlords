@@ -16,15 +16,16 @@ import Exceptions.InputInvalidException;
 import enums.HandType;
 import enums.PlayerRole;
 import enums.Rank;
-import helpers.Messenger;
 
 public class GameBoard {
 	private CardRoom room;
 	private PlayerController playerController;
+	private Messenger messenger;
 
 	public GameBoard(CardRoom room) {
 		this.room = room;
 		this.playerController = new PlayerController();
+		this.messenger = Messenger.getInstance();
 	}
 
 	public void run() {
@@ -33,14 +34,6 @@ public class GameBoard {
 		electLandlord();
 		gameStart();
 		checkWinner();
-		Messenger.getInstance().waiting();
-	}
-
-	private void checkWinner() {
-		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD)
-			Messenger.getInstance().print("Landlord wins!");
-		else
-			Messenger.getInstance().print("Peasants win!");
 	}
 
 	private void setNickName() {
@@ -49,15 +42,7 @@ public class GameBoard {
 		}
 	}
 
-	public boolean isValidInputCardNames(ArrayList<String> cardNames) {
-		for (String cardName : cardNames) {
-			if (!Rank.aliasSetContains(cardName))
-				return false;
-		}
-		return true;
-	}
-
-	public void electLandlord() {
+	private void electLandlord() {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
 		int cursor = new Random().nextInt(3); // range: 0, 1, 2
@@ -69,13 +54,11 @@ public class GameBoard {
 				if (nWaive == 3) { // all waive
 					landlordID = new Random().nextInt(3);
 					break;
-				} else if (nWaive == 2) // two players waive
+				} else if (nWaive == 2) { // two players waive
 					break;
-				else if (nWaive == 1) // one player waives
-					if (!choices.get(0))
-						cursor = (cursor + 1) % 3;
-					else if (nWaive == 0)
-						;// all run for landlord: give the chance to the first player
+				} else if (nWaive == 1 && !choices.get(0)) { // one player waives
+					cursor = (cursor + 1) % 3;
+				}
 			}
 
 			Player player = players.get(cursor);
@@ -87,7 +70,7 @@ public class GameBoard {
 			if (isRunningForLandlord)
 				landlordID = cursor;
 			else
-				nWaive++;
+				++nWaive;
 
 			cursor = (cursor + 1) % 3;
 		}
@@ -95,12 +78,12 @@ public class GameBoard {
 		room.setLandlordID(landlordID);
 		players.get(landlordID).setRole(PlayerRole.LANDLORD);
 		players.get(landlordID).getCards().addAll(this.room.getLandlordCards());
-		CardCase.sortCards(players.get(landlordID).getCards());
+		CardRoom.sortCards(players.get(landlordID).getCards());
 
-		Messenger.getInstance().print("The landlord is Player " + players.get(landlordID).getNickname());
-		Messenger.getInstance().print("Landlord cards:");
-		Messenger.getInstance().print(Messenger.getInstance().printCards(this.room.getLandlordCards()));
-		Messenger.getInstance().waiting();
+		this.messenger.print("The landlord is Player " + players.get(landlordID).getNickname());
+		this.messenger.print("Landlord cards:");
+		this.messenger.print(this.messenger.printCards(this.room.getLandlordCards()));
+		this.messenger.waiting();
 	}
 
 	public void gameStart() {
@@ -108,27 +91,25 @@ public class GameBoard {
 		int cursor = room.getLandlordID();
 		List<Player> players = this.room.getPlayers();
 		LinkedList<Hand> handHistory = this.room.getHandHistory();
-		LinkedList<Hand> recentHands = this.room.getRecentHands();
-		
 
-		Messenger.getInstance().clear();
-		Messenger.getInstance().print("Game Start!\n");
+		this.messenger.clear();
+		this.messenger.print("Game Start!\n");
 
 		while (!isFinish) {
 			Player player = players.get(cursor);
-			Messenger.getInstance().waitForPlayer(player);
-			Messenger.getInstance().clear();
-			Messenger.getInstance().print(Messenger.getInstance().playersInfo(cursor, this.room)); // TODO: Modification
+			this.messenger.waitForPlayer(player);
+			this.messenger.clear();
+			this.messenger.print(this.messenger.playersInfo(cursor, this.room));
 
 			while (true) {
 				try {
 					Command<String> playChoiceCommand = new PlayChoiceCommand(player);
 					this.playerController.storeAndExecute(playChoiceCommand);
-					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo"
+					String cmd = playChoiceCommand.getResult();
 
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {
-							Messenger.getInstance().print("Cannot pass.");
+							this.messenger.print("Cannot pass.");
 							continue;
 						} else {
 							handHistory.add(new Hand(null, null, null, 0, new ArrayList<Card>()));
@@ -142,43 +123,30 @@ public class GameBoard {
 						inputCardNames.add(cmdScanner.next());
 					cmdScanner.close();
 
-//				if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
-//					Messenger.getInstance().print(Messenger.getInstance().inputErrorMessage()); // TODO: Exception Handler
-//					continue;
-//				}
 					if (inputCardNames.size() == 0 || !isValidInputCardNames(inputCardNames)) {
 						throw new InputInvalidException();
 					}
 
 					List<Card> selectedCards = player.checkCardsOnHand(inputCardNames); // check if cards are on hand
-//				if (selectedCards == null) {
-//					Messenger.getInstance().print(Messenger.getInstance().cardsNotOnHandError());
-//					continue;
-//				}
+
 					if (selectedCards == null) {
 						throw new CardsNotOnHandException();
 					}
 
 					Hand currHand = Hand.cards2hand(selectedCards);
-//				if (currHand.getType() == HandType.ILLEGAL) {
-//					Messenger.getInstance().print(Messenger.getInstance().disobeyRulesError());
-//					continue;
-//				}
+
 					if (currHand.getType() == HandType.ILLEGAL) {
 						throw new DisobeyRulesException();
 					}
 
-					/* compare lastHnad with currHand */
+					/* compare lastHand with currHand */
 					Hand lastHand;
-					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || handHistory.isEmpty()) // create
-																															// a
-																															// fake
-																															// hand
+					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || handHistory.isEmpty())
 						lastHand = new Hand(HandType.ILLEGAL, null, null, 0, new ArrayList<Card>());
 					else
 						lastHand = handHistory.getLast();
 					// if the last player "PASS"
-					if (lastHand.getType() == null) {
+					if (lastHand.getCards().size() == 0) {
 						int index = handHistory.size() - 2;
 						lastHand = handHistory.get(index);
 					}
@@ -198,31 +166,45 @@ public class GameBoard {
 						handHistory.add(currHand);
 						break;
 					} else {
-//					System.out.println(Messenger.getInstance().disobeyRulesError());
-//					continue;
 						throw new DisobeyRulesException();
 					}
 				} catch (InputInvalidException e1) {
-					Messenger.getInstance().print(e1.getMessage());
+					this.messenger.print(e1.getMessage());
 				} catch (CardsNotOnHandException e2) {
-					Messenger.getInstance().print(e2.getMessage());
+					this.messenger.print(e2.getMessage());
 				} catch (DisobeyRulesException e3) {
-					Messenger.getInstance().print(e3.getMessage());
+					this.messenger.print(e3.getMessage());
 				}
 			}
 
 			if (!handHistory.getLast().getCards().isEmpty())
-				Messenger.getInstance().print(Messenger.getInstance().printCards(handHistory.getLast().getCards()));
+				this.messenger.print(this.messenger.printCards(handHistory.getLast().getCards()));
 
-			Messenger.getInstance().waiting();
-			Messenger.getInstance().clear();
+			this.messenger.waiting();
+			this.messenger.clear();
 
 			// check finish
 			if (player.getCards().size() == 0)
 				isFinish = true;
 
-			// Room info update
+			// update active player
 			cursor = (cursor + 1) % 3;
 		}
+	} 
+	
+	public boolean isValidInputCardNames(ArrayList<String> cardNames) {
+		for (String cardName : cardNames) {
+			if (!Rank.aliasSetContains(cardName))
+				return false;
+		}
+		return true;
+	}
+	
+	private void checkWinner() {
+		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD)
+			this.messenger.print("Landlord wins!");
+		else
+			this.messenger.print("Peasants win!");
+		this.messenger.waiting();
 	}
 }

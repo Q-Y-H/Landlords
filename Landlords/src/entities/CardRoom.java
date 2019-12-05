@@ -17,6 +17,7 @@ public class CardRoom {
 	private CardCase cardCase;
 	private LinkedList<Hand> handHistory;
 	private LinkedList<Hand> recentHands;
+
 	private RoomType type;
 
 	public CardRoom() {
@@ -38,7 +39,7 @@ public class CardRoom {
 
 		// Sort cards
 		for (List<Card> cards : cardLists) {
-			CardCase.sortCards(cards);
+			CardRoom.sortCards(cards);
 		}
 
 		// The last one portion for the landlord
@@ -47,12 +48,10 @@ public class CardRoom {
 		if (this.type == RoomType.PVP) {
 			for (int i = 0; i < 3; ++i)
 				this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT, recentHands));
-		} else if (this.type == RoomType.PVE) {
+		} else {
 			this.players.add(new HumanPlayer("undefined", PlayerRole.PEASANT, recentHands));
 			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT, recentHands));
 			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT, recentHands));
-		} else {
-			// TODO: implement in exception case such as null
 		}
 
 		for (Player player : this.players) {
@@ -142,11 +141,11 @@ public class CardRoom {
 		return cardGroups;
 	}
 
-	public static List<Card> hintCards(List<Card> cards, Hand prev, int length) {
+	public static List<Card> hintCards(List<Card> cards, Hand prev) {
 
 		List<Card> TempCards = new ArrayList<Card>();
 		List<List<Card>> workspace = new ArrayList<List<Card>>();
-		combinationSelect(workspace, cards, TempCards, length);
+		combinationSelect(workspace, cards, TempCards, prev.getCards().size());
 		for (List<Card> c : workspace) {
 			Hand tempHand = Hand.cards2hand(c);
 			if (prev.isSmallerThan(tempHand) == true) {
@@ -203,11 +202,19 @@ public class CardRoom {
 	}
 
 	public void updateRecentHands() {
-		int len = this.handHistory.size();
-		if (len < 2) {
+		int size = this.handHistory.size();
+		if (size < 2) {
 			this.recentHands = this.handHistory;
 		} else {
-			this.recentHands = this.handHistory; // TODO
+			this.recentHands = (LinkedList<Hand>) this.handHistory.subList(size - 2, size);
 		}
+	}
+
+	public LinkedList<Hand> getRecentHands() {
+		return recentHands;
+	}
+
+	public static void sortCards(List<Card> cards) {
+		Collections.sort(cards, Card.cardComparator);
 	}
 }

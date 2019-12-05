@@ -86,7 +86,7 @@ public class Hand {
 	//convert cards into Hand
 	public static Hand cards2hand(List<Card> cards) {
 		if(cards != null && !cards.isEmpty()) {
-			CardCase.sortCards(cards);
+			CardRoom.sortCards(cards);
 			
 			int[] numOfRanks = new int[20];
 			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;		//numOfRanks stores how many times a rank occurs

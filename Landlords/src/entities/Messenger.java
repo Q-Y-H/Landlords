@@ -1,36 +1,40 @@
-package helpers;
+package entities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import entities.Card;
-import entities.CardRoom;
-import entities.Hand;
-import entities.Player;
 import enums.HandType;
 
 public final class Messenger {
 
 	private static final Messenger INSTANCE = new Messenger();
+	private ArrayList<String> history = new ArrayList<String>();
 
 	final Scanner in = new Scanner(System.in);
 
-    private Messenger() {
+	private Messenger() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
 				in.close();
 			}
 		});
-    }
+	}
 
-    public static Messenger getInstance() {
-        return INSTANCE;
-    }
+	public static Messenger getInstance() {
+		return INSTANCE;
+	}
 
-	public  void print(String msg) {
+	public void print(String msg) {
+		history.add(msg);
+		System.out.print(msg);
+	}
+	
+	public void println(String msg) {
+		history.add(msg + "\n");
 		System.out.println(msg);
 	}
 
@@ -63,7 +67,7 @@ public final class Messenger {
 		boolean hasInput = false;
 
 		while (!hasInput) {
-			System.out.print(prompt);
+			print(prompt);
 			input = in.nextLine();
 			if (input.equals("")) {
 				hasInput = true;
@@ -82,7 +86,7 @@ public final class Messenger {
 					}
 				}
 			}
-			if(!hasInput) {
+			if (!hasInput) {
 				print("Invalid input.\n");
 			}
 		}
@@ -90,13 +94,13 @@ public final class Messenger {
 		return input;
 	}
 
-	public  void waitForPlayer(Player player) {
+	public void waitForPlayer(Player player) {
 		String msg = "It's player " + player.getNickname() + "'s turn!\n";
 		print(msg);
 		waiting();
 	}
 
-	public  void waiting() {
+	public void waiting() {
 		print("Press ENTER to continue ...");
 		try {
 			while (System.in.read() != '\n')
@@ -107,12 +111,12 @@ public final class Messenger {
 		}
 	}
 
-	public  void RunforLandlordMsg(Player player) {
+	public void RunforLandlordMsg(Player player) {
 		print("\nRunning for the LANDLORD position!\n");
 		waitForPlayer(player);
 	}
 
-	public  String printCards(List<Card> cards) {
+	public String printCards(List<Card> cards) {
 		String message = "┌";
 		int len = cards.size();
 		for (int i = 0; i < len; i++) {
@@ -145,7 +149,7 @@ public final class Messenger {
 		return message;
 	}
 
-	public  String printPreviousPokers(List<Card> nextPokers, List<Card> previousPokers, Player nextP,
+	public String printPreviousPokers(List<Card> nextPokers, List<Card> previousPokers, Player nextP,
 			Player previousP) {
 		String message = "";
 		if (nextPokers.size() == 0)
@@ -163,51 +167,26 @@ public final class Messenger {
 		return message;
 	}
 
-	public  void clear() {
+	public void clear() {
 		clear(300);
 	}
 
-	public  void clear(int times) {
+	public void clear(int times) {
 		String msg = "";
 		for (int i = 0; i < times; ++i)
 			msg += "\n";
 		print(msg);
 	}
 
-	
-	public String inputHelp(Hand prev) {
-		String message="";
-		if(prev.getType()!=HandType.ILLEGAL) {
-			message+="We suggest to play a ";
-			message+=prev.getType();
-			message+="\nYou can input “SUGGEST” for help.\n";
-		}	
-
-		return message;
-	}
-	public  String inputSuggest(Player p, Hand prev) {
-		// TODO Auto-generated method stub
-		List<Card> selectCards = new ArrayList<Card>();
-		selectCards = CardRoom.hintCards(p.getCards(), prev, prev.getCards().size());
-		String message = "";
-		if (selectCards != null) {
-			message += "We suggest you play: \n";
-			message += printCards(selectCards);
-		} else {
-			message += "We suggest you pass\n";
-		}
-		return message;
-	}
-
-	public  String inputErrorMessage() {
+	public String inputErrorMessage() {
 		return "Input should only contain numbers from 2 to 10 and J, Q, K, A, B, R!";
 	}
 
-	public  String cardsNotOnHandError() {
+	public String cardsNotOnHandError() {
 		return "You should select the cards in your hand!";
 	}
 
-	public  String disobeyRulesError() {
+	public String disobeyRulesError() {
 		return "Your input doesn't meet the rules!";
 	}
 
@@ -222,8 +201,7 @@ public final class Messenger {
 		return infoType;
 	}
 
-	public String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices,
-			int first) {
+	public String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices, int first) {
 		String msg = "Round " + (choices.size() + 1) + ":\n";
 		int size = choices.size();
 
@@ -244,13 +222,9 @@ public final class Messenger {
 
 	public String playersInfo(int cursor, CardRoom room) {
 		List<Player> players = room.getPlayers();
-		List<Hand> handHistory = room.getHandHistory();
+		List<Hand> handHistory = room.getRecentHands();
 
 		int size = handHistory.size();
-		if(size > 2) {
-			handHistory = handHistory.subList(size - 2, size);
-			size = 2; // TODO: refactor
-		}
 
 		String msg = "";
 		for (int i = 2; i >= 1; --i) {
@@ -282,35 +256,32 @@ public final class Messenger {
 		print(Messenger.getInstance().previousRunForLandlordInfo(players, cursor, choices, first));
 	}
 
-	/*
-	 * This method is hard to implement because besides the token, some other
-	 * parameters, like players, cursor, etc, are needed to generate the message
-	 */
-	public String getMessageByToken(String token) {
-		String msg = "";
-		switch (token) {
-		case "RunForLandlord":
-			clear();
-		}
-		return msg;
-	}
-
 	public void clearInputStream() {
 		in.nextLine();
 	}
 
-	public String inputHelp() {
-		String msg="";
-		msg+="You're the first, you can play SOLO; PAIR; TRIO; BOMB; ROCKET or Strights";// TODO Auto-generated method stub
+	public String inputHelpInfo() {
+		String msg = "Please refer to the following input instruction.\n";
+		msg += "\n";
+		msg += "To play cards:\n";
+		msg += "\t3 3 3 4\n";
+		msg += "To pass the round:\n";
+		msg += "\tpass\n";
+		msg += "Ask for a suggestion:\n";
+		msg += "\tsuggest\n";
 		return msg;
 	}
 
-	public String inputSuggest(Player player) {
-		String msg="";
-		List<Card> temp=new ArrayList<Card>();
-		temp.add(player.getCards().get(0));
-		msg+=printCards(temp);
-		return msg;
-		
+	public String inputSuggest(Player p, Hand prev) {
+		if (prev == null) {
+			return printCards(p.getCards().subList(0, 1));
+		}
+
+		List<Card> suggestCards = CardRoom.hintCards(p.getCards(), prev);
+		if (suggestCards != null) {
+			return "Suggestion:\n" + printCards(suggestCards);
+		} else {
+			return "Suggestion:\n\tpass\n";
+		}
 	}
 }
