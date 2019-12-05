@@ -61,8 +61,9 @@ public class RobotPlayer extends Player{
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();	
-		calculateCombinationList();		
+		calculateCombinationList();
 		clearInvalidHand();
+		
 		//Strategies
 		if(handHistory.isEmpty()||handHistory.size()>2&&handHistory.get(handHistory.size()-1).getType()==null &&handHistory.get(handHistory.size()-2).getType()==null) {
 			response=playCardsProactively();
@@ -478,9 +479,6 @@ public class RobotPlayer extends Player{
 		Collections.sort(combinationList, Hand.handComparator);
 	}
 	
-	public List<Hand> getSparsedList(){
-		return this.handList;
-	}
 
 	public void clearInvalidHand() {
 		if(!handList.isEmpty()) {
