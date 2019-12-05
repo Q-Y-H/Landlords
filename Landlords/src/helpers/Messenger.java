@@ -30,33 +30,9 @@ public final class Messenger {
         return INSTANCE;
     }
 
-	public  void print(String msg) {
+	public void print(String msg) {
 		System.out.println(msg);
 	}
-
-//	public  String printAskForInput(Scanner sc, String type, String prompt) {
-//		System.out.print(prompt);
-//		String input;
-//
-//		while (true) {
-//			input = sc.nextLine().toUpperCase();
-//			switch (type) {
-//			case "name":
-//				return input;
-//			case "landlord":
-//				if (input.equals("Y") || input.equals("N"))
-//					return input;
-//				else {
-//					System.out.print(prompt);
-//					break;
-//				}
-//			case "play":
-//				return input;
-//			}
-//			System.out.print("Please input correctly: ");
-//		}
-//
-//	}
 
 	public String askForInput(String prompt, String[] inputSet, boolean isCaseSensitive) {
 		String input = "";
@@ -66,7 +42,7 @@ public final class Messenger {
 			System.out.print(prompt);
 			input = in.nextLine();
 			if (input.equals("")) {
-				hasInput = true;
+				//hasInput = true;
 			} else if (inputSet.length == 0) {
 				hasInput = true;
 			} else {
@@ -83,7 +59,7 @@ public final class Messenger {
 				}
 			}
 			if(!hasInput) {
-				print("Invalid input.\n");
+				print("Invalid input");
 			}
 		}
 
@@ -99,8 +75,7 @@ public final class Messenger {
 	public  void waiting() {
 		print("Press ENTER to continue ...");
 		try {
-			while (System.in.read() != '\n')
-				;
+			while (System.in.read() != '\n');
 			// Helper.clearInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -175,28 +150,29 @@ public final class Messenger {
 	}
 
 	
-	public String inputHelp(Hand prev) {
+	public void inputHelp(Hand prev) {
 		String message="";
 		if(prev.getType()!=HandType.ILLEGAL) {
-			message+="We suggest to play a ";
+			message+="You may play a ";
 			message+=prev.getType();
-			message+="\nYou can input “SUGGEST” for help.\n";
+			message+="\nYou can input “SUGGEST” for more help\n";
 		}	
-
-		return message;
+		
+		System.out.print(message);
 	}
-	public  String inputSuggest(Player p, Hand prev) {
+	public void inputSuggest(Player p, Hand prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards = new ArrayList<Card>();
 		selectCards = CardRoom.hintCards(p.getCards(), prev, prev.getCards().size());
 		String message = "";
-		if (selectCards != null) {
+		if (selectCards != null && selectCards.size() != 0) {
 			message += "We suggest you play: \n";
 			message += printCards(selectCards);
 		} else {
 			message += "We suggest you pass\n";
 		}
-		return message;
+		
+		System.out.print(message);
 	}
 
 	public  String inputErrorMessage() {
@@ -291,26 +267,12 @@ public final class Messenger {
 		switch (token) {
 		case "RunForLandlord":
 			clear();
+
 		}
 		return msg;
 	}
 
 	public void clearInputStream() {
 		in.nextLine();
-	}
-
-	public String inputHelp() {
-		String msg="";
-		msg+="You're the first, you can play SOLO; PAIR; TRIO; BOMB; ROCKET or Strights";// TODO Auto-generated method stub
-		return msg;
-	}
-
-	public String inputSuggest(Player player) {
-		String msg="";
-		List<Card> temp=new ArrayList<Card>();
-		temp.add(player.getCards().get(0));
-		msg+=printCards(temp);
-		return msg;
-		
 	}
 }

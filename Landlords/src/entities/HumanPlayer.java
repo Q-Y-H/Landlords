@@ -7,8 +7,8 @@ import helpers.Messenger;
 
 public class HumanPlayer extends Player {
 
-	public HumanPlayer(String nickname, PlayerRole role,LinkedList<Hand> recentHands) {
-		super(nickname, role,recentHands);
+	public HumanPlayer(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
+		super(nickname, role,handHistory);
 	}
 
 	public HumanPlayer(String nickname) {
@@ -30,41 +30,23 @@ public class HumanPlayer extends Player {
 		// TODO
 		// Messenger.getInstance().handleRunForLandlord(players, cursor, choices, first);
 		String prompt = "Player " + this.getNickname() + ": Do you want to run for landlord? [y/n] ";
-		String input = Messenger.getInstance().askForInput(prompt, new String[] { "Y", "N" }, false);
-		if (input.toUpperCase().equals("Y"))
-			return true;
-		else 
-			return false;
+		do {
+			String input = Messenger.getInstance().askForInput(prompt, new String[] { "Y", "N" }, false);
+			if (input.toUpperCase().equals("Y"))
+				return true;
+			else 
+				return false;	
+		} while(true);
+		
 	}
 
 	@Override
 	public String getPlayChoice() {
 		// TODO Auto-generated method stub
 		Messenger.getInstance().print("Please choose the cards to play. Input 'help' for more information.\n");
-		String cmd = "";
-
-		while(true) {
-			String prompt = "[" + this.getRole() + "] " + this.getNickname() + " >> ";
-			cmd = Messenger.getInstance().askForInput(prompt, new String[] {}, false);
-			
-			if (cmd.toUpperCase().equals("HELP")) {
-				if (handHistory.isEmpty()) {
-					Messenger.getInstance().inputHelp();
-				}
-				else {
-					Messenger.getInstance().inputHelp(handHistory.getLast());
-				}
-			}else if (cmd.toUpperCase().equals("SUGGEST")) {
-				if(handHistory.isEmpty()) {
-					Messenger.getInstance().inputSuggest(this);
-				}
-				else {
-					Messenger.getInstance().inputSuggest(this,handHistory.getLast());
-				}
-			}else {
-				break;
-			}
-		} 
+		String prompt = "[" + this.getRole() + "] " + this.getNickname() + " >> ";
+		String cmd = Messenger.getInstance().askForInput(prompt, new String[] {}, false);
+	
 		return cmd;
 	}
 }

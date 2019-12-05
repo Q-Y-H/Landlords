@@ -3,10 +3,10 @@ package testCases;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import entities.Card;
 import entities.CardRoom;
@@ -15,19 +15,24 @@ import entities.RobotPlayer;
 import enums.Rank;
 import enums.RoomType;
 import enums.Suit;
-import junit.framework.TestCase;
 
-public class testRobotPlayer extends TestCase{
-	private Card[] c = new Card[20];
-
+public class testRobotPlayer {
+	private Card[] c;
+	private RobotPlayer robot;
+	
 	@BeforeEach
 	// initial 17 cards
 	public void setUp() {
+		c = new Card[18];
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);
-			RobotPlayer testStubPlayer=new RobotPlayer();
-			testStubPlayer.askForNickname();
-			RobotPlayer testStubPlayer2=new RobotPlayer("Bro");
+		robot = new RobotPlayer();
+	}
+	
+	@Test //test askForNickame
+	public void askForNickname_1() {
+		robot.askForNickname();
+		assertEquals(robot.getNickname(), new String("Robot 0"));
 	}
 	
 	@Test
@@ -47,17 +52,6 @@ public class testRobotPlayer extends TestCase{
 		System.out.println(robotplayer1.getPlayChoice());
 	}
 	
-	// Test for SparseCard
-//	@Test
-//	public void test3() {
-//		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-//		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-//		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3],c[2])));
-//		robotplayer1.sparseCards();
-//		System.out.println(robotplayer1.getSparsedList());
-//	}
-	
-	//Test for landlord Selection
 	@Test
 	public void test100() {
 		CardRoom cardRoom=new CardRoom();
