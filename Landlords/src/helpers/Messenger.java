@@ -299,4 +299,19 @@ public final class Messenger {
 	public void clearInputStream() {
 		in.nextLine();
 	}
+
+	public String inputHelp() {
+		String msg="";
+		msg+="You're the first, you can play SOLO; PAIR; TRIO; BOMB; ROCKET or Strights";// TODO Auto-generated method stub
+		return msg;
+	}
+
+	public String inputSuggest(Player player) {
+		String msg="";
+		List<Card> temp=new ArrayList<Card>();
+		temp.add(player.getCards().get(0));
+		msg+=printCards(temp);
+		return msg;
+		
+	}
 }

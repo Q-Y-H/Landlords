@@ -67,14 +67,14 @@ public class RobotPlayer extends Player{
 		calculateCombinationList();		
 		clearInvalidHand();
 		//Strategies
-		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
+		if(handHistory.isEmpty()||handHistory.size()>2&&handHistory.get(handHistory.size()-1).getType()==null &&handHistory.get(handHistory.size()-2).getType()==null) {
 			response=playCardsProactively();
 		}
 		else {
 			Hand lastValidHand=null;
-			for(int i=handHistroy.size()-1;i>=0;i--) {
-				if(handHistroy.get(i).getType()!=null) {
-					lastValidHand=handHistroy.get(i);
+			for(int i=handHistory.size()-1;i>=0;i--) {
+				if(handHistory.get(i).getType()!=null) {
+					lastValidHand=handHistory.get(i);
 					break;
 				}					
 			}

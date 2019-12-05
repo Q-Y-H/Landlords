@@ -126,15 +126,6 @@ public class GameBoard {
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo"
 
-					if(cmd.toUpperCase().equals("SUGGEST")) {
-						Messenger.getInstance().inputSuggest(player, handHistory.getLast());
-						continue;
-					}
-
-					if(cmd.toUpperCase().equals("HELP")) {
-						Messenger.getInstance().inputHelp(handHistory.getLast());
-						continue;
-					}
 
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {
