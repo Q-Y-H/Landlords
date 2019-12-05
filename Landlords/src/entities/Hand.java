@@ -16,6 +16,14 @@ public class Hand {
 	private int chainLength;
 	private List<Card> cards=new ArrayList<Card>();
 	private int weight=0;
+
+	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength,List<Card> cards) {
+		this.setType(type);
+		this.primal=primal;
+		this.kickers=kickers; 
+		this.chainLength=chainLength;
+		this.setCards(cards);
+	}
 	
 	public HandType getType() {
 		return type;
@@ -25,40 +33,10 @@ public class Hand {
 		return primal;
 	}
 
-//	private boolean sameCategoryWith(Hand h) {
-//		if(type!=h.type) 
-//			return false;
-//		else if(chainLength!=h.chainLength)
-//			return false;
-//
-//		if(kickers!=null && h.kickers!=null) 
-//			if(kickers[0].type!=h.kickers[0].type)
-//				return false;
-//		else if(!(kickers==null && h.kickers==null))
-//			return false;
-//		return true; 
-//	}
-//	
-//	public int compareTo(Hand h) {
-//		// TODO Refractory: throw exceptions
-//		if(h.type==HandType.ILLEGAL || h.type==null || type==HandType.ROCKET )
-//			return 1;
-//		else if( h.type==HandType.ROCKET || type==HandType.ILLEGAL||h.type==HandType.BOMB && type!=HandType.BOMB)
-//			return -1;		
-//		else if(!sameCategoryWith(h))
-//			return 1;
-//		else if(primal.ordinal()<h.primal.ordinal())
-//			return -1;
-//		else if(primal.ordinal()==h.primal.ordinal())
-//			return 0;
-//		else 
-//			return 1; 
-//	}
-
 	public boolean isSmallerThan(Hand h) {
 		if (h.type == HandType.ILLEGAL || type == HandType.ROCKET)
 			return false;
-		if (type == HandType.ILLEGAL || h.type == HandType.ROCKET)
+		if (type == null || type == HandType.ILLEGAL || h.type == HandType.ROCKET)
 			return true;
 		if (type == h.type) {
 			if (chainLength != h.chainLength)
@@ -90,14 +68,6 @@ public class Hand {
 
 	public String getInfo() {
 		return type + " " + primal.getName() + " ";
-	}
-
-	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength,List<Card> cards) {
-		this.setType(type);
-		this.primal=primal;
-		this.kickers=kickers; 
-		this.chainLength=chainLength;
-		this.setCards(cards);
 	}
 
 	public void setType(HandType type) {
