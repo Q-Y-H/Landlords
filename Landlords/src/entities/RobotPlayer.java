@@ -88,11 +88,7 @@ public class RobotPlayer extends Player{
 	}
 	
 	public List<Card> playCardsProactively() {
-		for(Hand hand:handList) {
-			if(hand.getType()!=HandType.ILLEGAL)
-				return hand.getCards();
-		}
-		return new ArrayList<Card>();
+		return handList.get(0).getCards();
 	}
 
 	public List<Card> playCardsPassively(List<Card> formerCards) {
