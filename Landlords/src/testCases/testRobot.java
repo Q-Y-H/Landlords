@@ -11,13 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 
 import entities.Card;
 import entities.CardCase;
+import entities.CardRoom;
 import entities.Hand;
 import entities.RobotPlayer;
 import enums.Rank;
 import enums.Suit;
-import helpers.Helper;
 import junit.framework.TestCase;
-
 
 public class testRobot extends TestCase{
 	private Card[] c = new Card[18];
@@ -48,7 +47,6 @@ public class testRobot extends TestCase{
 		System.out.println(robotplayer1.getPlayChoice());
 	}
 	
-
 	@Test
 	public void test3() {
 		CardCase cardCase = new CardCase();
@@ -156,5 +154,4 @@ public class testRobot extends TestCase{
 //		cardRoom.setup();
 //		System.out.println(cardRoom.getPlayers().get(0).getCards());
 //	}
-
 }

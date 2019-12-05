@@ -1,12 +1,12 @@
 package testCases;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import entities.Card;
 import entities.Hand;
@@ -188,24 +188,24 @@ public class testHand {
 		Hand h = Hand.cards2hand(cards);
 		assertEquals(h.toString(), new String("Illegal \n"));
 	}
-
+	
 	@Test // Null
 	void test24() {
 		List<Card> cards = null;
 		Hand h = Hand.cards2hand(cards);
 		assertEquals(h.toString(), new String("Illegal \n"));
 	}
-
+	
 	@Test // Empty
 	void test25() {
 		List<Card> cards = Arrays.asList();
 		Hand h = Hand.cards2hand(cards);
 		assertEquals(h.toString(), new String("Illegal \n"));
 	}
-
+	
 	@Test // 333444
 	void test26() {
-		List<Card> cards = Arrays.asList(c[3], c[3], c[3], c[4], c[4], c[4]);
+		List<Card> cards = Arrays.asList(c[3],c[3],c[3],c[4],c[4],c[4]);
 		Hand h = Hand.cards2hand(cards);
 		assertEquals(h.toString(), new String("TRIO 3 Kickers: null 2\n"));
 	}
@@ -221,7 +221,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[5]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // SOLO(4) vs SOLO(4)
@@ -231,7 +231,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SOLO(9) vs SOLO(7)
@@ -241,7 +241,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[7]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SOLO(3) vs PAIR(66)
@@ -251,7 +251,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[6], c[6]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SOLO(3) vs TRIO(6663)
@@ -261,7 +261,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[6], c[6], c[6], c[3]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SOLO(3) vs QUAD(666645)
@@ -271,7 +271,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[6], c[6], c[6], c[6], c[5], c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SOLO(3) vs BOMB(6666)
@@ -281,7 +281,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[6], c[6], c[6], c[6]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // SOLO(3) vs ROCKET(1617)
@@ -291,7 +291,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[16], c[17]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // PAIR(33) vs PAIR(55)
@@ -301,7 +301,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[5], c[5]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // PAIR(44) vs PAIR(44)
@@ -311,7 +311,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // PAIR(77) vs PAIR(44)
@@ -321,7 +321,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // PAIR(77) vs TRIO(4445)
@@ -331,7 +331,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[4], c[4], c[5]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // PAIR(77) vs SQUAD(333345)
@@ -341,7 +341,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[3], c[3], c[3], c[3], c[4], c[5]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // PAIR(77) vs SOLO(10)
@@ -351,7 +351,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs SOLO(10)
@@ -361,7 +361,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs ILLEGAL(46)
@@ -371,7 +371,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[6]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs SOLO(10)
@@ -381,7 +381,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs PAIR(1010)
@@ -391,7 +391,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[10], c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs TRIO(101010)
@@ -401,7 +401,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[8], c[8], c[8], c[3]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // TRIO(888) vs TRIO(888)
@@ -411,7 +411,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[8], c[8], c[8]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(33334455) vs ILLEGAL(46)
@@ -421,7 +421,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[6]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(33334455) vs SOLO(4)
@@ -431,7 +431,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(33334455) vs PAIR(44)
@@ -441,7 +441,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(33334455) vs TRIO(4449)
@@ -451,7 +451,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[4], c[4], c[9]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(33334455) vs SQUAD(44445566)
@@ -461,7 +461,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[4], c[4], c[9]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(55556677) vs SQUAD(33334455)
@@ -471,7 +471,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[3], c[3], c[3], c[3], c[4], c[4], c[5], c[5]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(55556677) vs BOMB(3333)
@@ -481,7 +481,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[3], c[3], c[3], c[3]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // SQUAD(55556677) vs ROCKET(1617)
@@ -491,7 +491,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[16], c[17]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // BOMB(6666) vs ILLEGAL(163)
@@ -501,7 +501,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[16], c[3]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // BOMB(6666) vs SOLO(3)
@@ -511,7 +511,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[3]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // BOMB(6666) vs PAIR(1111)
@@ -521,7 +521,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[11], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // BOMB(6666) vs PAIR(1111)
@@ -531,7 +531,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[11], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // BOMB(6666) vs TRIO(1111117)
@@ -541,7 +541,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[11], c[11], c[11], c[7]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // BOMB(6666) vs SQUAD(1111111178)
@@ -551,7 +551,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[11], c[11], c[11], c[11], c[7], c[8]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // BOMB(6666) vs ROCKET(1617)
@@ -561,7 +561,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[16], c[17]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // ROCKET(1617) vs ILLEGAL(810)
@@ -571,7 +571,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[8], c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // ROCKET(1617) vs SOLO(810)
@@ -581,7 +581,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[8]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // ROCKET(1617) vs PAIR(1010)
@@ -591,7 +591,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[10], c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // ROCKET(1617) vs TRIO(88810)
@@ -601,7 +601,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[8], c[8], c[8], c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // ROCKET(1617) vs SQUAD(8888991010)
@@ -611,7 +611,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[8], c[8], c[8], c[8], c[9], c[9], c[10], c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // ROCKET(1617) vs BOMB(8888)
@@ -621,7 +621,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[8], c[8], c[8], c[8]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // CHAINED-SOLO(34567) vs CHAINED-SOLO(78910J)
@@ -631,7 +631,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[7], c[8], c[9], c[10], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // CHAINED-SOLO in different length
@@ -641,7 +641,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[7], c[8], c[9], c[10], c[11], c[12]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs TRIO(777)
@@ -651,7 +651,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[7], c[7], c[7]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs SQUAD(77771011)
@@ -661,7 +661,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[7], c[7], c[7], c[7], c[10], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // TRIO(888) vs BOMB(7777)
@@ -671,7 +671,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[7], c[7], c[7], c[7]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // TRIO(888) vs ROCKET
@@ -681,7 +681,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[17], c[16]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // PAIR(77) vs BOMB(10101010)
@@ -691,7 +691,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[10], c[10], c[10], c[10]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // SOLO(7) vs ILLEGAL(9 11)
@@ -701,7 +701,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[9], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // PAIR(7) vs ILLEGAL(9 11)
@@ -711,7 +711,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[9], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // CHAINED-PAIR(778899) vs CHAINED-PAIR(9910101111)
@@ -721,7 +721,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[9], c[9], c[10], c[10], c[11], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // CHAINED-PAIR(778899) vs CHAINED-PAIR(9910101111)
@@ -731,7 +731,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[9], c[9], c[10], c[10], c[11], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(true, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test // CHAINED-PAIR(121213131414) vs CHAINED-PAIR(9910101111)
@@ -741,7 +741,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[9], c[9], c[10], c[10], c[11], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // AIRPLANE(12121213131345) vs AIRPLANE(9991010101112)
@@ -751,7 +751,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[9], c[9], c[9], c[10], c[10], c[10], c[11], c[12]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 	@Test // SQUAD(121212121314) vs SQUAD(999910101111)
@@ -761,9 +761,9 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[9], c[9], c[9], c[9], c[10], c[10], c[11], c[11]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
-
+	
 	@Test // TRIO(3334) vs TRIO(444)
 	void test155() {
 		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4]);
@@ -771,7 +771,7 @@ public class testHand {
 		List<Card> cards2 = Arrays.asList(c[4], c[4], c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
-		assertEquals(false, result);
+		Assert.assertEquals(false, result);
 	}
 
 }
