@@ -33,10 +33,6 @@ public class RobotPlayer extends Player{
 		super(nickname,null,null);
 	}
 
-	public RobotPlayer() {
-		super(null,null,null);
-	}
-
 	/*
 	 * Methods
 	 */
@@ -65,6 +61,8 @@ public class RobotPlayer extends Player{
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();	
+		calculateCombinationList();
+		clearInvalidHand();
 		
 		//Strategies
 		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
@@ -481,9 +479,6 @@ public class RobotPlayer extends Player{
 		Collections.sort(combinationList, Hand.handComparator);
 	}
 	
-	public List<Hand> getSparsedList(){
-		return this.handList;
-	}
 
 	public void clearInvalidHand() {
 		if(!handList.isEmpty()) {
