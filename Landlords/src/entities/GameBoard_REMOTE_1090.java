@@ -37,7 +37,6 @@ public class GameBoard {
 	}
 
 	private void checkWinner() {
-		// TODO Auto-generated method stub
 		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD)
 			Messenger.getInstance().print("Landlord wins!");
 		else
@@ -45,12 +44,11 @@ public class GameBoard {
 	}
 
 	private void setNickName() {
-		// TODO Auto-generated method stub
 		for (Player player : room.getPlayers()) {
 			this.playerController.storeAndExecute(new SetNicknameCommand(player));
 		}
 	}
-	
+
 	public boolean isValidInputCardNames(ArrayList<String> cardNames) {
 		for (String cardName : cardNames) {
 			if (!Rank.aliasSetContains(cardName))
@@ -58,11 +56,11 @@ public class GameBoard {
 		}
 		return true;
 	}
-	
+
 	public void electLandlord() {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
-		int cursor = new Random().nextInt(3);//range: 0, 1, 2
+		int cursor = new Random().nextInt(3); // range: 0, 1, 2
 		int landlordID = 0;
 		int nWaive = 0;
 
@@ -71,12 +69,13 @@ public class GameBoard {
 				if (nWaive == 3) { // all waive
 					landlordID = new Random().nextInt(3);
 					break;
-				} 
-				else if (nWaive == 2) // two players waive
+				} else if (nWaive == 2) // two players waive
 					break;
 				else if (nWaive == 1) // one player waives
-					if(!choices.get(0)) cursor = (cursor + 1) % 3;
-				// all run for landlord: give the chance to the first player
+					if (!choices.get(0))
+						cursor = (cursor + 1) % 3;
+					else if (nWaive == 0)
+						;// all run for landlord: give the chance to the first player
 			}
 
 			Player player = players.get(cursor);
@@ -109,13 +108,14 @@ public class GameBoard {
 		int cursor = room.getLandlordID();
 		List<Player> players = this.room.getPlayers();
 		LinkedList<Hand> handHistory = this.room.getHandHistory();
+		LinkedList<Hand> recentHands = this.room.getRecentHands();
+		
 
 		Messenger.getInstance().clear();
 		Messenger.getInstance().print("Game Start!\n");
 
 		while (!isFinish) {
 			Player player = players.get(cursor);
-			//List<Card> playerCards = player.getCards();
 			Messenger.getInstance().waitForPlayer(player);
 			Messenger.getInstance().clear();
 			Messenger.getInstance().print(Messenger.getInstance().playersInfo(cursor, this.room)); // TODO: Modification
@@ -125,16 +125,6 @@ public class GameBoard {
 					Command<String> playChoiceCommand = new PlayChoiceCommand(player);
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo"
-
-					if(cmd.toUpperCase().equals("SUGGEST")) {
-						Messenger.getInstance().inputSuggest(player, handHistory.getLast());
-						continue;
-					}
-
-					if(cmd.toUpperCase().equals("HELP")) {
-						Messenger.getInstance().inputHelp(handHistory.getLast());
-						continue;
-					}
 
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {
@@ -178,35 +168,36 @@ public class GameBoard {
 						throw new DisobeyRulesException();
 					}
 
-					/*compare lastHnad with currHand*/
+					/* compare lastHnad with currHand */
 					Hand lastHand;
-					if(room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-							|| handHistory.isEmpty()) //create a fake hand
-						lastHand = new Hand(HandType.ILLEGAL,null, null, 0, new ArrayList<Card>());
+					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || handHistory.isEmpty()) // create
+																															// a
+																															// fake
+																															// hand
+						lastHand = new Hand(HandType.ILLEGAL, null, null, 0, new ArrayList<Card>());
 					else
 						lastHand = handHistory.getLast();
-					//if the last player "PASS"
-					if(lastHand.getType() == null) {
-						int index = handHistory.size()-2;
+					// if the last player "PASS"
+					if (lastHand.getType() == null) {
+						int index = handHistory.size() - 2;
 						lastHand = handHistory.get(index);
 					}
-					
-					Hand lastValidHand=null;
-					for(int i=handHistory.size()-1;i>=0;i--) {
-						if(handHistory.get(i).getType()!=null) {
-							lastValidHand=handHistory.get(i);
+
+					Hand lastValidHand = null;
+					for (int i = handHistory.size() - 1; i >= 0; i--) {
+						if (handHistory.get(i).getType() != null) {
+							lastValidHand = handHistory.get(i);
 							break;
-						}					
+						}
 					}
-					
-					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
-							|| handHistory.isEmpty() || lastValidHand.isSmallerThan(currHand) == true) {
+
+					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || handHistory.isEmpty()
+							|| lastValidHand.isSmallerThan(currHand) == true) {
 						player.removeCards(selectedCards);
 						room.setLastHandPlayer(player);
 						handHistory.add(currHand);
 						break;
-					}
-					else {
+					} else {
 //					System.out.println(Messenger.getInstance().disobeyRulesError());
 //					continue;
 						throw new DisobeyRulesException();

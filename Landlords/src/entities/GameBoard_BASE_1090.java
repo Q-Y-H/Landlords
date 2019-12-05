@@ -76,7 +76,7 @@ public class GameBoard {
 					break;
 				else if (nWaive == 1) // one player waives
 					if(!choices.get(0)) cursor = (cursor + 1) % 3;
-				// all run for landlord: give the chance to the first player
+				else if (nWaive == 0) ;// all run for landlord: give the chance to the first player
 			}
 
 			Player player = players.get(cursor);
@@ -126,15 +126,6 @@ public class GameBoard {
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult(); // TODO: refactor it to "redo"
 
-					if(cmd.toUpperCase().equals("SUGGEST")) {
-						Messenger.getInstance().inputSuggest(player, handHistory.getLast());
-						continue;
-					}
-
-					if(cmd.toUpperCase().equals("HELP")) {
-						Messenger.getInstance().inputHelp(handHistory.getLast());
-						continue;
-					}
 
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {

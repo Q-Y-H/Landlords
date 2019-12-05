@@ -34,30 +34,6 @@ public final class Messenger {
 		System.out.println(msg);
 	}
 
-//	public  String printAskForInput(Scanner sc, String type, String prompt) {
-//		System.out.print(prompt);
-//		String input;
-//
-//		while (true) {
-//			input = sc.nextLine().toUpperCase();
-//			switch (type) {
-//			case "name":
-//				return input;
-//			case "landlord":
-//				if (input.equals("Y") || input.equals("N"))
-//					return input;
-//				else {
-//					System.out.print(prompt);
-//					break;
-//				}
-//			case "play":
-//				return input;
-//			}
-//			System.out.print("Please input correctly: ");
-//		}
-//
-//	}
-
 	public String askForInput(String prompt, String[] inputSet, boolean isCaseSensitive) {
 		String input = "";
 		boolean hasInput = false;

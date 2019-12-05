@@ -76,7 +76,7 @@ public class GameBoard {
 					break;
 				else if (nWaive == 1) // one player waives
 					if(!choices.get(0)) cursor = (cursor + 1) % 3;
-				// all run for landlord: give the chance to the first player
+				else if (nWaive == 0) ;// all run for landlord: give the chance to the first player
 			}
 
 			Player player = players.get(cursor);

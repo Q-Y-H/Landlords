@@ -38,7 +38,7 @@ public class testRobot extends TestCase{
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
 		System.out.println(robotplayer1.getPlayChoice());
-	}
+	}/*
 	@Test
 	public void test2() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
@@ -153,5 +153,5 @@ public class testRobot extends TestCase{
 //		CardRoom cardRoom=new CardRoom();
 //		cardRoom.setup();
 //		System.out.println(cardRoom.getPlayers().get(0).getCards());
-//	}
+//	}*/
 }
