@@ -24,7 +24,6 @@ public class GameBoard {
 	private CardRoom room;
 	private PlayerController playerController;
 	private Messenger messenger;
-	public int rand;
 
 	public GameBoard(CardRoom room) {
 		this.room = room;
@@ -46,11 +45,9 @@ public class GameBoard {
 		}
 	}
 
-	private void electLandlord() {
+	private void electLandlord(int initCursor) {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
-		int initCursor = new Random().nextInt(3);// range: 0, 1, 2
-		rand = initCursor;
 		int currCursor = initCursor;
 		int landlordID = 0;
 		int nWaive = 0;
@@ -92,6 +89,10 @@ public class GameBoard {
 		this.messenger.println("Landlord cards:");
 		this.messenger.println(this.messenger.printCards(this.room.getLandlordCards()));
 		this.messenger.waiting();
+	}
+	
+	private void electLandlord() {
+		electLandlord(new Random().nextInt(3));
 	}
 
 	public void gameStart() {
@@ -168,7 +169,7 @@ public class GameBoard {
 			}
 
 			if (!handHistory.getLast().getCards().isEmpty())
-				this.messenger.print(this.messenger.printCards(handHistory.getLast().getCards()));
+				this.messenger.println(this.messenger.printCards(handHistory.getLast().getCards()));
 
 			this.messenger.waiting();
 			this.messenger.clear();
@@ -182,7 +183,7 @@ public class GameBoard {
 		}
 	}
 
-	public boolean isValidInputCardNames(ArrayList<String> cardNames) {
+	private boolean isValidInputCardNames(ArrayList<String> cardNames) {
 		for (String cardName : cardNames) {
 			if (!Rank.aliasSetContains(cardName))
 				return false;
