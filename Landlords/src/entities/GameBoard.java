@@ -24,6 +24,7 @@ public class GameBoard {
 	private CardRoom room;
 	private PlayerController playerController;
 	private Messenger messenger;
+	public int rand;
 
 	public GameBoard(CardRoom room) {
 		this.room = room;
@@ -49,6 +50,7 @@ public class GameBoard {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
 		int initCursor = new Random().nextInt(3);// range: 0, 1, 2
+		rand = initCursor;
 		int currCursor = initCursor;
 		int landlordID = 0;
 		int nWaive = 0;
@@ -180,7 +182,7 @@ public class GameBoard {
 		}
 	}
 
-	private boolean isValidInputCardNames(ArrayList<String> cardNames) {
+	public boolean isValidInputCardNames(ArrayList<String> cardNames) {
 		for (String cardName : cardNames) {
 			if (!Rank.aliasSetContains(cardName))
 				return false;

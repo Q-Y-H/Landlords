@@ -36,7 +36,7 @@ public enum Rank {
 
 	RANK_RED_JOKER(17, "R", new String[] { "R", "r" }),;
 
-	private int value;
+	private int value; // TODO: not used?
 	private String name;
 	private String[] alias;
 	private static Set<String> aliasSet = new HashSet<String>();
