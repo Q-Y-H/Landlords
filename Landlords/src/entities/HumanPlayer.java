@@ -48,9 +48,9 @@ public class HumanPlayer extends Player {
 			cmd = Messenger.getInstance().askForInput(prompt, new String[] {}, false);
 			
 			if (cmd.toUpperCase().equals("HELP")) {
-				// TODO
+				cmd=Messenger.getInstance().inputHelp(handHistory.getLast());
 			}else if (cmd.toUpperCase().equals("SUGGEST")) {
-				// TODO
+				cmd=Messenger.getInstance().inputSuggest(this,handHistory.getLast());
 			}else {
 				break;
 			}
