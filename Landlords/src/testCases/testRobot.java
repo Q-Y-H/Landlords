@@ -47,6 +47,7 @@ public class testRobot extends TestCase{
 		System.out.println(robotplayer1.getPlayChoice());
 	}
 	
+
 	@Test
 	public void test3() {
 		CardCase cardCase = new CardCase();
@@ -154,4 +155,5 @@ public class testRobot extends TestCase{
 //		cardRoom.setup();
 //		System.out.println(cardRoom.getPlayers().get(0).getCards());
 //	}
+
 }
