@@ -65,8 +65,7 @@ public class RobotPlayer extends Player{
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();	
-		calculateCombinationList();		
-		clearInvalidHand();
+		
 		//Strategies
 		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
 			response=playCardsProactively();
@@ -136,7 +135,14 @@ public class RobotPlayer extends Player{
 
 	}
 
-
+		
+	public String getHandList() {
+		String message = null;
+		for(Hand hand: handList) {
+			message+=hand.toString();
+		}
+		return message;
+	}
 	public void sparseCards() {		
 
 		handList.clear();
@@ -313,7 +319,7 @@ public class RobotPlayer extends Player{
 		}
 		
 		//5.2 顺子长度大于5，头/尾存在连对，顺子长度-连对长度>=5,转化为三带加顺子
-		if(numOfRanks[maxStart]>=2&&maxEnd-maxStart>=4) {
+		if(numOfRanks[maxStart]>=2&&maxEnd-maxStart>=5) {
 			numOfRanks[maxStart]=0;
 			List<Card> tem=new ArrayList<Card>();
 			for(Card card :copyCards) {

@@ -137,21 +137,147 @@ public class testRobot extends TestCase{
 		System.out.println(robotplayer1.decideRunForLandlord());
 		System.out.println(robotplayer1.getPlayChoice());
 	}
-	// Test for SparseCard
-//	@Test
-//	public void test3() {
-//		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-//		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-//		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3],c[2])));
-//		robotplayer1.sparseCards();
-//		System.out.println(robotplayer1.getSparsedList());
-//	}
-	
-	//Test for landlord Selection
-//	@Test
-//	public void test100() {
-//		CardRoom cardRoom=new CardRoom();
-//		cardRoom.setup();
-//		System.out.println(cardRoom.getPlayers().get(0).getCards());
-//	}
+	@Test
+	public void test10() {
+		CardCase cardCase = new CardCase();
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[3], c[4], c[4], c[4], c[4], c[5], c[5], c[5], c[5], c[15], c[16], c[17]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test11() {
+		CardCase cardCase = new CardCase();
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4], c[4], c[4], c[5], c[5], c[5], c[7], c[13], c[16]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test12() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[5], c[6], c[7], c[17]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test13() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test14() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[6], c[7], c[7], c[8], c[9], c[10], c[11], c[12]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test15() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4], c[5], c[6], c[7], c[8], c[9],  c[10], c[10]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test16() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test17() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[10]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test18() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3],  c[4],  c[5],  c[6], c[7], c[8], c[9], c[10] ,c[15], c[15], c[16]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test19() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test20() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test21() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[6], c[6], c[6], c[7], c[8], c[9], c[10]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
+	@Test
+	public void test22() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[4], c[5], c[5], c[6], c[7], c[7], c[8], c[9], c[10], c[11], c[11] ,c[13], c[17]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
 }
