@@ -16,23 +16,23 @@ public abstract class Player {
 	private String nickname;
 	private PlayerRole role;
 	protected List<Card> cards = new ArrayList<Card>();
-	protected LinkedList<Hand> handHistory=new LinkedList<Hand>();
-	
-	public Player(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
+	protected LinkedList<Hand> recentHands = new LinkedList<Hand>();
+
+	public Player(String nickname, PlayerRole role, LinkedList<Hand> recentHands) {
 		this.setId(idCounter);
 		this.nickname = nickname;
 		this.role = role;
 		this.cards = null;
-		this.handHistory=handHistory;
+		this.recentHands = recentHands;
 		++Player.idCounter;
 	}
 
 	public Player(String nickname) {
-		this(nickname, null,null);
+		this(nickname, null, null);
 	}
 
 	public Player() {
-		this(null, null,null);
+		this(null, null, null);
 	}
 
 	public PlayerRole getRole() {
@@ -92,11 +92,11 @@ public abstract class Player {
 	public void removeCards(List<Card> handCards) {
 		cards.removeAll(handCards);
 	}
-	
-	public void removeCards(Hand hand) {		
+
+	public void removeCards(Hand hand) {
 		this.removeCards(hand.getCards());
 	}
-	
+
 	public void playCards(List<Card> cards) {
 		// TODO Auto-generated method stub
 

@@ -7,8 +7,8 @@ import helpers.Messenger;
 
 public class HumanPlayer extends Player {
 
-	public HumanPlayer(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
-		super(nickname, role,handHistory);
+	public HumanPlayer(String nickname, PlayerRole role,LinkedList<Hand> recentHands) {
+		super(nickname, role,recentHands);
 	}
 
 	public HumanPlayer(String nickname) {
@@ -48,9 +48,9 @@ public class HumanPlayer extends Player {
 			cmd = Messenger.getInstance().askForInput(prompt, new String[] {}, false);
 			
 			if (cmd.toUpperCase().equals("HELP")) {
-				cmd=Messenger.getInstance().inputHelp(handHistory.getLast());
+				cmd=Messenger.getInstance().inputHelp(recentHands.getLast());
 			}else if (cmd.toUpperCase().equals("SUGGEST")) {
-				cmd=Messenger.getInstance().inputSuggest(this,handHistory.getLast());
+				cmd=Messenger.getInstance().inputSuggest(this,recentHands.getLast());
 			}else {
 				break;
 			}

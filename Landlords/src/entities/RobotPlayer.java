@@ -24,8 +24,8 @@ public class RobotPlayer extends Player{
 	/*
 	 * Constructor
 	 */
-	public RobotPlayer(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
-		super(nickname, role,handHistory);
+	public RobotPlayer(String nickname, PlayerRole role,LinkedList<Hand> recentHands) {
+		super(nickname, role,recentHands);
 	}
 
 	public RobotPlayer(String nickname) {
@@ -67,14 +67,14 @@ public class RobotPlayer extends Player{
 		calculateCombinationList();		
 		clearInvalidHand();
 		//Strategies
-		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
+		if(recentHands.isEmpty()||recentHands.size()>2&&recentHands.get(recentHands.size()-1).getType()==null &&recentHands.get(recentHands.size()-2).getType()==null) {
 			response=playCardsProactively();
 		}
 		else {
 			Hand lastValidHand=null;
-			for(int i=handHistroy.size()-1;i>=0;i--) {
-				if(handHistroy.get(i).getType()!=null) {
-					lastValidHand=handHistroy.get(i);
+			for(int i=recentHands.size()-1;i>=0;i--) {
+				if(recentHands.get(i).getType()!=null) {
+					lastValidHand=recentHands.get(i);
 					break;
 				}					
 			}
