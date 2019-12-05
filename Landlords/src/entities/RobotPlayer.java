@@ -33,10 +33,6 @@ public class RobotPlayer extends Player{
 		super(nickname,null,null);
 	}
 
-	public RobotPlayer() {
-		super(null,null,null);
-	}
-
 	/*
 	 * Methods
 	 */
@@ -65,7 +61,8 @@ public class RobotPlayer extends Player{
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();	
-		
+		calculateCombinationList();		
+		clearInvalidHand();
 		//Strategies
 		if(handHistroy.isEmpty()||handHistroy.size()>2&&handHistroy.get(handHistroy.size()-1).getType()==null &&handHistroy.get(handHistroy.size()-2).getType()==null) {
 			response=playCardsProactively();
