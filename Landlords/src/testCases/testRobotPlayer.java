@@ -18,7 +18,7 @@ import enums.Suit;
 import helpers.Helper;
 import junit.framework.TestCase;
 
-public class testRobot extends TestCase{
+public class testRobotPlayer extends TestCase{
 	private Card[] c = new Card[20];
 
 	@BeforeEach
