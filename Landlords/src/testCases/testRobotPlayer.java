@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.Assert;
 
 import entities.Card;
 import entities.CardCase;
@@ -36,7 +37,7 @@ public class testRobotPlayer extends TestCase{
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[4],c[3])));
-		System.out.println(robotplayer1.getPlayChoice());
+		Assert.assertEquals("pass",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
@@ -45,15 +46,16 @@ public class testRobotPlayer extends TestCase{
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		System.out.println(robotplayer1.getPlayChoice());
+		Assert.assertEquals("5  5  ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
 	public void test2() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[16], c[17]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		System.out.println(robotplayer1.getPlayChoice());
+		Assert.assertEquals("pass",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
@@ -61,15 +63,11 @@ public class testRobotPlayer extends TestCase{
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		System.out.println(robotplayer1.getPlayChoice());
+		Assert.assertEquals("3  ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
 	public void test4() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		System.out.println(robotplayer1.getPlayChoice());
 	}
 	
 	@Test
@@ -77,7 +75,7 @@ public class testRobotPlayer extends TestCase{
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5])));
-		System.out.println(robotplayer1.getPlayChoice());
+		Assert.assertEquals("5  5  ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
@@ -86,7 +84,7 @@ public class testRobotPlayer extends TestCase{
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3],c[3],c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[4],c[4],c[4],c[4])));
-		System.out.println(robotplayer1.getPlayChoice());
+		Assert.assertEquals("4  4  4  4  ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
