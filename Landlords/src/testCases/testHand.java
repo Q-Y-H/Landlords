@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +12,8 @@ import entities.Card;
 import entities.Hand;
 import enums.Rank;
 import enums.Suit;
-import junit.framework.TestCase;
 
-class testHand extends TestCase {
+public class testHand {
 	private Card[] c = new Card[20];
 
 	@BeforeEach
@@ -31,63 +31,63 @@ class testHand extends TestCase {
 	void test01() {
 		List<Card> cards = Arrays.asList(c[5]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("SOLO 5 Kickers: null 1\n"));
 	}
 
 	@Test // 55
 	void test02() {
 		List<Card> cards = Arrays.asList(c[5], c[5]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("PAIR 5 Kickers: null 1\n"));
 	}
 
 	@Test // 555
 	void test03() {
 		List<Card> cards = Arrays.asList(c[5], c[5], c[5]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("TRIO 5 Kickers: null 1\n"));
 	}
 
 	@Test // 5555
 	void test04() {
 		List<Card> cards = Arrays.asList(c[5], c[5], c[5], c[5]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("BOMB 5 Kickers: null 1\n"));
 	}
 
 	@Test // 34567
 	void test05() {
 		List<Card> cards = Arrays.asList(c[3], c[4], c[5], c[6], c[7]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("SOLO 3 Kickers: null 5\n"));
 	}
 
 	@Test // 445566
 	void test06() {
 		List<Card> cards = Arrays.asList(c[4], c[5], c[6], c[4], c[5], c[6]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("PAIR 4 Kickers: null 3\n"));
 	}
 
-	@Test // 555666
+	@Test // 5556
 	void test07() {
-		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[5], c[6],c[6]);
+		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[5]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("TRIO 5 Kickers: SOLO 6 1\n"));
 	}
 
-	@Test // 5553
+	@Test // 8883
 	void test08() {
-		List<Card> cards = Arrays.asList(c[5], c[5], c[5], c[3]);
+		List<Card> cards = Arrays.asList(c[8], c[8], c[8], c[3]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("TRIO 8 Kickers: SOLO 3 1\n"));
 	}
 
 	@Test // 555666+34
 	void test09() {
 		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[6], c[5], c[6], c[3], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("TRIO 5 Kickers: SOLO 3 SOLO 4 2\n"));
 	}
 
 	@Test // 55533
@@ -96,35 +96,35 @@ class testHand extends TestCase {
 		Card c2 = new Card(Rank.RANK_3, Suit.BLANK);
 		List<Card> cards = Arrays.asList(c[5], c[5], c[5], c[3], c[3]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("TRIO 5 Kickers: PAIR 3 1\n"));
 	}
 
 	@Test // 555666+3344
 	void test11() {
 		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[6], c[5], c[6], c[3], c[4], c[3], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("TRIO 5 Kickers: PAIR 3 PAIR 4 2\n"));
 	}
 
 	@Test // 5555+34
 	void test12() {
 		List<Card> cards = Arrays.asList(c[5], c[5], c[5], c[5], c[3], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("QUAD 5 Kickers: SOLO 3 SOLO 4 1\n"));
 	}
 
 	@Test // 5555+3344
 	void test13() {
 		List<Card> cards = Arrays.asList(c[5], c[5], c[5], c[5], c[3], c[4], c[3], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("QUAD 5 Kickers: PAIR 3 PAIR 4 1\n"));
 	}
 
 	@Test // 55556666+789 10
 	void test14() {
 		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[6], c[5], c[6], c[5], c[6], c[7], c[8], c[9], c[10]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("QUAD 5 Kickers: SOLO 7 SOLO 8 SOLO 9 SOLO 10 2\n"));
 	}
 
 	@Test // 55556666+33447788
@@ -132,70 +132,84 @@ class testHand extends TestCase {
 		List<Card> cards = Arrays.asList(c[5], c[6], c[5], c[6], c[5], c[6], c[5], c[6], c[7], c[8], c[7], c[8], c[3],
 				c[4], c[3], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("QUAD 5 Kickers: PAIR 3 PAIR 4 PAIR 7 PAIR 8 2\n"));
 	}
 
 	@Test // Jj
 	void test16() {
 		List<Card> cards = Arrays.asList(c[16], c[17]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("ROCKET B Kickers: null 1\n"));
 	}
 
 	@Test // Illegal 333555
 	void test17() {
 		List<Card> cards = Arrays.asList();
 		Hand h = Hand.cards2hand(cards);
-		System.out.println(h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
 	}
 
 	@Test // Illegal 31617
 	void test18() {
 		List<Card> cards = Arrays.asList(c[3], c[16], c[17]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 18: " + h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
 	}
 
 	@Test // Illegal 44443
 	void test19() {
 		List<Card> cards = Arrays.asList(c[3], c[4], c[4], c[4], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 19: " + h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
 	}
 
 	@Test // Illegal 34
 	void test20() {
 		List<Card> cards = Arrays.asList(c[3], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 20: " + h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
 	}
 
 	@Test // Illegal 345
 	void test21() {
 		List<Card> cards = Arrays.asList(c[3], c[4], c[5]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 21: " + h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
 	}
 
 	@Test // Illegal 443
 	void test22() {
 		List<Card> cards = Arrays.asList(c[3], c[4], c[4]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 22: " + h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
 	}
 
 	@Test // Illegal 345
 	void test23() {
 		List<Card> cards = Arrays.asList(c[3], c[4], c[5], c[6]);
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 23: " + h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
 	}
-
-	@Test // Illegal 345
+	
+	@Test // Null
 	void test24() {
-		List<Card> cards = Arrays.asList(c[8], c[4], c[8]);
+		List<Card> cards = null;
 		Hand h = Hand.cards2hand(cards);
-		System.out.println("Test 24: " + h.toString());
+		assertEquals(h.toString(), new String("Illegal \n"));
+	}
+	
+	@Test // Empty
+	void test25() {
+		List<Card> cards = Arrays.asList();
+		Hand h = Hand.cards2hand(cards);
+		assertEquals(h.toString(), new String("Illegal \n"));
+	}
+	
+	@Test // 333444
+	void test26() {
+		List<Card> cards = Arrays.asList(c[3],c[3],c[3],c[4],c[4],c[4]);
+		Hand h = Hand.cards2hand(cards);
+		assertEquals(h.toString(), new String("TRIO 3 Kickers: null 2\n"));
 	}
 	/*
 	 * test method compareTo(Hand)
@@ -747,6 +761,16 @@ class testHand extends TestCase {
 		List<Card> cards1 = Arrays.asList(c[12], c[12], c[12], c[12], c[13], c[14]);
 		Hand h1 = Hand.cards2hand(cards1);
 		List<Card> cards2 = Arrays.asList(c[9], c[9], c[9], c[9], c[10], c[10], c[11], c[11]);
+		Hand h2 = Hand.cards2hand(cards2);
+		boolean result = h1.isSmallerThan(h2);
+		Assert.assertEquals(false, result);
+	}
+	
+	@Test // TRIO(3334) vs TRIO(444)
+	void test155() {
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[4], c[4], c[4]);
 		Hand h2 = Hand.cards2hand(cards2);
 		boolean result = h1.isSmallerThan(h2);
 		Assert.assertEquals(false, result);
