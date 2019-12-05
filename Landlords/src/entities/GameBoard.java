@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import Commands.Command;
 import Commands.DecideRunForLandlordCommand;
 import Commands.PlayChoiceCommand;
 import Commands.SetNicknameCommand;
 import Exceptions.CardsNotOnHandException;
 import Exceptions.DisobeyRulesException;
+import Exceptions.FirstPlayerCannotPassException;
 import Exceptions.InputInvalidException;
 import enums.HandType;
 import enums.PlayerRole;
@@ -94,6 +97,7 @@ public class GameBoard {
 		int cursor = room.getLandlordID();
 		List<Player> players = this.room.getPlayers();
 		LinkedList<Hand> handHistory = this.room.getHandHistory();
+		Hand lastValidHand = null;
 
 		this.messenger.clear();
 		this.messenger.print("Game Start!\n");
@@ -103,68 +107,61 @@ public class GameBoard {
 			this.messenger.waitForPlayer(player);
 			this.messenger.clear();
 			this.messenger.print(this.messenger.prevPlayersInfo(cursor, this.room));
+			boolean isValidInput = false;
 
-			while (true) {
+			while (!isValidInput) {
 				try {
 					Command<String> playChoiceCommand = new PlayChoiceCommand(player);
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult();
 
 					if (cmd.toUpperCase().equals("PASS")) {
-						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {
-							this.messenger.println("Cannot pass.");
-							continue;
+						if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player) {
+							throw new FirstPlayerCannotPassException();
 						} else {
 							handHistory.add(Hand.cards2hand(new ArrayList<Card>()));
-							break;
+							isValidInput = true;
 						}
-					}
-
-					ArrayList<String> inputCardNames = new ArrayList<String>();
-					Scanner cmdScanner = new Scanner(cmd);
-					while (cmdScanner.hasNext())
-						inputCardNames.add(cmdScanner.next());
-					cmdScanner.close();
-
-					if (inputCardNames.size() == 0 || !isValidInputCardNames(inputCardNames)) {
-						throw new InputInvalidException();
-					}
-
-					List<Card> selectedCards = player.checkCardsOnHand(inputCardNames);
-
-					if (selectedCards == null) {
-						throw new CardsNotOnHandException();
-					}
-
-					Hand currHand = Hand.cards2hand(selectedCards);
-
-					if (currHand.getType() == HandType.ILLEGAL) {
-						throw new DisobeyRulesException();
-					}
-
-					Hand lastValidHand = null;
-					for (int i = handHistory.size() - 1; i >= 0; i--) {
-						if (!handHistory.get(i).getCards().isEmpty()) {
-							lastValidHand = handHistory.get(i);
-							break;
-						}
-					}
-
-					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || handHistory.isEmpty()
-							|| lastValidHand.isSmallerThan(currHand)) {
-						player.removeCards(selectedCards);
-						room.setLastHandPlayer(player);
-						handHistory.add(currHand);
-						break;
 					} else {
-						throw new DisobeyRulesException();
+						ArrayList<String> inputCardNames = new ArrayList<String>();
+						Scanner cmdScanner = new Scanner(cmd);
+						while (cmdScanner.hasNext())
+							inputCardNames.add(cmdScanner.next());
+						cmdScanner.close();
+
+						if (inputCardNames.size() == 0 || !isValidInputCardNames(inputCardNames)) {
+							throw new InputInvalidException();
+						}
+
+						List<Card> selectedCards = player.checkCardsOnHand(inputCardNames);
+						if (selectedCards == null) {
+							throw new CardsNotOnHandException();
+						}
+
+						Hand currHand = Hand.cards2hand(selectedCards);
+						if (currHand.getType() == HandType.ILLEGAL) {
+							throw new DisobeyRulesException();
+						}
+
+						if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
+								|| lastValidHand.isSmallerThan(currHand)) {
+							player.removeCards(selectedCards);
+							handHistory.add(currHand);
+							lastValidHand = currHand;
+							room.setLastHandPlayer(player);
+							isValidInput = true;
+						} else {
+							throw new DisobeyRulesException();
+						}
 					}
-				} catch (InputInvalidException e1) {
-					this.messenger.println(e1.getMessage());
-				} catch (CardsNotOnHandException e2) {
-					this.messenger.println(e2.getMessage());
-				} catch (DisobeyRulesException e3) {
-					this.messenger.println(e3.getMessage());
+				} catch (InputInvalidException e) {
+					this.messenger.println(e.getMessage());
+				} catch (CardsNotOnHandException e) {
+					this.messenger.println(e.getMessage());
+				} catch (DisobeyRulesException e) {
+					this.messenger.println(e.getMessage());
+				} catch (FirstPlayerCannotPassException e) {
+					this.messenger.println(e.getMessage());
 				}
 			}
 
