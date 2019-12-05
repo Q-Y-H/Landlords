@@ -188,7 +188,7 @@ public final class Messenger {
 	public  String inputSuggest(Player p, Hand prev) {
 		// TODO Auto-generated method stub
 		List<Card> selectCards = new ArrayList<Card>();
-		selectCards = Helper.hintCards(p.getCards(), prev, prev.getCards().size());
+		selectCards = CardRoom.hintCards(p.getCards(), prev, prev.getCards().size());
 		String message = "";
 		if (selectCards != null) {
 			message += "We suggest you play: \n";

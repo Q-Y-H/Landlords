@@ -1,12 +1,9 @@
 package testCases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
 import entities.Card;
-import entities.Hand;
-import enums.HandType;
 import enums.Rank;
 
 class testCard {

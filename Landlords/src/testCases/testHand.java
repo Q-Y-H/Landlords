@@ -92,8 +92,6 @@ public class testHand {
 
 	@Test // 55533
 	void test10() {
-		Card c1 = new Card(Rank.RANK_5, Suit.BLANK);
-		Card c2 = new Card(Rank.RANK_3, Suit.BLANK);
 		List<Card> cards = Arrays.asList(c[5], c[5], c[5], c[3], c[3]);
 		Hand h = Hand.cards2hand(cards);
 		assertEquals(h.toString(), new String("TRIO 5 Kickers: PAIR 3 1\n"));

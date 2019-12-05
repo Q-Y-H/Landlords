@@ -2,8 +2,6 @@ package testCases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +14,6 @@ import entities.Card;
 import entities.Hand;
 import entities.HumanPlayer;
 import entities.Player;
-import enums.HandType;
-import enums.PlayerRole;
 import enums.Rank;
 import enums.Suit;
 
@@ -28,17 +24,13 @@ public class testPlayer {
 	@BeforeEach
 	// initial 17 cards
 	public void setUp() {
-		c = new Card[20];
+		c = new Card[18];
 		player = new HumanPlayer("nick");
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);
 		List<Card> cards = Arrays.asList(c[3],c[3],c[4],c[4],c[5],c[5],c[7],c[7],c[7],
 				c[8],c[8],c[8],c[8],c[9],c[10],c[11],c[12]);
 		player.setCards(cards);
-		
-		/*String input = new String("abc\n" + "n\n" + "y\n");
-		ByteArrayInputStream bais = new ByteArrayInputStream(input.getBytes());
-		System.setIn(bais);*/
 	}
 	
 	@Test // checkCardsOnHand

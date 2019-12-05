@@ -6,7 +6,6 @@ import java.util.List;
 
 import enums.HandType;
 import enums.Rank;
-import helpers.Helper;
 
 public class Hand {
 
@@ -87,7 +86,7 @@ public class Hand {
 	//convert cards into Hand
 	public static Hand cards2hand(List<Card> cards) {
 		if(cards != null && !cards.isEmpty()) {
-			Helper.sortCards(cards);
+			CardCase.sortCards(cards);
 			
 			int[] numOfRanks = new int[20];
 			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;		//numOfRanks stores how many times a rank occurs
@@ -168,8 +167,8 @@ public class Hand {
 		};
 
 	protected int getWeight() {
-		List<Card> response = null;
-		int[] numOfCards = new int[20];
+		//List<Card> response = null;
+		//int[] numOfCards = new int[20];
 
 		switch(type){
 		case ROCKET:{

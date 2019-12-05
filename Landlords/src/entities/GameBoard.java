@@ -15,7 +15,7 @@ import Exceptions.DisobeyRulesException;
 import Exceptions.InputInvalidException;
 import enums.HandType;
 import enums.PlayerRole;
-import helpers.Helper;
+import enums.Rank;
 import helpers.Messenger;
 
 public class GameBoard {
@@ -50,7 +50,15 @@ public class GameBoard {
 			this.playerController.storeAndExecute(new SetNicknameCommand(player));
 		}
 	}
-
+	
+	public boolean isValidInputCardNames(ArrayList<String> cardNames) {
+		for (String cardName : cardNames) {
+			if (!Rank.aliasSetContains(cardName))
+				return false;
+		}
+		return true;
+	}
+	
 	public void electLandlord() {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
@@ -88,7 +96,7 @@ public class GameBoard {
 		room.setLandlordID(landlordID);
 		players.get(landlordID).setRole(PlayerRole.LANDLORD);
 		players.get(landlordID).getCards().addAll(this.room.getLandlordCards());
-		Helper.sortCards(players.get(landlordID).getCards());
+		CardCase.sortCards(players.get(landlordID).getCards());
 
 		Messenger.getInstance().print("The landlord is Player " + players.get(landlordID).getNickname());
 		Messenger.getInstance().print("Landlord cards:");
@@ -107,7 +115,7 @@ public class GameBoard {
 
 		while (!isFinish) {
 			Player player = players.get(cursor);
-			List<Card> playerCards = player.getCards();
+			//List<Card> playerCards = player.getCards();
 			Messenger.getInstance().waitForPlayer(player);
 			Messenger.getInstance().clear();
 			Messenger.getInstance().print(Messenger.getInstance().playersInfo(cursor, this.room)); // TODO: Modification
@@ -148,7 +156,7 @@ public class GameBoard {
 //					Messenger.getInstance().print(Messenger.getInstance().inputErrorMessage()); // TODO: Exception Handler
 //					continue;
 //				}
-					if (inputCardNames.size() == 0 || !Helper.isValidInputCardNames(inputCardNames)) {
+					if (inputCardNames.size() == 0 || !isValidInputCardNames(inputCardNames)) {
 						throw new InputInvalidException();
 					}
 

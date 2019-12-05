@@ -15,14 +15,13 @@ public class HumanPlayer extends Player {
 		super(nickname);
 	}
 
-	public HumanPlayer() {
-	}
+	public HumanPlayer() {}
 
 	@Override
 	public void askForNickname() {
 		// TODO Auto-generated method stub
 		String prompt = "[Player " + this.getId() + "] Please Set Your Nickname >> ";
-		String nickname = Messenger.getInstance().getInstance().askForInput(prompt, new String[] {}, true);
+		String nickname = Messenger.getInstance().askForInput(prompt, new String[] {}, true);
 		this.setNickname(nickname);
 	}
 
@@ -31,7 +30,7 @@ public class HumanPlayer extends Player {
 		// TODO
 		// Messenger.getInstance().handleRunForLandlord(players, cursor, choices, first);
 		String prompt = "Player " + this.getNickname() + ": Do you want to run for landlord? [y/n] ";
-		String input = Messenger.getInstance().getInstance().askForInput(prompt, new String[] { "Y", "N" }, false);
+		String input = Messenger.getInstance().askForInput(prompt, new String[] { "Y", "N" }, false);
 		if (input.toUpperCase().equals("Y"))
 			return true;
 		else 
@@ -46,7 +45,7 @@ public class HumanPlayer extends Player {
 
 		while(true) {
 			String prompt = "[" + this.getRole() + "] " + this.getNickname() + " >> ";
-			cmd = Messenger.getInstance().getInstance().askForInput(prompt, new String[] {}, false);
+			cmd = Messenger.getInstance().askForInput(prompt, new String[] {}, false);
 			
 			if (cmd.toUpperCase().equals("HELP")) {
 				// TODO

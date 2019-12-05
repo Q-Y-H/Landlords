@@ -15,7 +15,6 @@ import entities.RobotPlayer;
 import enums.Rank;
 import enums.RoomType;
 import enums.Suit;
-import helpers.Helper;
 import junit.framework.TestCase;
 
 public class testRobotPlayer extends TestCase{
@@ -39,6 +38,7 @@ public class testRobotPlayer extends TestCase{
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
 		System.out.println(robotplayer1.getPlayChoice());
 	}
+	
 	@Test
 	public void test2() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
