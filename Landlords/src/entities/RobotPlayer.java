@@ -94,14 +94,6 @@ public class RobotPlayer extends Player{
 			if(hand.getType()!=HandType.ILLEGAL)
 				return hand.getCards();
 		}
-		for(Hand hand:combinationList) {
-			if(hand.getType()!=HandType.ILLEGAL)
-				return hand.getCards();
-		}
-		for(Hand hand:bombList) {
-			if(hand.getType()!=HandType.ILLEGAL)
-				return hand.getCards();
-		}
 		return new ArrayList<Card>();
 	}
 
