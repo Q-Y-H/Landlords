@@ -18,6 +18,7 @@ import enums.PlayerRole;
 import enums.Rank;
 
 public class GameBoard {
+	public int rand;
 	private CardRoom room;
 	private PlayerController playerController;
 	private Messenger messenger;
@@ -30,13 +31,14 @@ public class GameBoard {
 
 	public void run() {
 		room.setup();
-		setNickName();
+		setNickname();
 		electLandlord();
 		gameStart();
 		checkWinner();
 	}
 
-	private void setNickName() {
+	private void setNickname() {
+		// TODO Auto-generated method stub
 		for (Player player : room.getPlayers()) {
 			this.playerController.storeAndExecute(new SetNicknameCommand(player));
 		}
@@ -45,7 +47,8 @@ public class GameBoard {
 	private void electLandlord() {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
-		int cursor = new Random().nextInt(3); // range: 0, 1, 2
+		int cursor = new Random().nextInt(3);//range: 0, 1, 2
+		rand = cursor;
 		int landlordID = 0;
 		int nWaive = 0;
 
@@ -53,12 +56,14 @@ public class GameBoard {
 			if (i == 3) {
 				if (nWaive == 3) { // all waive
 					landlordID = new Random().nextInt(3);
+					rand = landlordID;
 					break;
-				} else if (nWaive == 2) { // two players waive
+				} 
+				else if (nWaive == 2) // two players waive
 					break;
-				} else if (nWaive == 1 && !choices.get(0)) { // one player waives
+				else if (nWaive == 1 && !choices.get(0)) // one player waives
 					cursor = (cursor + 1) % 3;
-				}
+				// all run for landlord: give the chance to the first player
 			}
 
 			Player player = players.get(cursor);
@@ -107,6 +112,16 @@ public class GameBoard {
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult();
 
+					if(cmd.toUpperCase().equals("SUGGEST")) {
+						Messenger.getInstance().inputSuggest(player, handHistory.getLast());
+						continue;
+					}
+
+					if(cmd.toUpperCase().equals("HELP")) {
+						Messenger.getInstance().inputHelp(handHistory.getLast());
+						continue;
+					}
+
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (handHistory.isEmpty() || room.getLastHandPlayer() == player) {
 							this.messenger.print("Cannot pass.");
@@ -150,17 +165,17 @@ public class GameBoard {
 						int index = handHistory.size() - 2;
 						lastHand = handHistory.get(index);
 					}
-
-					Hand lastValidHand = null;
-					for (int i = handHistory.size() - 1; i >= 0; i--) {
-						if (handHistory.get(i).getType() != null) {
-							lastValidHand = handHistory.get(i);
+					
+					Hand lastValidHand=null;
+					for(int i=handHistory.size()-1;i>=0;i--) {
+						if(handHistory.get(i).getType()!=null) {
+							lastValidHand=handHistory.get(i);
 							break;
-						}
+						}					
 					}
-
-					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player || handHistory.isEmpty()
-							|| lastValidHand.isSmallerThan(currHand) == true) {
+					
+					if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player
+							|| handHistory.isEmpty() || lastValidHand.isSmallerThan(currHand) == true) {
 						player.removeCards(selectedCards);
 						room.setLastHandPlayer(player);
 						handHistory.add(currHand);

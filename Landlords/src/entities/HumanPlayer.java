@@ -47,9 +47,9 @@ public class HumanPlayer extends Player {
 			cmd = this.messenger.askForInput(prompt, new String[] {}, false);
 
 			if (cmd.toUpperCase().equals("HELP")) {
-				this.messenger.print(this.messenger.inputHelpInfo());
+				this.messenger.println(this.messenger.inputHelpInfo());
 			} else if (cmd.toUpperCase().equals("SUGGEST")) {
-				this.messenger.print(this.messenger.inputSuggest(this, recentHands.peekLast()));
+				this.messenger.println(this.messenger.inputSuggest(this, recentHands.peekLast()));
 			} else {
 				break;
 			}

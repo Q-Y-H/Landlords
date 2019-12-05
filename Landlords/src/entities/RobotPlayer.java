@@ -137,8 +137,8 @@ public class RobotPlayer extends Player {
 		return CardRoom.hintCards(cards, formerHand);
 
 	}
-
-	public void sparseCards() {
+	
+	public void sparseCards() {		
 
 		handList.clear();
 		bombList.clear();

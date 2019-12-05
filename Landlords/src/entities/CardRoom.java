@@ -27,7 +27,6 @@ public class CardRoom {
 		this.lastHandPlayer = null;
 		this.cardCase = new CardCase();
 		this.handHistory = new LinkedList<Hand>();
-		this.updateRecentHands();
 		this.type = null;
 	}
 
@@ -41,7 +40,7 @@ public class CardRoom {
 		for (List<Card> cards : cardLists) {
 			CardRoom.sortCards(cards);
 		}
-
+		
 		// The last one portion for the landlord
 		this.landlordCards = cardLists.get(3);
 
@@ -53,9 +52,9 @@ public class CardRoom {
 			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT, recentHands));
 			this.players.add(new RobotPlayer("undefined", PlayerRole.PEASANT, recentHands));
 		}
-
-		for (Player player : this.players) {
-			player.setCards(cardLists.get(player.getId() % 3));
+		
+		for(Player player:this.players) {
+			player.setCards(cardLists.get(player.getId()%3));
 		}
 	}
 
@@ -152,33 +151,34 @@ public class CardRoom {
 				return c;
 			}
 		}
-		// check bombs
-		List<Card> RBJoker = new ArrayList<Card>();
+		//check bombs
+		List<Card>RBJoker= new ArrayList<Card>();
 		int[] numOfRanks = new int[20];
-		for (Card card : cards) {
-			if (card.getRank().ordinal() == 14 || card.getRank().ordinal() == 13) {
+		for(Card card: cards) {
+			if(card.getRank().ordinal()==14||card.getRank().ordinal()==13) {
 				RBJoker.add(card);
-			} else {
-				numOfRanks[card.getRank().ordinal() + 3]++;
 			}
-		}
-		for (int i = 0; i < numOfRanks.length; i++) {
-			if (numOfRanks[i] == 4) {
-				List<Card> tem = new ArrayList<Card>();
-				for (Card card : cards) {
-					if (card.getRank().ordinal() == i - 3) {
+			else{
+				numOfRanks[card.getRank().ordinal()+3]++;	
+			}
+		}			
+		for(int i=0;i<numOfRanks.length;i++) {
+			if(numOfRanks[i]==4) {
+				List<Card> tem=new ArrayList<Card>();
+				for(Card card:cards) {
+					if(card.getRank().ordinal()==i-3) {
 						tem.add(card);
 					}
 				}
-				numOfRanks[i] = 0;
+				numOfRanks[i]=0;
 				return tem;
 			}
 		}
-		// Rocket
-		if (RBJoker.size() == 2) {
+		//Rocket
+		if(RBJoker.size()==2) {
 			return RBJoker;
 		}
-		return new ArrayList<Card>();
+		return new ArrayList<Card>();	
 	}
 
 	private static void combinationSelect(List<List<Card>> workspace, List<Card> dataList, List<Card> resultList,

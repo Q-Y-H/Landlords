@@ -30,11 +30,11 @@ public abstract class Player {
 	}
 
 	public Player(String nickname) {
-		this(nickname, null, null);
+		this(nickname, null,null);
 	}
 
 	public Player() {
-		this(null, null, null);
+		this(null, null,null);
 	}
 
 	public PlayerRole getRole() {
@@ -94,11 +94,11 @@ public abstract class Player {
 	public void removeCards(List<Card> handCards) {
 		cards.removeAll(handCards);
 	}
-
-	public void removeCards(Hand hand) {
+	
+	public void removeCards(Hand hand) {		
 		this.removeCards(hand.getCards());
 	}
-
+	
 	public void playCards(List<Card> cards) {
 		// TODO Auto-generated method stub
 
