@@ -291,7 +291,6 @@ public final class Messenger {
 		switch (token) {
 		case "RunForLandlord":
 			clear();
-
 		}
 		return msg;
 	}

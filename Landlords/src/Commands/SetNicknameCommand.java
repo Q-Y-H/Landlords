@@ -15,7 +15,6 @@ public class SetNicknameCommand implements Command<Void> {
 
 	@Override
 	public Void getResult() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
