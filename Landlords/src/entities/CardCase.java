@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import enums.Rank;
@@ -40,6 +41,10 @@ public class CardCase {
 
 	public void setBaseCards(List<Card> baseCards) {
 		this.baseCards = baseCards;
+	}
+	
+	public static void sortCards(List<Card> cards) {
+		Collections.sort(cards, Card.cardComparator);
 	}
 
 }

@@ -10,7 +10,6 @@ import java.util.List;
 
 import enums.HandType;
 import enums.Rank;
-import helpers.Helper;
 
 public class RobotPlayer extends Player{
 	
@@ -132,7 +131,7 @@ public class RobotPlayer extends Player{
 				return hand.getCards();
 			}
 		}		
-		return Helper.hintCards(cards, formerHand, formerHand.getCards().size());
+		return CardRoom.hintCards(cards, formerHand, formerHand.getCards().size());
 
 	}
 

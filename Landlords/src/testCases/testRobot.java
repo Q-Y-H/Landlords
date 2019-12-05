@@ -2,6 +2,7 @@ package testCases;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,20 +16,19 @@ import entities.Hand;
 import entities.RobotPlayer;
 import enums.Rank;
 import enums.Suit;
-import helpers.Helper;
 import junit.framework.TestCase;
 
 public class testRobot extends TestCase{
-	private Card[] c = new Card[20];
+	private Card[] c = new Card[18];
 
 	@BeforeEach
 	// initial 17 cards
 	public void setUp() {
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);
-			RobotPlayer testStubPlayer=new RobotPlayer();
-			testStubPlayer.askForNickname();
-			RobotPlayer testStubPlayer2=new RobotPlayer("Bro");
+		RobotPlayer testStubPlayer=new RobotPlayer();
+		testStubPlayer.askForNickname();
+		RobotPlayer testStubPlayer2=new RobotPlayer("Bro");
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class testRobot extends TestCase{
 	@Test
 	public void test3() {
 		CardCase cardCase = new CardCase();
-		Helper.shuffleCards(cardCase);
+		Collections.shuffle(cardCase.getBaseCards());
 		List<List<Card>> cardLists = Helper.cutCards(cardCase);
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
