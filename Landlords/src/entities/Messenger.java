@@ -32,7 +32,7 @@ public final class Messenger {
 		history.add(msg);
 		System.out.print(msg);
 	}
-	
+
 	public void println(String msg) {
 		history.add(msg + "\n");
 		System.out.println(msg);
@@ -46,7 +46,7 @@ public final class Messenger {
 			print(prompt);
 			input = in.nextLine();
 			if (input.equals("")) {
-				//hasInput = true;
+				// hasInput = true;
 			} else if (inputSet.length == 0) {
 				hasInput = true;
 			} else {
@@ -62,12 +62,21 @@ public final class Messenger {
 					}
 				}
 			}
-			if(!hasInput) {
+			if (!hasInput) {
 				println("Invalid input");
 			}
 		}
-
 		return input;
+	}
+
+	public void waiting() {
+		print("Press ENTER to continue ...");
+		try {
+			while (System.in.read() != '\n')
+				;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void waitForPlayer(Player player) {
@@ -76,19 +85,31 @@ public final class Messenger {
 		waiting();
 	}
 
-	public void waiting() {
-		print("Press ENTER to continue ...");
-		try {
-			while (System.in.read() != '\n');
-			// Helper.clearInputStream();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void clearInputStream() {
+		in.nextLine();
 	}
 
-	public void RunforLandlordMsg(Player player) {
-		print("\nRunning for the LANDLORD position!\n");
-		waitForPlayer(player);
+	public void clear(int times) {
+		String msg = "";
+		for (int i = 0; i < times; ++i)
+			msg += "\n";
+		print(msg);
+	}
+
+	public void clear() {
+		clear(300);
+	}
+
+	public String inputErrorMessage() {
+		return "Input should only contain numbers from 2 to 10 and J, Q, K, A, B, R!";
+	}
+
+	public String cardsNotOnHandError() {
+		return "You should select the cards in your hand!";
+	}
+
+	public String disobeyRulesError() {
+		return "Your input doesn't meet the rules!";
 	}
 
 	public String printCards(List<Card> cards) {
@@ -116,86 +137,7 @@ public final class Messenger {
 		return message;
 	}
 
-	public String printCardsByPlayerName(Player p) {
-		String message = "It's your turn to play. Your pokers are as follows:\n";
-		List<Card> pokers = p.getCards();
-		message += printCards(pokers);
-		message += "Please enter the pokers you want to play:(You can enter [pass] to skip this round)\n";
-		return message;
-	}
-
-	public String printPreviousPokers(List<Card> nextPokers, List<Card> previousPokers, Player nextP,
-			Player previousP) {
-		String message = "";
-		if (nextPokers.size() == 0)
-			message += (nextP.getNickname() + " passes.\n");
-		else {
-			message += (nextP.getNickname() + " plays:\n");
-			printCards(nextPokers);
-		}
-		if (previousPokers.size() == 0)
-			message += (previousP.getNickname() + " passes.\n");
-		else {
-			message += (nextP.getNickname() + " plays:\n");
-			printCards(nextPokers);
-		}
-		return message;
-	}
-
-	public void clear() {
-		clear(300);
-	}
-
-	public void clear(int times) {
-		String msg = "";
-		for (int i = 0; i < times; ++i)
-			msg += "\n";
-		print(msg);
-	}
-
-	public  String inputErrorMessage() {
-		return "Input should only contain numbers from 2 to 10 and J, Q, K, A, B, R!";
-	}
-
-	public String cardsNotOnHandError() {
-		return "You should select the cards in your hand!";
-	}
-
-	public String disobeyRulesError() {
-		return "Your input doesn't meet the rules!";
-	}
-
-	@SuppressWarnings("unchecked")
-	// TODO
-	public String previousInfo(String infoType, List<Player> players, int cursor, List info) {
-		if (infoType.equals("RunForLandlord"))
-			// previousRunForLandlordInfo(players, cursor, info, first);
-			;
-		// else if (infoType.equals("Play"))
-		// previousPlayInfo(players, cursor, info);
-		return infoType;
-	}
-
-	public String previousRunForLandlordInfo(List<Player> players, int cursor, List<Boolean> choices, int first) {
-		String msg = "Round " + (choices.size() + 1) + ":\n";
-		int size = choices.size();
-
-		for (int i = 0; i < size; i++) {
-			int index = (first + i) % 3;
-			msg += ("Player " + players.get(index).getNickname() + ": ");
-			if (choices.get(i))
-				msg += ("Running for LANDLORD.\n\n");
-			else
-				msg += ("Waived.\n\n");
-		}
-
-		msg += ("It's your turn. Your cards are as follows:\n");
-		msg += (printCards(players.get(cursor).getCards()) + "\n");
-
-		return msg;
-	}
-
-	public String playersInfo(int cursor, CardRoom room) {
+	public String prevPlayersInfo(int cursor, CardRoom room) {
 		List<Player> players = room.getPlayers();
 		List<Hand> handHistory = room.getRecentHands();
 
@@ -221,18 +163,27 @@ public final class Messenger {
 		return msg;
 	}
 
-	public void handleRunForLandlord(List<Player> players, int cursor, List<Boolean> choices, int first) {
-		Player player = players.get(cursor);
+	public void handleRunForLandlord(List<Boolean> choices, List<Player> players, int currCursor, int initCursor) {
+		Player player = players.get(currCursor);
+		int size = choices.size();
 
 		clear();
 		print("\nRound " + (choices.size() + 1) + ": Running for the LANDLORD position!\n");
 		waitForPlayer(player);
 		clear();
-		print(Messenger.getInstance().previousRunForLandlordInfo(players, cursor, choices, first));
-	}
+		println("Round " + (choices.size() + 1) + ":\n");
 
-	public void clearInputStream() {
-		in.nextLine();
+		for (int i = 0; i < size; i++) {
+			int index = (initCursor + i) % 3;
+			println("Player " + players.get(index).getNickname() + ": ");
+			if (choices.get(i))
+				println("Running for LANDLORD.\n");
+			else
+				println("Waived.\n");
+		}
+
+		println("It's your turn. Your cards are as follows:");
+		println(printCards(players.get(currCursor).getCards()) + "\n");
 	}
 
 	public String inputHelpInfo() {
@@ -259,46 +210,5 @@ public final class Messenger {
 			return "Suggestion:\n\tpass\n";
 		}
 	}
-	/*
-	 * This method is hard to implement because besides the token, some other
-	 * parameters, like players, cursor, etc, are needed to generate the message
-	 */
-	public String getMessageByToken(String token) {
-		String msg = "";
-		switch (token) {
-		case "RunForLandlord":
-			clear();
 
-		}
-		return msg;
-	}
-
-	public void clearInputStream() {
-		in.nextLine();
-	}
-
-	public void inputHelp(Hand prev) {
-		String message="";
-		if(prev.getType()!=HandType.ILLEGAL) {
-			message+="You may play a ";
-			message+=prev.getType();
-			message+="\nYou can input “SUGGEST” for more help\n";
-		}	
-		
-		System.out.print(message);
-	}
-	public void inputSuggest(Player p, Hand prev) {
-		// TODO Auto-generated method stub
-		List<Card> selectCards = new ArrayList<Card>();
-		selectCards = CardRoom.hintCards(p.getCards(), prev, prev.getCards().size());
-		String message = "";
-		if (selectCards != null && selectCards.size() != 0) {
-			message += "We suggest you play: \n";
-			message += printCards(selectCards);
-		} else {
-			message += "We suggest you pass\n";
-		}
-		
-		System.out.print(message);
-	}
 }

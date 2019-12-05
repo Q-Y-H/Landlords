@@ -104,7 +104,7 @@ public class GameBoard {
 			Player player = players.get(cursor);
 			this.messenger.waitForPlayer(player);
 			this.messenger.clear();
-			this.messenger.print(this.messenger.playersInfo(cursor, this.room));
+			this.messenger.print(this.messenger.prevPlayersInfo(cursor, this.room));
 
 			while (true) {
 				try {
