@@ -23,11 +23,11 @@ public class CardRoom {
 	public CardRoom() {
 		this.players = new ArrayList<Player>();
 		this.landlordCards = null;
-//		this.lastHand = new Hand(HandType.ILLEGAL,null,null,0,null);
 		this.lastHandPlayer = null;
 		this.cardCase = new CardCase();
 		this.handHistory = new LinkedList<Hand>();
 		this.type = null;
+		updateRecentHands();
 	}
 
 	public void setup() {

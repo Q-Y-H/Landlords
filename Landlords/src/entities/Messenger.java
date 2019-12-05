@@ -2,11 +2,8 @@ package entities;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
-import enums.HandType;
 
 public final class Messenger {
 
@@ -139,9 +136,9 @@ public final class Messenger {
 
 	public String prevPlayersInfo(int cursor, CardRoom room) {
 		List<Player> players = room.getPlayers();
-		List<Hand> handHistory = room.getRecentHands();
+		List<Hand> recenHands = room.getRecentHands();
 
-		int size = handHistory.size();
+		int size = recenHands.size();
 
 		String msg = "";
 		for (int i = 2; i >= 1; --i) {
@@ -150,8 +147,8 @@ public final class Messenger {
 				int remainCards = player.getCards().size();
 				msg += ("[" + player.getRole() + "] " + player.getNickname() + ": " + remainCards
 						+ " cards remaining.\n");
-				if (handHistory.get(size - i).getCards().size() != 0)
-					msg += (printCards(handHistory.get(size - i).getCards()));
+				if (recenHands.get(size - i).getCards().size() != 0)
+					msg += (printCards(recenHands.get(size - i).getCards()));
 				else
 					msg += ("PASS\n");
 			}
