@@ -16,7 +16,6 @@ import entities.Hand;
 import entities.RobotPlayer;
 import enums.Rank;
 import enums.Suit;
-import helpers.Helper;
 import junit.framework.TestCase;
 
 public class testRobotPlayer extends TestCase{
@@ -46,7 +45,8 @@ public class testRobotPlayer extends TestCase{
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		Assert.assertEquals("5  5  ",robotplayer1.getPlayChoice());
+		System.out.println("Test1: "+robotplayer1.getPlayChoice());
+		Assert.assertEquals("5 5 ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class testRobotPlayer extends TestCase{
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		Assert.assertEquals("3  ",robotplayer1.getPlayChoice());
+		Assert.assertEquals("3 ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
@@ -75,7 +75,7 @@ public class testRobotPlayer extends TestCase{
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5])));
-		Assert.assertEquals("5  5  ",robotplayer1.getPlayChoice());
+		Assert.assertEquals("5 5 ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test
@@ -84,7 +84,7 @@ public class testRobotPlayer extends TestCase{
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3],c[3],c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[4],c[4],c[4],c[4])));
-		Assert.assertEquals("4  4  4  4  ",robotplayer1.getPlayChoice());
+		Assert.assertEquals("4 4 4 4 ",robotplayer1.getPlayChoice());
 	}
 	
 	@Test

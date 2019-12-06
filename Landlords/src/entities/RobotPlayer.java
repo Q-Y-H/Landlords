@@ -63,16 +63,16 @@ public class RobotPlayer extends Player {
 		sparseCards();	
 		calculateCombinationList();
 		clearInvalidHand();
-		
+
 		//Strategies
-		if(handHistory.isEmpty()||handHistory.size()>2&&handHistory.get(handHistory.size()-1).getType()==null &&handHistory.get(handHistory.size()-2).getType()==null) {
+		if(recentHands.isEmpty()||recentHands.getFirst().getCards().isEmpty() &&recentHands.getLast().getCards().isEmpty()) {
 			response=playCardsProactively();
 		}
 		else {
 			Hand lastValidHand=null;
-			for(int i=handHistory.size()-1;i>=0;i--) {
-				if(handHistory.get(i).getType()!=null) {
-					lastValidHand=handHistory.get(i);
+			for(int i=recentHands.size()-1;i>=0;i--) {
+				if(!recentHands.get(i).getCards().isEmpty()) {
+					lastValidHand=recentHands.get(i);
 					break;
 				}
 			}
