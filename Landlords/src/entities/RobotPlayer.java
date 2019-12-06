@@ -446,7 +446,6 @@ public class RobotPlayer extends Player{
 			copyCards.add(card);
 			combinationList.add(Hand.cards2hand(copyCards));
 		}	
-		List<Hand> tempList=new ArrayList<Hand>();
 		Hand temp1Hand=null;
 		Hand temp2Hand=null;
 		List<Card> temp1Cards=new ArrayList<Card>();
@@ -467,11 +466,10 @@ public class RobotPlayer extends Player{
 				temp1Cards.addAll(temp2Cards);
 				Hand combinationHand=Hand.cards2hand(temp1Cards);
 				if(combinationHand.getType()!=HandType.ILLEGAL) {
-					tempList.add(combinationHand);
+					combinationList.add(combinationHand);
 				}
 			}
 		}
-		combinationList.addAll(tempList);
 		Collections.sort(combinationList, Hand.handComparator);
 	}
 	
