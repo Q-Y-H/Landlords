@@ -46,8 +46,8 @@ public class testRobotPlayer {
 	@Test // askForNickame
 	public void askForNickname_0() {
 		robot = new RobotPlayer();
-		// This is the fourth Player ever instantiated
+		// This is the sixth Player ever instantiated
 		robot.askForNickname();
-		assertEquals(robot.getNickname(), new String("Robot 0"));
+		assertEquals(robot.getNickname(), new String("Robot 2"));
 	}
 }
