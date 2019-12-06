@@ -154,6 +154,7 @@ public class GameBoard {
 						} else {
 							throw new DisobeyRulesException();
 						}
+
 					}
 				} catch (InputInvalidException e) {
 					this.messenger.println(e.getMessage());

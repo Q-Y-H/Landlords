@@ -33,10 +33,6 @@ public class RobotPlayer extends Player {
 		super(nickname, null, null);
 	}
 
-	public RobotPlayer() {
-		super(null, null, null);
-	}
-
 	/*
 	 * Methods
 	 */
@@ -61,21 +57,22 @@ public class RobotPlayer extends Player {
 	}
 
 	@Override
-	public String getPlayChoice() {
-		// Initialization
-		List<Card> response = new ArrayList<Card>();
-		sparseCards();
+	public String getPlayChoice( ) {
+		//Initialization
+		List<Card> response=new ArrayList<Card>();
+		sparseCards();	
 		calculateCombinationList();
 		clearInvalidHand();
-		// Strategies
-		if (recentHands.isEmpty() || recentHands.size() > 2 && recentHands.get(recentHands.size() - 1).getType() == null
-				&& recentHands.get(recentHands.size() - 2).getType() == null) {
-			response = playCardsProactively();
-		} else {
-			Hand lastValidHand = null;
-			for (int i = recentHands.size() - 1; i >= 0; i--) {
-				if (recentHands.get(i).getType() != null) {
-					lastValidHand = recentHands.get(i);
+		
+		//Strategies
+		if(handHistory.isEmpty()||handHistory.size()>2&&handHistory.get(handHistory.size()-1).getType()==null &&handHistory.get(handHistory.size()-2).getType()==null) {
+			response=playCardsProactively();
+		}
+		else {
+			Hand lastValidHand=null;
+			for(int i=handHistory.size()-1;i>=0;i--) {
+				if(handHistory.get(i).getType()!=null) {
+					lastValidHand=handHistory.get(i);
 					break;
 				}
 			}
@@ -93,19 +90,7 @@ public class RobotPlayer extends Player {
 	}
 
 	public List<Card> playCardsProactively() {
-		for (Hand hand : handList) {
-			if (hand.getType() != HandType.ILLEGAL)
-				return hand.getCards();
-		}
-		for (Hand hand : combinationList) {
-			if (hand.getType() != HandType.ILLEGAL)
-				return hand.getCards();
-		}
-		for (Hand hand : bombList) {
-			if (hand.getType() != HandType.ILLEGAL)
-				return hand.getCards();
-		}
-		return new ArrayList<Card>();
+		return handList.get(0).getCards();
 	}
 
 	public List<Card> playCardsPassively(List<Card> formerCards) {
@@ -136,8 +121,18 @@ public class RobotPlayer extends Player {
 		}
 		return CardRoom.hintCards(cards, formerHand);
 
+  }
+
+		
+	public String getHandList() {
+		String message = null;
+		for(Hand hand: handList) {
+			message+=hand.toString();
+		}
+		return message;
 	}
-	
+  
+  
 	public void sparseCards() {		
 
 		handList.clear();
@@ -445,15 +440,14 @@ public class RobotPlayer extends Player {
 			copyCards.clear();
 			copyCards.add(card);
 			combinationList.add(Hand.cards2hand(copyCards));
-		}
-		List<Hand> tempList = new ArrayList<Hand>();
-		Hand temp1Hand = null;
-		Hand temp2Hand = null;
-		List<Card> temp1Cards = new ArrayList<Card>();
-		List<Card> temp2Cards = new ArrayList<Card>();
-
-		for (int i = 0; i < handList.size() - 1; i++) {
-			for (int j = i + 1; j < handList.size(); j++) {
+		}	
+		Hand temp1Hand=null;
+		Hand temp2Hand=null;
+		List<Card> temp1Cards=new ArrayList<Card>();
+		List<Card> temp2Cards=new ArrayList<Card>();
+		
+		for(int i=0;i<handList.size()-1;i++) {
+			for(int j=i+1;j<handList.size();j++) {
 				temp2Cards.clear();
 				temp1Cards.clear();
 				temp1Hand = handList.get(i);
@@ -465,18 +459,13 @@ public class RobotPlayer extends Player {
 					continue;
 				temp2Cards.addAll(temp2Hand.getCards());
 				temp1Cards.addAll(temp2Cards);
-				Hand combinationHand = Hand.cards2hand(temp1Cards);
-				if (combinationHand.getType() != HandType.ILLEGAL) {
-					tempList.add(combinationHand);
+				Hand combinationHand=Hand.cards2hand(temp1Cards);
+				if(combinationHand.getType()!=HandType.ILLEGAL) {
+					combinationList.add(combinationHand);
 				}
 			}
 		}
-		combinationList.addAll(tempList);
 		Collections.sort(combinationList, Hand.handComparator);
-	}
-
-	public List<Hand> getSparsedList() {
-		return this.handList;
 	}
 
 	public void clearInvalidHand() {
