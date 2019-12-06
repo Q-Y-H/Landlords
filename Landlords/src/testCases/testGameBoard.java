@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Random;
 
 import entities.CardRoom;
 import entities.GameBoard;
@@ -34,13 +35,30 @@ public class testGameBoard {
 	}
 	
 	@Test // isValidInputCardNames
-	public void isValidInputCardNames_789() {
+	public void isValidInputCardNames_789() {		
 		ArrayList<String> cardnames = new ArrayList<String>();
 		cardnames.add("7");
 		cardnames.add("8");
 		cardnames.add("9");
 		
-		assertEquals(gbPVE.isValidInputCardNames(cardnames), true);
+		try {
+			method = GameBoard.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			assertEquals(method.invoke(gbPVE, cardnames), true);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test // isValidInputCardNames
@@ -48,7 +66,24 @@ public class testGameBoard {
 		ArrayList<String> cardnames = new ArrayList<String>();
 		cardnames.add("t");
 		
-		assertEquals(gbPVE.isValidInputCardNames(cardnames), false);
+		try {
+			method = GameBoard.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			assertEquals(method.invoke(gbPVE, cardnames), false);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test // isValidInputCardNames
@@ -57,7 +92,24 @@ public class testGameBoard {
 		cardnames.add("x");
 		cardnames.add("a");
 		
-		assertEquals(gbPVE.isValidInputCardNames(cardnames), true);
+		try {
+			method = GameBoard.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			assertEquals(method.invoke(gbPVE, cardnames), true);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test // isValidInputCardNames
@@ -67,22 +119,17 @@ public class testGameBoard {
 		cardnames.add("Q");
 		cardnames.add("k");
 		
-		assertEquals(gbPVE.isValidInputCardNames(cardnames), true);
-	}
-	
-	@Test // test electLandlord
-	public void electLandlord_n_n_n() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", null);
+			method = GameBoard.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
 			method.setAccessible(true);
-		} catch (NoSuchMethodException e1) {
-			e1.printStackTrace();
-		} catch (SecurityException e1) {
-			e1.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
 		}
-	
+		
 		try {
-			method.invoke(gbPVP, null);
+			assertEquals(method.invoke(gbPVE, cardnames), true);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -90,23 +137,22 @@ public class testGameBoard {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		
-		assertEquals(crPVP.getLandlordID(), gbPVP.rand);
 	}
 	
 	@Test // test electLandlord
 	public void electLandlord_n_n_y() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", null);
+			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
 		} catch (SecurityException e1) {
 			e1.printStackTrace();
 		}
-	
+		
+		int rand = new Random().nextInt(3);
 		try {
-			method.invoke(gbPVP, null);
+			method.invoke(gbPVP, rand);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -115,22 +161,23 @@ public class testGameBoard {
 			e.printStackTrace();
 		}
 		
-		assertEquals(crPVP.getLandlordID(), (gbPVP.rand + 2) % 3);
+		assertEquals(crPVP.getLandlordID(), (rand + 2) % 3);
 	}
 	
 	@Test // test electLandlord
 	public void electLandlord_n_y_n() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", null);
+			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
 		} catch (SecurityException e1) {
 			e1.printStackTrace();
 		}
-	
+		
+		int rand = new Random().nextInt(3);
 		try {
-			method.invoke(gbPVP, null);
+			method.invoke(gbPVP, rand);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -139,7 +186,7 @@ public class testGameBoard {
 			e.printStackTrace();
 		}
 		
-		assertEquals(crPVP.getLandlordID(), (gbPVP.rand + 1) % 3);
+		assertEquals(crPVP.getLandlordID(), (rand + 1) % 3);
 	}
 	
 	@Test // test setNickName
@@ -171,16 +218,17 @@ public class testGameBoard {
 	@Test // test electLandlord
 	public void electLandlord_n_y_y_y() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", null);
+			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
 		} catch (SecurityException e1) {
 			e1.printStackTrace();
 		}
-	
+		
+		int rand = new Random().nextInt(3);
 		try {
-			method.invoke(gbPVP, null);
+			method.invoke(gbPVP, rand);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -189,22 +237,23 @@ public class testGameBoard {
 			e.printStackTrace();
 		}
 		
-		assertEquals(crPVP.getLandlordID(), (gbPVP.rand + 1) % 3);
+		assertEquals(crPVP.getLandlordID(), (rand + 1) % 3);
 	}
 	
 	@Test // test electLandlord
 	public void electLandlord_y_n_y_n() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", null);
+			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
 		} catch (SecurityException e1) {
 			e1.printStackTrace();
 		}
-	
+		
+		int rand = new Random().nextInt(3);
 		try {
-			method.invoke(gbPVP, null);
+			method.invoke(gbPVP, rand);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
@@ -213,7 +262,7 @@ public class testGameBoard {
 			e.printStackTrace();
 		}
 		
-		assertEquals(crPVP.getLandlordID(), (gbPVP.rand + 2) % 3);
+		assertEquals(crPVP.getLandlordID(), (rand + 2) % 3);
 	}
 	
 }

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
-
 import Commands.Command;
 import Commands.DecideRunForLandlordCommand;
 import Commands.PlayChoiceCommand;
@@ -117,7 +115,7 @@ public class GameBoard {
 					Command<String> playChoiceCommand = new PlayChoiceCommand(player);
 					this.playerController.storeAndExecute(playChoiceCommand);
 					String cmd = playChoiceCommand.getResult();
-
+					
 					if (cmd.toUpperCase().equals("PASS")) {
 						if (room.getLastHandPlayer() == null || room.getLastHandPlayer() == player) {
 							throw new FirstPlayerCannotPassException();

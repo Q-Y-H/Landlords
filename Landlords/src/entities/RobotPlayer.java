@@ -88,7 +88,7 @@ public class RobotPlayer extends Player {
 		
 		String ans = "";
 		for (Card card : response)
-			ans += (card.toString() + " ");
+			ans += card.toString();
 		return ans;
 	}
 

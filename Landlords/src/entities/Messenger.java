@@ -201,7 +201,7 @@ public final class Messenger {
 		}
 
 		List<Card> suggestCards = CardRoom.hintCards(p.getCards(), prev);
-		if (suggestCards != null) {
+		if (suggestCards != null && suggestCards.size() != 0) {
 			return "Suggestion:\n" + printCards(suggestCards);
 		} else {
 			return "Suggestion:\n\tpass\n";

@@ -9,11 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import entities.Card;
-import entities.CardRoom;
 import entities.Hand;
 import entities.RobotPlayer;
 import enums.Rank;
-import enums.RoomType;
 import enums.Suit;
 
 public class testRobotPlayer {
@@ -26,37 +24,30 @@ public class testRobotPlayer {
 		c = new Card[18];
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);
-		robot = new RobotPlayer();
 	}
 	
-	@Test //test askForNickame
-	public void askForNickname_1() {
-		robot.askForNickname();
-		assertEquals(robot.getNickname(), new String("Robot 0"));
-	}
-	
-	@Test
-	public void test1() {
+	@Test // getPlayChoice
+	public void getPlayChoice_33_553() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		System.out.println(robotplayer1.getPlayChoice());
+		robot = new RobotPlayer(null,null,handHistory);
+		robot.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
+		assertEquals(robot.getPlayChoice(), new String("5 5 "));
 	}
 	
-	@Test
-	public void test2() {
+	@Test // getPlayChoice
+	public void getPlayChoice_empty_553() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		System.out.println(robotplayer1.getPlayChoice());
+		robot = new RobotPlayer(null,null,handHistory);
+		robot.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
+		assertEquals(robot.getPlayChoice(), new String("3 "));
 	}
 	
-	@Test
-	public void test100() {
-		CardRoom cardRoom=new CardRoom();
-		cardRoom.setType(RoomType.PVE);
-		cardRoom.setup();
-		System.out.println(cardRoom.getPlayers().get(0).getCards());
+	@Test // askForNickame
+	public void askForNickname_0() {
+		robot = new RobotPlayer();
+		// This is the fourth Player ever instantiated
+		robot.askForNickname();
+		assertEquals(robot.getNickname(), new String("Robot 0"));
 	}
 }

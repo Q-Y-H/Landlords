@@ -2,6 +2,7 @@ package testCases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +23,13 @@ public class testCardRoom {
 	
 	@BeforeEach
 	public void setUp() {
+		String input = new String("pass\n" + "n\n" + "y\n" + "abc\n" + "Foo\n" +
+				"n\n" + "n\n" + "y\n" + "n\n" + "y\n" + "n\n" + 
+				"a\n" + "b\n" + "c\n" + "n\n" + "y\n" + "y\n" + "y\n" + "y\n" + "n\n" + "y\n" + "n\n" +
+				"abc\n" + "n\n" + "y\n");
+		ByteArrayInputStream bais = new ByteArrayInputStream(input.getBytes());
+		System.setIn(bais);
+		// The binding to System.in is restored in testPlay.java
 		c = new Card[18];
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);
