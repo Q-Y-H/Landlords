@@ -218,7 +218,17 @@ public class testRobotPlayer extends TestCase{
 		robotplayer1.sparseCards();
 		System.out.println(robotplayer1.getHandList());
 	}
-
+	@Test
+	public void test23() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
+		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[9], c[10], c[10], c[11] ,c[11], c[17]);
+		robotplayer1.setCards(cards1);
+		System.out.println(cards1);
+		System.out.println(robotplayer1.decideRunForLandlord());
+		robotplayer1.sparseCards();
+		System.out.println(robotplayer1.getHandList());
+	}
 	
 //	@Test
 //	public void test200() {
