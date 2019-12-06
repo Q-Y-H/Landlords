@@ -6,7 +6,6 @@ import java.util.List;
 
 import enums.HandType;
 import enums.Rank;
-import helpers.Helper;
 
 public class Hand {
 
@@ -62,8 +61,12 @@ public class Hand {
 		if (type == HandType.ILLEGAL)
 			return "Illegal " + "\n";
 		String kickersInfo = "";
-		kickersInfo = (kickers == null) ? "null " : kickers[0].getInfo();
-		return "Handtype: "+type + " " + "Primal: "+primal.getName() + " Kickers: " + kickersInfo + "Chainlength: "+chainLength + " cards:"+this.cards+ " weight: "+this.getWeight()+"\n";
+		if (kickers == null) 
+			kickersInfo= "null ";
+		else 
+			for(int i = 0;i < kickers.length;i++)
+				kickersInfo += kickers[i].getInfo();
+		return type + " " +primal.getName() + " Kickers: " + kickersInfo +chainLength + "\n";
 	}
 
 	public String getInfo() {
@@ -83,7 +86,7 @@ public class Hand {
 	//convert cards into Hand
 	public static Hand cards2hand(List<Card> cards) {
 		if(cards != null && !cards.isEmpty()) {
-			Helper.sortCards(cards);
+			CardRoom.sortCards(cards);
 			
 			int[] numOfRanks = new int[20];
 			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;		//numOfRanks stores how many times a rank occurs
@@ -152,7 +155,8 @@ public class Hand {
 
 	public void setCards(List<Card> cards) {
 		this.cards.clear();
-		this.cards.addAll(cards);
+		if(cards != null)
+			this.cards.addAll(cards);
 	}
 	public static Comparator<Hand> handComparator = new Comparator<Hand>() {
 
@@ -163,8 +167,8 @@ public class Hand {
 		};
 
 	protected int getWeight() {
-		List<Card> response = null;
-		int[] numOfCards = new int[20];
+		//List<Card> response = null;
+		//int[] numOfCards = new int[20];
 
 		switch(type){
 		case ROCKET:{

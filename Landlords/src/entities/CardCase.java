@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import enums.Rank;
@@ -37,9 +38,4 @@ public class CardCase {
 	public List<Card> getBaseCards() {
 		return baseCards;
 	}
-
-	public void setBaseCards(List<Card> baseCards) {
-		this.baseCards = baseCards;
-	}
-
 }

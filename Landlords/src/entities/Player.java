@@ -15,15 +15,17 @@ public abstract class Player {
 	private int id;
 	private String nickname;
 	private PlayerRole role;
-	protected List<Card> cards = new ArrayList<Card>();
-	protected LinkedList<Hand> handHistory=new LinkedList<Hand>();
-	
-	public Player(String nickname, PlayerRole role,LinkedList<Hand> handHistory) {
+	protected Messenger messenger;
+	protected List<Card> cards;
+	protected LinkedList<Hand> recentHands;
+
+	public Player(String nickname, PlayerRole role, LinkedList<Hand> recentHands) {
 		this.setId(idCounter);
 		this.nickname = nickname;
 		this.role = role;
 		this.cards = null;
-		this.handHistory=handHistory;
+		this.recentHands = recentHands;
+		this.messenger = Messenger.getInstance();
 		++Player.idCounter;
 	}
 
