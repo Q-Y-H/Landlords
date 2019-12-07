@@ -66,14 +66,11 @@ public class RobotPlayer extends Player {
 		System.out.println(handList);
 		System.out.println(combinationList);
 		System.out.println(bombList);
-		
-		System.out.println("ff cards"+recentHands.getFirst());
-		System.out.println("f cards"+recentHands.getLast());
-		
 		System.out.println("Recent hand");
 		for (int i=0;i<recentHands.size();i++) {
-			System.out.println(recentHands.get(i));
+			System.out.print(recentHands.get(i));
 		}
+		System.out.println("End");
 		//Strategies
 		if(recentHands.isEmpty()||recentHands.getFirst().getCards().isEmpty() &&recentHands.getLast().getCards().isEmpty()) {
 			System.out.println("proactive response ");
