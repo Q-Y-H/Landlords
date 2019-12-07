@@ -66,7 +66,7 @@ public class Hand {
 		else 
 			for(int i = 0;i < kickers.length;i++)
 				kickersInfo += kickers[i].getInfo();
-		return type + " " +primal.getName() + " Kickers: " + kickersInfo +chainLength + "\n";
+		return type + " " +primal.getName() + " Kickers: " + kickersInfo +chainLength + "cards "+cards+"\n";
 	}
 
 	public String getInfo() {

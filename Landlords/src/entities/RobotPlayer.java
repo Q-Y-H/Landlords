@@ -63,22 +63,32 @@ public class RobotPlayer extends Player {
 		sparseCards();	
 		calculateCombinationList();
 		clearInvalidHand();
-		
+		System.out.println(handList);
+		System.out.println(combinationList);
+		System.out.println(bombList);
+		System.out.println("Recent hand");
+		for (int i=0;i<recentHands.size();i++) {
+			System.out.print(recentHands.get(i));
+		}
+		System.out.println("End");
 		//Strategies
-		if(handHistory.isEmpty()||handHistory.size()>2&&handHistory.get(handHistory.size()-1).getType()==null &&handHistory.get(handHistory.size()-2).getType()==null) {
+		if(recentHands.isEmpty()||recentHands.getFirst().getCards().isEmpty() &&recentHands.getLast().getCards().isEmpty()) {
+			System.out.println("proactive response ");
 			response=playCardsProactively();
 		}
 		else {
+			System.out.println("passive response ");
 			Hand lastValidHand=null;
-			for(int i=handHistory.size()-1;i>=0;i--) {
-				if(handHistory.get(i).getType()!=null) {
-					lastValidHand=handHistory.get(i);
+			for(int i=recentHands.size()-1;i>=0;i--) {
+				if(!recentHands.get(i).getCards().isEmpty()) {
+					lastValidHand=recentHands.get(i);
 					break;
 				}
 			}
 			List<Card> formerCards = lastValidHand.getCards(); // get last valid cards
 			response = playCardsPassively(formerCards);
 		}
+		System.out.println(response);
 		// Convert response to answer
 		if (response.isEmpty())
 			return "pass";

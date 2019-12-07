@@ -15,8 +15,8 @@ public class CardRoom {
 	private Player lastHandPlayer;
 	private int landlordID;
 	private CardCase cardCase;
-	private LinkedList<Hand> handHistory;
-	private LinkedList<Hand> recentHands;
+	private LinkedList<Hand> handHistory=new LinkedList<Hand>();
+	private LinkedList<Hand> recentHands=new LinkedList<Hand>();
 
 	private RoomType type;
 
@@ -203,10 +203,16 @@ public class CardRoom {
 
 	public void updateRecentHands() {
 		int size = this.handHistory.size();
-		if (size < 2) {
-			this.recentHands = this.handHistory;
-		} else {
-			this.recentHands = (LinkedList<Hand>) this.handHistory.subList(size - 2, size);
+		if(size==0) {
+			return;
+		}
+		else if (size < 2 ) {
+			recentHands.add(handHistory.get(size-1));
+		} 
+		else {
+			recentHands.clear();
+			recentHands.add(handHistory.get(size-2));
+			recentHands.add(handHistory.get(size-1));
 		}
 	}
 

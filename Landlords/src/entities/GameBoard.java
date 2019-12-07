@@ -179,6 +179,7 @@ public class GameBoard {
 
 			// update active player
 			cursor = (cursor + 1) % 3;
+			room.updateRecentHands();
 		}
 	}
 
