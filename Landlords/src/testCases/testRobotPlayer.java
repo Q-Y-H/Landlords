@@ -3,8 +3,11 @@ package testCases;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +17,6 @@ import entities.RobotPlayer;
 import enums.Rank;
 import enums.Suit;
 import junit.framework.TestCase;
-
-public class testRobotPlayer extends TestCase{
-	private Card[] c = new Card[20];
 
 
 public class testRobotPlayer {
@@ -102,9 +102,11 @@ public class testRobotPlayer {
 	}
 	@Test
 	public void test11() {
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		robot = new RobotPlayer(null,null,handHistory);
 		robot.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
-		assertEquals(robot.getPlayChoice(), new String("5 5 "));
+		System.out.println("test11"+robot.getPlayChoice());
+		assertEquals(robot.getPlayChoice(), new String("3 "));
 	}
 	
 	@Test // getPlayChoice
@@ -115,14 +117,6 @@ public class testRobotPlayer {
 		assertEquals(robot.getPlayChoice(), new String("3 "));
 	}
 	
-	@Test // askForNickame
-	public void askForNickname_0() {
-		robot = new RobotPlayer();
-		// This is the sixth Player ever instantiated
-		robot.askForNickname();
-		assertEquals(robot.getNickname(), new String("Robot 2"));
-	}
-
 	@Test
 	public void test19() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
