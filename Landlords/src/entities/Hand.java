@@ -166,10 +166,7 @@ public class Hand {
 			}
 		};
 
-	protected int getWeight() {
-		//List<Card> response = null;
-		//int[] numOfCards = new int[20];
-
+	public int getWeight() {
 		switch(type){
 		case ROCKET:{
 			return 20;

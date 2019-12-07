@@ -26,7 +26,8 @@ public class testCardRoom {
 		String input = new String("pass\n" + "n\n" + "y\n" + "abc\n" + "Foo\n" +
 				"n\n" + "n\n" + "y\n" + "n\n" + "y\n" + "n\n" + 
 				"a\n" + "b\n" + "c\n" + "n\n" + "y\n" + "y\n" + "y\n" + "y\n" + "n\n" + "y\n" + "n\n" +
-				"abc\n" + "n\n" + "y\n");
+				"abc\n" + "n\n" + "y\n" +
+				"pass\n" + "abc\n");
 		ByteArrayInputStream bais = new ByteArrayInputStream(input.getBytes());
 		System.setIn(bais);
 		// The binding to System.in is restored in testPlay.java

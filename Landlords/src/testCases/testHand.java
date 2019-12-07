@@ -774,5 +774,76 @@ public class testHand {
 		boolean result = h1.isSmallerThan(h2);
 		Assert.assertEquals(false, result);
 	}
-
+	
+	@Test // getWeight
+	public void getWeight_BR() {
+		Hand h = Hand.cards2hand(Arrays.asList(c[16],c[17]));
+		assertEquals(h.getWeight(), 20);
+	}
+	
+	@Test // getWeight
+	public void getWeight_4444() {
+		Hand h = Hand.cards2hand(Arrays.asList(c[4],c[4],c[4],c[4]));
+		assertEquals(h.getWeight(), 9);
+	}
+	
+	@Test // getWeight
+	public void getWeight_Q() {
+		Hand h = Hand.cards2hand(Arrays.asList(c[12]));
+		assertEquals(h.getWeight(), 2);
+	}
+	
+	@Test // getWeight
+	public void getWeight_6789X() {
+		Hand h = Hand.cards2hand(Arrays.asList(c[6],c[7],c[8],c[9],c[10]));
+		assertEquals(h.getWeight(), -9);
+	}
+	
+	@Test // getWeight
+	public void getWeight_AA() {
+		Hand h = Hand.cards2hand(Arrays.asList(c[14],c[14]));
+		assertEquals(h.getWeight(), 4);
+	}
+	
+	@Test // getWeight
+	public void getWeight_AAAA34() {
+		Hand h = Hand.cards2hand(Arrays.asList(c[14],c[14],c[14],c[14],c[3],c[4]));
+		assertEquals(h.getWeight(), 5);
+	}
+	
+	@Test // getWeight
+	public void getWeight_222A() {
+		Hand h = Hand.cards2hand(Arrays.asList(c[15],c[15],c[15],c[14]));
+		assertEquals(h.getWeight(), 4);
+	}
+	
+	@Test
+	public void null_isSmallerThan_any() {
+		List<Card> cards1 = Arrays.asList(c[3]);
+		Hand h1 = new Hand(null,Rank.RANK_3,new Hand[0],0,cards1);
+		List<Card> cards2 = Arrays.asList(c[9], c[9], c[9], c[9], c[10], c[10], c[11], c[11]);
+		Hand h2 = Hand.cards2hand(cards2);
+		boolean result = h1.isSmallerThan(h2);
+		Assert.assertEquals(true, result);
+	}
+	
+	@Test
+	public void ILLEGAL_isSmallerThan_any() {
+		List<Card> cards1 = Arrays.asList(c[3],c[4],c[5]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[9], c[9], c[9], c[9], c[10], c[10], c[11], c[11]);
+		Hand h2 = Hand.cards2hand(cards2);
+		boolean result = h1.isSmallerThan(h2);
+		Assert.assertEquals(true, result);
+	}
+	
+	@Test
+	public void _444_isSmallerThan_3334_false() {
+		List<Card> cards1 = Arrays.asList(c[4],c[4],c[4]);
+		Hand h1 = Hand.cards2hand(cards1);
+		List<Card> cards2 = Arrays.asList(c[3], c[3], c[3], c[4]);
+		Hand h2 = Hand.cards2hand(cards2);
+		boolean result = h1.isSmallerThan(h2);
+		Assert.assertEquals(false, result);
+	}
 }

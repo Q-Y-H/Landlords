@@ -3,15 +3,12 @@ package testCases;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 import entities.Card;
-import entities.CardCase;
-import entities.CardRoom;
 import entities.Hand;
 import entities.RobotPlayer;
 import enums.Rank;
@@ -21,16 +18,20 @@ import junit.framework.TestCase;
 public class testRobotPlayer extends TestCase{
 	private Card[] c = new Card[20];
 
+
+public class testRobotPlayer {
+	private Card[] c;
+	private RobotPlayer robot;
+	
 	@BeforeEach
 	// initial 17 cards
 	public void setUp() {
+		c = new Card[18];
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);
-			RobotPlayer testStubPlayer=new RobotPlayer("Robot Alex");
-			testStubPlayer.askForNickname();
 	}
 	
-	@Test
+  @Test
 	public void test0() {	//No cards could match
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
@@ -39,8 +40,9 @@ public class testRobotPlayer extends TestCase{
 		Assert.assertEquals("pass",robotplayer1.getPlayChoice());
 	}
 	
-	@Test
-	public void test1() {
+  
+	@Test // getPlayChoice
+	public void getPlayChoice_33_553() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
@@ -100,80 +102,27 @@ public class testRobotPlayer extends TestCase{
 	}
 	@Test
 	public void test11() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4], c[4], c[4], c[5], c[5], c[5], c[7], c[13], c[16]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
-	}
-	@Test
-	public void test12() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[5], c[6], c[7], c[17]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
+		robot = new RobotPlayer(null,null,handHistory);
+		robot.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
+		assertEquals(robot.getPlayChoice(), new String("5 5 "));
 	}
 	
-	@Test
-	public void test14() {
+	@Test // getPlayChoice
+	public void getPlayChoice_empty_553() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[6], c[7], c[7], c[8], c[9], c[10], c[11], c[12]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		System.out.println(robotplayer1.decideRunForLandlord());
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
+		robot = new RobotPlayer(null,null,handHistory);
+		robot.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[3])));
+		assertEquals(robot.getPlayChoice(), new String("3 "));
 	}
-	@Test
-	public void test15() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4], c[5], c[6], c[7], c[8], c[9],  c[10], c[10]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		System.out.println(robotplayer1.decideRunForLandlord());
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
+	
+	@Test // askForNickame
+	public void askForNickname_0() {
+		robot = new RobotPlayer();
+		// This is the sixth Player ever instantiated
+		robot.askForNickname();
+		assertEquals(robot.getNickname(), new String("Robot 2"));
 	}
-	@Test
-	public void test16() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		System.out.println(robotplayer1.decideRunForLandlord());
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
-	}
-	@Test
-	public void test17() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[10]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		System.out.println(robotplayer1.decideRunForLandlord());
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
-	}
-	@Test
-	public void test18() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3],  c[4],  c[5],  c[6], c[7], c[8], c[9], c[10] ,c[15], c[15], c[16]);
-		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		System.out.println(robotplayer1.decideRunForLandlord());
-		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
-	}
+
 	@Test
 	public void test19() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
@@ -218,6 +167,7 @@ public class testRobotPlayer extends TestCase{
 		robotplayer1.sparseCards();
 		System.out.println(robotplayer1.getHandList());
 	}
+  
 	@Test
 	public void test23() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
@@ -229,18 +179,5 @@ public class testRobotPlayer extends TestCase{
 		robotplayer1.sparseCards();
 		System.out.println(robotplayer1.getHandList());
 	}
-	
-//	@Test
-//	public void test200() {
-//		CardCase cardCase = new CardCase();
-//		Helper.shuffleCards(cardCase);
-//		List<List<Card>> cardLists = Helper.cutCards(cardCase);
-//		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-//		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-//		robotplayer1.setCards(cardLists.get(0));
-//		System.out.println(cardLists.get(0));
-//		System.out.println(robotplayer1.decideRunForLandlord());
-//		System.out.println(robotplayer1.getPlayChoice());
-//	}
 
 }
