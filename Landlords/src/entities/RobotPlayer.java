@@ -134,8 +134,12 @@ public class RobotPlayer extends Player {
   }
 
 		
-	public List<Hand> getHandList() {
-		return handList;
+	public String getHandList() {
+		String message = "";
+		for(Hand hand: handList) {
+			message+=hand.toString();
+		}
+		return message;
 	}
   
   

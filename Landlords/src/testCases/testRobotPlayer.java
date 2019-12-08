@@ -100,7 +100,11 @@ public class testRobotPlayer {
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[15]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3],c[3],c[3],c[3]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[16],c[17]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test11() {
@@ -130,7 +134,11 @@ public class testRobotPlayer {
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[4]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[5],c[5]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test16() {
@@ -143,7 +151,11 @@ public class testRobotPlayer {
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[5],c[6],c[7],c[8]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[9],c[9]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[10],c[10]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test17() {
@@ -167,7 +179,11 @@ public class testRobotPlayer {
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[4],c[4],c[3],c[3],c[3]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test19() {
@@ -179,7 +195,11 @@ public class testRobotPlayer {
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3],c[3],c[4],c[4],c[5],c[5]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test20() {
@@ -191,7 +211,11 @@ public class testRobotPlayer {
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[10],c[10]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test21() {
@@ -203,7 +227,11 @@ public class testRobotPlayer {
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[6]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test22() {
@@ -220,7 +248,11 @@ public class testRobotPlayer {
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[11]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[13]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[17]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
   
 	@Test
