@@ -179,7 +179,7 @@ public class GameBoard {
 			if (player.getCards().size() == 0)
 				isFinish = true;
 
-			// update active player
+			// update active player and recentHands
 			cursor = (cursor + 1) % 3;
 			room.updateRecentHands();
 		}
