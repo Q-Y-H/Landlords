@@ -63,7 +63,7 @@ public class GameBoard {
 			}
 
 			Player player = players.get(currCursor);
-			this.messenger.handleRunForLandlord(choices, players, currCursor, initCursor);
+			this.messenger.handleClaimLandlord(choices, players, currCursor, initCursor);
 			Command<Boolean> runForLandlord = new DecideRunForLandlordCommand(player);
 			this.playerController.storeAndExecute(runForLandlord);
 
@@ -103,7 +103,7 @@ public class GameBoard {
 		this.messenger.clear();
 		this.messenger.print("===========\n");
 		this.messenger.print("Game Start!\n");
-		this.messenger.print("===========\n");
+		this.messenger.print("===========\n\n");
 
 		while (!isFinish) {
 			Player player = players.get(cursor);
