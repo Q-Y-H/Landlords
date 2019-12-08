@@ -243,8 +243,11 @@ public class RobotPlayer extends Player {
 						tem.add(card);
 					}
 				}
-				copyCards.removeAll(tem);
-				handList.add(Hand.cards2hand(tem));
+				numOfRanks[i]=0;
+				if (!tem.isEmpty()) {
+					copyCards.removeAll(tem);
+					handList.add(Hand.cards2hand(tem));
+				}
 			}
 		}
 		Collections.sort(handList, Hand.handComparator);
@@ -300,7 +303,7 @@ public class RobotPlayer extends Player {
 				int maxE2 = maxEnd;
 				for (int t = maxS2; t <= maxE1; t++) {
 					numOfRanks[t]--;
-				}
+				}			
 				temp.addAll(handlerOfSOS(copyCards, maxS2, maxE2, numOfRanks, handList));
 				temp.addAll(handlerOfSOS(copyCards, maxS1, maxE1, numOfRanks, handList));
 				return temp;//
@@ -311,7 +314,7 @@ public class RobotPlayer extends Player {
 		}
 
 		// 5.2 顺子长度大于5，头/尾存在连对，顺子长度-连对长度>=5,转化为三带加顺子
-		if (numOfRanks[maxStart] >= 2 && maxEnd - maxStart >= 4) {
+		if (numOfRanks[maxStart] >= 2 && maxEnd - maxStart >= 5) {
 			numOfRanks[maxStart] = 0;
 			List<Card> tem = new ArrayList<Card>();
 			for (Card card : copyCards) {
@@ -320,8 +323,10 @@ public class RobotPlayer extends Player {
 
 				}
 			}
-			copyCards.removeAll(tem);
-			handList.add(Hand.cards2hand(tem));
+			if (!tem.isEmpty()) {
+				copyCards.removeAll(tem);
+				handList.add(Hand.cards2hand(tem));
+			}
 			return handlerOfSOS(copyCards, maxStart + 1, maxEnd, numOfRanks, handList);
 		}
 		if (numOfRanks[maxEnd] >= 2 && maxEnd - maxStart >= 5) {
@@ -332,8 +337,10 @@ public class RobotPlayer extends Player {
 					tem.add(card);
 				}
 			}
-			copyCards.removeAll(tem);
-			handList.add(Hand.cards2hand(tem));
+			if (!tem.isEmpty()) {
+				copyCards.removeAll(tem);
+				handList.add(Hand.cards2hand(tem));
+			}
 			return handlerOfSOS(copyCards, maxStart, maxEnd - 1, numOfRanks, handList);
 		}
 
@@ -363,7 +370,7 @@ public class RobotPlayer extends Player {
 				copyCards.removeAll(tem);
 			}
 
-			temp.add(new StraightOfCards(HandType.PAIR, Rank.getRankByValue(maxEnd), maxEnd - point + 1, tem));
+			temp.add(new StraightOfCards(HandType.PAIR, Rank.getRankByValue(maxEnd), maxEnd - point+1, tem));
 			temp.addAll(handlerOfSOS(copyCards, maxStart, point - 1, numOfRanks, handList));
 			return temp;
 		} else if (point != 0 && point - maxStart > 4) {
@@ -375,8 +382,10 @@ public class RobotPlayer extends Player {
 					}
 				}
 				numOfRanks[point]--;
-				copyCards.removeAll(tem);
-				handList.add(Hand.cards2hand(tem));
+				if (!tem.isEmpty()) {
+					copyCards.removeAll(tem);
+					handList.add(Hand.cards2hand(tem));
+				}
 			}
 			return handlerOfSOS(copyCards, maxStart, point - 1, numOfRanks, handList);
 		}
@@ -417,14 +426,16 @@ public class RobotPlayer extends Player {
 					}
 				}
 				numOfRanks[point]--;
-				copyCards.removeAll(tem);
-				handList.add(Hand.cards2hand(tem));
+				if (!tem.isEmpty()) {
+					copyCards.removeAll(tem);
+					handList.add(Hand.cards2hand(tem));
+				}
 			}
 			return handlerOfSOS(copyCards, point + 1, maxEnd, numOfRanks, handList);
 		}
 
-		temp.add(new StraightOfCards(HandType.SOLO, Rank.getRankByValue(maxEnd), maxEnd - maxStart,
-				setCard(copyCards, maxStart, maxEnd)));// 鏃犲彉鍖�
+		temp.add(new StraightOfCards(HandType.SOLO, Rank.getRankByValue(maxStart), maxEnd - maxStart+1,
+				setCard(copyCards, maxStart, maxEnd)));
 
 		return temp;
 	}
@@ -510,21 +521,9 @@ public class RobotPlayer extends Player {
 }
 
 class StraightOfCards extends Hand{ // TODO: what is this?
-	private int chainLength;
-	private HandType type;
-	private Rank endRank;
 		
-	public StraightOfCards(HandType handType, Rank EndRank, int length, List<Card> cards) {
-		super(handType,Rank.getRankByValue(EndRank.ordinal()-length+3),null,length,cards);
-		chainLength=length;
-		type=handType;
-		endRank=EndRank;
-	}
-	public int getChainLength() {
-		return chainLength;
-	}
-	public int getEnd() {
-		return endRank.ordinal()+3;
+	public StraightOfCards(HandType handType, Rank startRank, int length, List<Card> cards) {
+		super(handType,Rank.getRankByValue(startRank.ordinal()+3),null,length,cards);
 	}
 	public List<Card>getCards(){
 		return super.getCards();

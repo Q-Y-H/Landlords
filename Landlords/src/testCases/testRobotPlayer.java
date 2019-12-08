@@ -161,13 +161,18 @@ public class testRobotPlayer {
 	public void test17() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList( c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
+		List<Card> cards1 = Arrays.asList( c[4],c[4],c[4],c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
 		robotplayer1.setCards(cards1);
 		robotplayer1.sparseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[5]))));
+		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[4],c[4]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[10],c[10],c[10]))));
-		Assert.assertEquals(exceptedHands,robotplayer1.getHandList());
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
 	public void test18() {
@@ -201,52 +206,19 @@ public class testRobotPlayer {
 		}
 		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
-	@Test
-	public void test20() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
-		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
-		List<Hand> exceptedHands=new ArrayList<Hand>();
-		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
-		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[10],c[10]))));
-		String result="";
-		for(Hand hand: exceptedHands) {
-			result+=hand.toString();
-		}
-		Assert.assertEquals(result,robotplayer1.getHandList());
-	}
-	@Test
-	public void test21() {
-		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[6], c[6], c[6], c[7], c[8], c[9], c[10]);
-		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
-		List<Hand> exceptedHands=new ArrayList<Hand>();
-		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
-		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[6]))));
-		String result="";
-		for(Hand hand: exceptedHands) {
-			result+=hand.toString();
-		}
-		Assert.assertEquals(result,robotplayer1.getHandList());
-	}
+
 	@Test
 	public void test22() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[6], c[7], c[7], c[8], c[9], c[10], c[11], c[11] ,c[13], c[17]);
+		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[6], c[7], c[8],c[8] ,c[9], c[10], c[11], c[12] ,c[13], c[17]);
 		robotplayer1.setCards(cards1);
 		System.out.println(cards1);
 		System.out.println(robotplayer1.decideRunForLandlord());
 		robotplayer1.sparseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
-		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[11],c[7],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3],c[4],c[5],c[6],c[7]))));
-		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[11]))));
-		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[13]))));
+		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[11],c[12],c[13],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[17]))));
 		String result="";
 		for(Hand hand: exceptedHands) {
@@ -254,17 +226,20 @@ public class testRobotPlayer {
 		}
 		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
-  
 	@Test
 	public void test23() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
-		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[9], c[10], c[10], c[11] ,c[11], c[17]);
+		List<Card> cards1 = Arrays.asList(c[4], c[5], c[6], c[7], c[8], c[9], c[9], c[10], c[10], c[11] ,c[11]);
 		robotplayer1.setCards(cards1);
-		System.out.println(cards1);
-		System.out.println(robotplayer1.decideRunForLandlord());
 		robotplayer1.sparseCards();
-		System.out.println(robotplayer1.getHandList());
+		List<Hand> exceptedHands=new ArrayList<Hand>();
+		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[5],c[6],c[7],c[8]))));
+		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[11],c[11],c[10],c[9],c[9],c[10]))));
+		String result="";
+		for(Hand hand: exceptedHands) {
+			result+=hand.toString();
+		}
+		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
-
 }
