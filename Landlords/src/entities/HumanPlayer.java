@@ -27,7 +27,7 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public Boolean decideRunForLandlord() {
-		String prompt = "Player " + this.getNickname() + ": Do you want to run for landlord? [y/n] ";
+		String prompt = "Player " + this.getNickname() + ": Do you want to claim for landlord? [y/n] ";
 		String input = this.messenger.askForInput(prompt, new String[] { "Y", "N" }, false);
 		if (input.toUpperCase().equals("Y"))
 			return true;

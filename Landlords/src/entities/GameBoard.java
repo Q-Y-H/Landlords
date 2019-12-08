@@ -32,7 +32,7 @@ public class GameBoard {
 	public void run() {
 		room.setup();
 		setNickname();
-		electLandlord();
+		claimLandlord();
 		gameStart();
 		checkWinner();
 	}
@@ -43,7 +43,7 @@ public class GameBoard {
 		}
 	}
 
-	private void electLandlord(int initCursor) {
+	private void claimLandlord(int initCursor) {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
 		int currCursor = initCursor;
@@ -89,8 +89,8 @@ public class GameBoard {
 		this.messenger.waiting();
 	}
 	
-	private void electLandlord() {
-		electLandlord(new Random().nextInt(3));
+	private void claimLandlord() {
+		claimLandlord(new Random().nextInt(3));
 	}
 
 	public void gameStart() {
