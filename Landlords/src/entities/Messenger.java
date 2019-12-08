@@ -165,7 +165,9 @@ public final class Messenger {
 		int size = choices.size();
 
 		clear();
-		print("\nRound " + (choices.size() + 1) + ": Running for the LANDLORD position!\n");
+		print("\n===========================================\n");
+		print("Round " + (choices.size() + 1) + ": Running for the LANDLORD position!\n");
+		print("===========================================\n");
 		waitForPlayer(player);
 		clear();
 		println("Round " + (choices.size() + 1) + ":\n");
@@ -173,7 +175,7 @@ public final class Messenger {
 		for (int i = 0; i < size; i++) {
 			int index = (initCursor + i) % 3;
 			println("Player " + players.get(index).getNickname() + ": ");
-			if (choices.get(i))
+			if (choices.get(i)) 	
 				println("Running for LANDLORD.\n");
 			else
 				println("Waived.\n");

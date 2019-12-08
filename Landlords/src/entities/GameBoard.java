@@ -101,7 +101,9 @@ public class GameBoard {
 		Hand lastValidHand = null;
 
 		this.messenger.clear();
+		this.messenger.print("===========\n");
 		this.messenger.print("Game Start!\n");
+		this.messenger.print("===========\n");
 
 		while (!isFinish) {
 			Player player = players.get(cursor);
@@ -192,10 +194,15 @@ public class GameBoard {
 	}
 
 	private void checkWinner() {
-		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD)
+		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD) {
+			this.messenger.println("==============");
 			this.messenger.println("Landlord wins!");
-		else
+			this.messenger.println("==============");
+		}else {
+			this.messenger.println("==============");
 			this.messenger.println("Peasants win!");
+			this.messenger.println("==============");
+		}
 		this.messenger.waiting();
 	}
 }
