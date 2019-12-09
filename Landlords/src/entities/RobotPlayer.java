@@ -42,8 +42,9 @@ public class RobotPlayer extends Player {
 		this.setNickname("Robot " + getId() % 3);
 	}
 
+	
 	@Override
-	public Boolean decideRunForLandlord() {
+	public Boolean decideRunForLandlord() {	//deicde run for landlords based on sum of weight of hands 	
 		sparseCards();
 		int weightSum = 0;
 		for (Hand hand : handList) {
@@ -62,24 +63,14 @@ public class RobotPlayer extends Player {
 		List<Card> response=new ArrayList<Card>();
 		sparseCards();	
 		calculateCombinationList();
-		clearInvalidHand();
-		System.out.println(handList);
-		System.out.println(combinationList);
-		System.out.println(bombList);
-		System.out.println("Recent hand");
-		for (int i=0;i<recentHands.size();i++) {
-			System.out.print(recentHands.get(i));
-		}
-		System.out.println("End");
+		
 		//Strategies
-		if(recentHands.isEmpty()||recentHands.getFirst().getCards().isEmpty() &&recentHands.getLast().getCards().isEmpty()) {
-			System.out.println("proactive response ");
-			response=playCardsProactively();
+		if(recentHands.isEmpty()||recentHands.getFirst().getCards().isEmpty() &&recentHands.getLast().getCards().isEmpty()) {	//proactive strategy
+			response=playCardsProactively();	
 		}
-		else {
-			System.out.println("passive response ");
+		else {	//passive strategy
 			Hand lastValidHand=null;
-			for(int i=recentHands.size()-1;i>=0;i--) {
+			for(int i=recentHands.size()-1;i>=0;i--) {	//get the last valid hand for comparison
 				if(!recentHands.get(i).getCards().isEmpty()) {
 					lastValidHand=recentHands.get(i);
 					break;
@@ -88,12 +79,11 @@ public class RobotPlayer extends Player {
 			List<Card> formerCards = lastValidHand.getCards(); // get last valid cards
 			response = playCardsPassively(formerCards);
 		}
-		System.out.println(response);
-		// Convert response to answer
+		
+		// Convert calculated hand response to string
+		String ans = "";
 		if (response.isEmpty())
 			return "pass";
-		
-		String ans = "";
 		for (Card card : response)
 			ans += card.toString();
 		return ans;
@@ -107,30 +97,24 @@ public class RobotPlayer extends Player {
 		List<Card> response = new ArrayList<Card>();
 		Hand formerHand = Hand.cards2hand(formerCards);
 		totalHandCount = handList.size();
-		if (totalHandCount == 2 && !bombList.isEmpty()) {
+		if (totalHandCount == 2 && !bombList.isEmpty()) {	//situation you may take controls of others
 			response = bombList.get(0).getCards();
 			return response;
 		}
-		if (formerHand.getType() == HandType.ROCKET) {
+		if (formerHand.getType() == HandType.ROCKET) {	//situation you can only pass
 			return new ArrayList<Card>();
 		}
-		for (Hand hand : handList) {
+		for (Hand hand : handList) {	//check for answers in handlist according to weigth of hands
 			if (formerHand.isSmallerThan(hand) == true) {
 				return hand.getCards();
 			}
 		}
-		for (Hand hand : combinationList) {
-			if (formerHand.isSmallerThan(hand) == true) {
-				return hand.getCards();
-			}
-		}
-		for (Hand hand : bombList) {
+		for (Hand hand : combinationList) {		//check for answers in combinationlist according to weigth of hands
 			if (formerHand.isSmallerThan(hand) == true) {
 				return hand.getCards();
 			}
 		}
 		return CardRoom.hintCards(cards, formerHand);
-
   }
 
 		
@@ -284,12 +268,12 @@ public class RobotPlayer extends Player {
 		return chainLength;
 	}
 
-	// 5. handle the SOS
+	// 5. handle the straight of solo (sos in the later part)
 	private static List<StraightOfCards> handlerOfSOS(List<Card> copyCards, int maxStart, int maxEnd, int[] numOfRanks,
 			List<Hand> handList) {
 		List<StraightOfCards> temp = new ArrayList<StraightOfCards>();
 
-		// 5.1若顺子中出现单牌（连续长度不限）且该单牌段长x，与顺子头部长度距离d1，尾部距离d2，满足：d1+x>=5且d2+x>=5，拆为两个顺子
+		// 5.1 sparse sos into two sos
 		int additionLength = 0;
 		int additionEnd = 0;
 		for (int i = maxStart; i <= maxEnd; i++) {
@@ -313,7 +297,7 @@ public class RobotPlayer extends Player {
 			}
 		}
 
-		// 5.2 顺子长度大于5，头/尾存在连对，顺子长度-连对长度>=5,转化为三带加顺子
+		// 5.2sparse sos into sos plus trio
 		if (numOfRanks[maxStart] >= 2 && maxEnd - maxStart >= 5) {
 			numOfRanks[maxStart] = 0;
 			List<Card> tem = new ArrayList<Card>();
@@ -344,7 +328,7 @@ public class RobotPlayer extends Player {
 			return handlerOfSOS(copyCards, maxStart, maxEnd - 1, numOfRanks, handList);
 		}
 
-		// 5.3 顺子长度大于5，头/尾存在单牌，顺子长度-连对长度>=5,转化为对子加顺子
+		// 5.3 sparse sos into paris and sos
 
 		int point = maxEnd;
 		int[] addition1 = new int[maxEnd - maxStart];
@@ -489,38 +473,9 @@ public class RobotPlayer extends Player {
 		Collections.sort(combinationList, Hand.handComparator);
 	}
 
-	public void clearInvalidHand() {
-		if (!handList.isEmpty()) {
-
-			Iterator<Hand> handIterator = handList.iterator();
-
-			while (handIterator.hasNext()) {
-				Hand checkingHand = (Hand) handIterator.next();
-				if (checkingHand.getCards().isEmpty() || checkingHand.getType() == HandType.ILLEGAL)
-					handIterator.remove();
-			}
-		}
-		if (!bombList.isEmpty()) {
-			Iterator<Hand> handIterator2 = combinationList.iterator();
-			while (handIterator2.hasNext()) {
-				Hand checkingHand = (Hand) handIterator2.next();
-				if (checkingHand.getCards().isEmpty() || checkingHand.getType() == HandType.ILLEGAL)
-					handIterator2.remove();
-			}
-		}
-		if (!combinationList.isEmpty()) {
-
-			Iterator<Hand> handIterator3 = bombList.iterator();
-			while (handIterator3.hasNext()) {
-				Hand checkingHand = (Hand) handIterator3.next();
-				if (checkingHand.getCards().isEmpty() || checkingHand.getType() == HandType.ILLEGAL)
-					handIterator3.remove();
-			}
-		}
-	}
 }
 
-class StraightOfCards extends Hand{ // TODO: what is this?
+class StraightOfCards extends Hand{ // data structure of straight of cards for handling straight of solo
 		
 	public StraightOfCards(HandType handType, Rank startRank, int length, List<Card> cards) {
 		super(handType,Rank.getRankByValue(startRank.ordinal()+3),null,length,cards);
