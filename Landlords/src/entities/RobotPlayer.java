@@ -29,12 +29,12 @@ public class RobotPlayer extends Player {
 	 */
 	public RobotPlayer(String nickname, PlayerRole role, LinkedList<Hand> recentHands) {
 		super(nickname, role, recentHands);
-		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUM;
+		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUMROBOTSTRATEGY;
 	}
 
 	public RobotPlayer(String nickname) {
 		super(nickname, null, null);
-		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUM;
+		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUMROBOTSTRATEGY;
 	}
 	
 	public void setDifficulty(RobotPlayerDifficulty robotPlayerDifficulty) {
