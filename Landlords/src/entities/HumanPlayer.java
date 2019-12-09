@@ -19,7 +19,6 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public void askForNickname() {
-		// TODO Auto-generated method stub
 		String prompt = "[Player " + this.getId() + "] Please Set Your Nickname >> ";
 		String nickname = this.messenger.askForInput(prompt, new String[] {}, true);
 		this.setNickname(nickname);
@@ -37,7 +36,8 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public String getPlayChoice() {
-		this.messenger.print("Please choose the cards to play. Input 'help' for more information. Input 'pass' to skip this round.\n");
+		this.messenger.print(
+				"Please choose the cards to play. Input 'help' for more information. Input 'pass' to skip this round.\n");
 		String cmd = "";
 
 		while (true) {

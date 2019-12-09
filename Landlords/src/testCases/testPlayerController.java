@@ -10,7 +10,6 @@ import Commands.SetNicknameCommand;
 import entities.HumanPlayer;
 import entities.Player;
 import entities.PlayerController;
-import entities.RobotPlayer;
 
 public class testPlayerController {
 	PlayerController pc;

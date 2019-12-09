@@ -3,6 +3,9 @@ package testCases;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,18 +23,22 @@ public class testCardRoom {
 	private CardRoom cr;
 	private Card[] c;
 	private List<Card> cards;
+	private Method method = null;
 	
 	@BeforeEach
 	public void setUp() {
-		String input = new String("pass\n" + "n\n" + "y\n" + "abc\n" + "Foo\n" +
+		String input = new String("pass\n" + "a\n" + "b\n" + "c\n" +
+		
+				"pass\n" + "n\n" + "y\n" + "abc\n" + "Foo\n" +
 				"n\n" + "n\n" + "y\n" + "n\n" + "y\n" + "n\n" + 
-				"a\n" + "b\n" + "c\n" + "n\n" + "y\n" + "y\n" + "y\n" + "y\n" + "n\n" + "y\n" + "n\n" +
+				"n\n" + "y\n" + "y\n" + "y\n" + "y\n" + "n\n" + "y\n" + "n\n" +
 				"abc\n" + "n\n" + "y\n" +
 				"pass\n" + "abc\n");
 		ByteArrayInputStream bais = new ByteArrayInputStream(input.getBytes());
 		System.setIn(bais);
 		// The binding to System.in is restored in testPlay.java
-
+		
+		cr = new CardRoom();
 		c = new Card[18];
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);
@@ -214,4 +221,169 @@ public class testCardRoom {
 			i++;
 		assertEquals(i, expected.size());
 	}
+	
+	@Test // isValidInputCardNames
+	public void isValidInputCardNames_789() {		
+		ArrayList<String> cardnames = new ArrayList<String>();
+		cardnames.add("7");
+		cardnames.add("8");
+		cardnames.add("9");
+		
+		try {
+			method = CardRoom.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			assertEquals(method.invoke(cr, cardnames), true);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test // isValidInputCardNames
+	public void isValidInputCardNames_t() {
+		ArrayList<String> cardnames = new ArrayList<String>();
+		cardnames.add("t");
+		
+		try {
+			method = CardRoom.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			assertEquals(method.invoke(cr, cardnames), false);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test // isValidInputCardNames
+	public void isValidInputCardNames_xa() {
+		ArrayList<String> cardnames = new ArrayList<String>();
+		cardnames.add("x");
+		cardnames.add("a");
+		
+		try {
+			method = CardRoom.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			assertEquals(method.invoke(cr, cardnames), true);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test // isValidInputCardNames
+	public void isValidInputCardNames_jQk() {
+		ArrayList<String> cardnames = new ArrayList<String>();
+		cardnames.add("j");
+		cardnames.add("Q");
+		cardnames.add("k");
+		
+		try {
+			method = CardRoom.class.getDeclaredMethod("isValidInputCardNames", ArrayList.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			assertEquals(method.invoke(cr, cardnames), true);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test // askForPlayChoice
+	public void askForPlayChoice_0_pass(){
+		cr.setup();
+		assertEquals(cr.askForPlayChoice(0), new String("pass"));
+	}
+	
+	@Test // askForNickNames
+	public void askForNickname_a_b_c() {
+		CardRoom crPVP = new CardRoom();
+		crPVP.setType(RoomType.PVP);
+		crPVP.setup();
+		
+		try {
+			method = CardRoom.class.getDeclaredMethod("askForNicknames", null);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException e1) {
+			e1.printStackTrace();
+		} catch (SecurityException e1) {
+			e1.printStackTrace();
+		}
+	
+		try {
+			method.invoke(crPVP, null);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(crPVP.getPlayers().get(0).getNickname(), new String("a"));
+		assertEquals(crPVP.getPlayers().get(1).getNickname(), new String("b"));
+		assertEquals(crPVP.getPlayers().get(2).getNickname(), new String("c"));
+	}
+	
+	@Test // processPlayChoice
+	public void processPlayChoice_multiple() {
+		CardRoom cr = new CardRoom();
+		cr.setType(RoomType.PVP);
+		cr.setup();
+		
+		assertEquals(cr.processPlayerChoice(0, "pass"), false);
+		cards = new ArrayList<Card>();
+		cards.add(c[3]);
+		cards.add(c[3]);
+		cards.add(c[4]);
+		cr.getPlayers().get(0).setCards(cards);
+		assertEquals(cr.processPlayerChoice(0, ""), false);
+		assertEquals(cr.processPlayerChoice(0, "5"), false);
+		assertEquals(cr.processPlayerChoice(0, "3 4"), false);
+		assertEquals(cr.processPlayerChoice(0, "34"), false);
+		assertEquals(cr.processPlayerChoice(0, "3 3"), true);
+		cr.setLastHandPlayer(0);
+		assertEquals(cr.processPlayerChoice(0, "pass"), false);
+		cr.setLastHandPlayer(1);
+		assertEquals(cr.processPlayerChoice(0, "pass"), true);
+	}
+
 }
