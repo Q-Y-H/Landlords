@@ -8,10 +8,10 @@ import entities.Card;
 import entities.CardRoom;
 import entities.Hand;
 import entities.RobotPlayer;
-import entities.getResponse;
+import entities.robotDifficultyStrategy;;
 
-public enum RobotPlayerDifficulty implements getResponse{
-	EASY{
+public enum RobotPlayerDifficulty implements robotDifficultyStrategy{
+	EASYROBOTSTRATEGY{
 
 		@Override
 		public List<Card> calculateResponse(RobotPlayer robotPlayer,LinkedList<Hand> recentHands) {
@@ -40,7 +40,7 @@ public enum RobotPlayerDifficulty implements getResponse{
 		}
 	},
 	
-	MEDIUM{
+	MEDIUMROBOTSTRATEGY{
 		@Override
 		public List<Card> calculateResponse(RobotPlayer robotPlayer,LinkedList<Hand> recentHands) {
 			List<Card> response=new ArrayList<Card>();
