@@ -5,9 +5,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
+
 import enums.HandType;
 import enums.PlayerRole;
 import enums.Rank;
+import enums.RobotPlayerDifficulty;
 
 public class RobotPlayer extends Player {
 
@@ -19,18 +22,24 @@ public class RobotPlayer extends Player {
 	private List<Hand> bombList = new ArrayList<Hand>();
 	private List<Hand> combinationList = new ArrayList<Hand>();
 	private List<Card> copyCards = new ArrayList<Card>();
-
+	private RobotPlayerDifficulty robotPlayerDifficulty;
+	
 	/*
 	 * Constructor
 	 */
 	public RobotPlayer(String nickname, PlayerRole role, LinkedList<Hand> recentHands) {
 		super(nickname, role, recentHands);
+		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUM;
 	}
 
 	public RobotPlayer(String nickname) {
 		super(nickname, null, null);
+		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUM;
 	}
-
+	
+	public void setDifficulty(RobotPlayerDifficulty robotPlayerDifficulty) {
+		this.robotPlayerDifficulty=robotPlayerDifficulty;
+	}
 	/*
 	 * Methods
 	 */
@@ -60,23 +69,9 @@ public class RobotPlayer extends Player {
 		List<Card> response=new ArrayList<Card>();
 		parseCards();	
 		calculateCombinationList();
+		
+		response=this.robotPlayerDifficulty.calculateResponse(this,this.recentHands);
 
-		// Strategies
-		if (recentHands.isEmpty()
-				|| recentHands.getFirst().getCards().isEmpty() && recentHands.getLast().getCards().isEmpty()) { // proactive
-																												// strategy
-			response = playCardsProactively();
-		} else { // passive strategy
-			Hand lastValidHand = null;
-			for (int i = recentHands.size() - 1; i >= 0; i--) { // get the last valid hand for comparison
-				if (!recentHands.get(i).getCards().isEmpty()) {
-					lastValidHand = recentHands.get(i);
-					break;
-				}
-			}
-			List<Card> formerCards = lastValidHand.getCards(); // get last valid cards
-			response = playCardsPassively(formerCards);
-		}
 
 		// Convert calculated hand response to string
 		String ans = "";
@@ -483,4 +478,6 @@ class StraightOfCards extends Hand { // data structure of straight of cards for 
 	public List<Card> getCards() {
 		return super.getCards();
 	}
+	
 }
+
