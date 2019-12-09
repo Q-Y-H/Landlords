@@ -113,18 +113,6 @@ public final class Messenger {
 		clear(300);
 	}
 
-	public String inputErrorMessage() {
-		return "Input should only contain numbers from 2 to 10 and J, Q, K, A, B, R!";
-	}
-
-	public String cardsNotOnHandError() {
-		return "You should select the cards in your hand!";
-	}
-
-	public String disobeyRulesError() {
-		return "Your input doesn't meet the rules!";
-	}
-
 	public String printCards(List<Card> cards) {
 		String message = "┌";
 		int len = cards.size();
