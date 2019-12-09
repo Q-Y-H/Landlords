@@ -273,7 +273,7 @@ public class RobotPlayer extends Player {
 			List<Hand> handList) {
 		List<StraightOfCards> temp = new ArrayList<StraightOfCards>();
 
-		// 5.1 sparse sos into two sos
+		// 5.1 sparse sos into two straights
 		int additionLength = 0;
 		int additionEnd = 0;
 		for (int i = maxStart; i <= maxEnd; i++) {
@@ -297,8 +297,9 @@ public class RobotPlayer extends Player {
 			}
 		}
 
+
 		// 5.2sparse sos into sos plus trio
-		if (numOfRanks[maxStart] >= 2 && maxEnd - maxStart >= 5) {
+		if (numOfRanks[maxStart] >= 2 && maxEnd - maxStart >= 5) {		//check trio at the front of straight
 			numOfRanks[maxStart] = 0;
 			List<Card> tem = new ArrayList<Card>();
 			for (Card card : copyCards) {
@@ -313,6 +314,7 @@ public class RobotPlayer extends Player {
 			}
 			return handlerOfSOS(copyCards, maxStart + 1, maxEnd, numOfRanks, handList);
 		}
+		//behind
 		if (numOfRanks[maxEnd] >= 2 && maxEnd - maxStart >= 5) {
 			numOfRanks[maxEnd] = 0;
 			List<Card> tem = new ArrayList<Card>();
@@ -328,8 +330,9 @@ public class RobotPlayer extends Player {
 			return handlerOfSOS(copyCards, maxStart, maxEnd - 1, numOfRanks, handList);
 		}
 
-		// 5.3 sparse sos into paris and sos
 
+		// 5.3 sparse sos into paris and sos
+		//check pairs at the front of straight
 		int point = maxEnd;
 		int[] addition1 = new int[maxEnd - maxStart];
 		int[] addition2 = new int[maxEnd - maxStart];
@@ -373,8 +376,7 @@ public class RobotPlayer extends Player {
 			}
 			return handlerOfSOS(copyCards, maxStart, point - 1, numOfRanks, handList);
 		}
-		// behind
-
+		//behind
 		point = maxStart;
 
 		if (numOfRanks[point] == 1) {
