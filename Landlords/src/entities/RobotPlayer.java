@@ -54,7 +54,7 @@ public class RobotPlayer extends Player {
 		}
 	}
 
-	
+	@Override
 	public String getPlayChoice( ) {
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
