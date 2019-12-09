@@ -6,6 +6,7 @@ import java.util.List;
 
 import enums.HandType;
 import enums.Rank;
+import sun.java2d.marlin.stats.Histogram;
 
 public class Hand {
 
@@ -66,7 +67,7 @@ public class Hand {
 		else 
 			for(int i = 0;i < kickers.length;i++)
 				kickersInfo += kickers[i].getInfo();
-		return type + " " +primal.getName() + " Kickers: " + kickersInfo +chainLength + "cards "+cards+"\n";
+		return type + " " +primal.getName() + " Kickers: " + kickersInfo +chainLength +"\n";
 	}
 
 	public String getInfo() {
@@ -169,7 +170,7 @@ public class Hand {
 	public int getWeight() {
 		switch(type){
 		case ROCKET:{
-			return 20;
+			return 21;
 		}
 		case BOMB:{
 			return primal.ordinal()+8;
@@ -184,7 +185,7 @@ public class Hand {
 		}
 		case PAIR:{
 			if(this.getChainLength()!=1) {
-				return primal.ordinal()-chainLength;
+				return primal.ordinal()-chainLength-7;
 			}
 			else {
 				return primal.ordinal()-7;
@@ -192,10 +193,14 @@ public class Hand {
 		}
 		case TRIO:{
 			if(this.getChainLength()!=1) {
-				return primal.ordinal()/2;
+				return primal.ordinal()-chainLength-8;
 			}
 			else {
-				return primal.ordinal()-8;
+				if(this.kickers!=null)					
+					return primal.ordinal()-8+kickers[0].getWeight()-5;
+				else {
+					return primal.ordinal()-8;
+				}
 			}
 		}
 		case QUAD:{
