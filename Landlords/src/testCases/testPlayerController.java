@@ -3,7 +3,9 @@ package testCases;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import Commands.PlayChoiceCommand;
 import Commands.SetNicknameCommand;
@@ -11,6 +13,7 @@ import entities.HumanPlayer;
 import entities.Player;
 import entities.PlayerController;
 
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class testPlayerController {
 	PlayerController pc;
 	

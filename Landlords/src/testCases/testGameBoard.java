@@ -1,9 +1,12 @@
+/*
 package testCases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,6 +16,7 @@ import entities.CardRoom;
 import entities.GameBoard;
 import enums.RoomType;
 
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class testGameBoard {
 	Method method = null;
 	CardRoom crPVE;
@@ -136,5 +140,5 @@ public class testGameBoard {
 		
 		assertEquals(crPVP.getLandlordID(), (rand + 2) % 3);
 	}
-	
 }
+*/

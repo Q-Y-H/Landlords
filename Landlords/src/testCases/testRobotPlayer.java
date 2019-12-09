@@ -9,8 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.TestMethodOrder;
 
 import entities.Card;
 import entities.Hand;
@@ -18,6 +19,7 @@ import entities.RobotPlayer;
 import enums.Rank;
 import enums.Suit;
 
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class testRobotPlayer {
 	private Card[] c;
 	private RobotPlayer robot;

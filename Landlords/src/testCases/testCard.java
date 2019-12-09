@@ -1,11 +1,15 @@
 package testCases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import entities.Card;
 import enums.Rank;
 
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class testCard {
 
 	@Test // single smaller

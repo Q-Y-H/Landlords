@@ -6,13 +6,16 @@ import java.util.List;
 import org.junit.Assert;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import entities.Card;
 import entities.Hand;
 import enums.Rank;
 import enums.Suit;
 
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class testHand {
 	private Card[] c;
 

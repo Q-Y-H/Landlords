@@ -1,3 +1,4 @@
+/*
 package testCases;
 
 import java.util.ArrayList;
@@ -6,8 +7,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import entities.Card;
 import entities.Hand;
@@ -16,6 +19,7 @@ import entities.Player;
 import enums.Rank;
 import enums.Suit;
 
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class testPlayer {
 	private Card[] c;
 	private Player player;
@@ -216,5 +220,5 @@ public class testPlayer {
 		System.setIn(System.in);
 	}
 }
-
+*/
 
