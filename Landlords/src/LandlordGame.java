@@ -8,7 +8,7 @@ public class LandlordGame {
 
 	public LandlordGame() {
 		CardRoom room = new CardRoom();
-		Messenger.getInstance().print("Welcome to the Landlord Poker Game!\n");
+		Messenger.getInstance().print("Welcome to the Landlord Poker Game!\n\n");
 		askForRoomType(room);
 		gameBoard = new GameBoard(room);
 	}
