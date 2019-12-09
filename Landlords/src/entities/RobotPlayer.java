@@ -45,7 +45,7 @@ public class RobotPlayer extends Player {
 	
 	@Override
 	public Boolean decideRunForLandlord() {	//deicde run for landlords based on sum of weight of hands 	
-		sparseCards();
+		parseCards();
 		int weightSum = 0;
 		for (Hand hand : handList) {
 			weightSum += hand.getWeight();
@@ -61,7 +61,7 @@ public class RobotPlayer extends Player {
 	public String getPlayChoice( ) {
 		//Initialization
 		List<Card> response=new ArrayList<Card>();
-		sparseCards();	
+		parseCards();	
 		calculateCombinationList();
 		
 		//Strategies
@@ -127,7 +127,7 @@ public class RobotPlayer extends Player {
 	}
   
   
-	public void sparseCards() {		
+	public void parseCards() {		
 
 		handList.clear();
 		bombList.clear();
@@ -273,7 +273,7 @@ public class RobotPlayer extends Player {
 			List<Hand> handList) {
 		List<StraightOfCards> temp = new ArrayList<StraightOfCards>();
 
-		// 5.1 sparse sos into two straights
+		// 5.1 parse sos into two straights
 		int additionLength = 0;
 		int additionEnd = 0;
 		for (int i = maxStart; i <= maxEnd; i++) {
@@ -298,7 +298,7 @@ public class RobotPlayer extends Player {
 		}
 
 
-		// 5.2sparse sos into sos plus trio
+		// 5.2 parse sos into sos plus trio
 		if (numOfRanks[maxStart] >= 2 && maxEnd - maxStart >= 5) {		//check trio at the front of straight
 			numOfRanks[maxStart] = 0;
 			List<Card> tem = new ArrayList<Card>();
@@ -331,7 +331,7 @@ public class RobotPlayer extends Player {
 		}
 
 
-		// 5.3 sparse sos into paris and sos
+		// 5.3 parse sos into paris and sos
 		//check pairs at the front of straight
 		int point = maxEnd;
 		int[] addition1 = new int[maxEnd - maxStart];
