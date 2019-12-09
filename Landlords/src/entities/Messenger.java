@@ -9,6 +9,7 @@ public final class Messenger {
 
 	private static final Messenger INSTANCE = new Messenger();
 	private ArrayList<String> history = new ArrayList<String>();
+	private CardRoom cardRoom;
 
 	final Scanner in = new Scanner(System.in);
 
@@ -24,6 +25,10 @@ public final class Messenger {
 	public static Messenger getInstance() {
 		return INSTANCE;
 	}
+	
+	public void setCardRoom(CardRoom cardRoom) {
+		this.cardRoom = cardRoom;
+	}
 
 	public void print(String msg) {
 		history.add(msg);
@@ -33,6 +38,17 @@ public final class Messenger {
 	public void println(String msg) {
 		history.add(msg + "\n");
 		System.out.println(msg);
+	}
+
+	public void printBetweenBanner(String msg) {
+		int length = msg.length();
+		String banner = "";
+		for (int i = 0; i < length; ++i) {
+			banner += "=";
+		}
+		println(banner);
+		println(msg);
+		println(banner);
 	}
 
 	public String askForInput(String prompt, String[] inputSet, boolean isCaseSensitive) {
@@ -165,9 +181,7 @@ public final class Messenger {
 		int size = choices.size();
 
 		clear();
-		print("\n===========================================\n");
-		print("Round " + (choices.size() + 1) + ": Claiming the LANDLORD position!\n");
-		print("===========================================\n\n");
+		printBetweenBanner("Round " + (choices.size() + 1) + ": Claiming the LANDLORD position!");
 		waitForPlayer(player);
 		clear();
 		println("Round " + (choices.size() + 1) + ":\n");
@@ -175,7 +189,7 @@ public final class Messenger {
 		for (int i = 0; i < size; i++) {
 			int index = (initCursor + i) % 3;
 			println("Player " + players.get(index).getNickname() + ": ");
-			if (choices.get(i)) 	
+			if (choices.get(i))
 				println("Claiming LANDLORD.\n");
 			else
 				println("Waived.\n");
@@ -209,5 +223,13 @@ public final class Messenger {
 			return "Suggestion:\n\tpass\n";
 		}
 	}
-
+	
+	public void showLandlordInfo() {
+		int landlordID = this.cardRoom.getLandlordID();
+		clear();
+		println("The landlord is Player " + this.cardRoom.getPlayers().get(landlordID).getNickname());
+		println("Landlord cards:");
+		println(printCards(this.cardRoom.getLandlordCards()));
+		waiting();
+	}
 }

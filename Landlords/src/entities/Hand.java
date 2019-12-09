@@ -211,4 +211,11 @@ public class Hand {
 	public int getChainLength() {
 		return this.chainLength;
 	}
+	
+	public boolean isPass() {
+		if(this.cards.isEmpty())
+			return true;
+		else
+			return false;
+	}
 }

@@ -57,31 +57,31 @@ public class RobotPlayer extends Player {
 	}
 
 	@Override
-	public String getPlayChoice( ) {
-		//Initialization
-		List<Card> response=new ArrayList<Card>();
-		sparseCards();	
+	public String getPlayChoice() {
+		// Initialization
+		List<Card> response = new ArrayList<Card>();
+		sparseCards();
 		calculateCombinationList();
 		clearInvalidHand();
 		System.out.println(handList);
 		System.out.println(combinationList);
 		System.out.println(bombList);
 		System.out.println("Recent hand");
-		for (int i=0;i<recentHands.size();i++) {
+		for (int i = 0; i < recentHands.size(); i++) {
 			System.out.print(recentHands.get(i));
 		}
 		System.out.println("End");
-		//Strategies
-		if(recentHands.isEmpty()||recentHands.getFirst().getCards().isEmpty() &&recentHands.getLast().getCards().isEmpty()) {
+		// Strategies
+		if (recentHands.isEmpty()
+				|| recentHands.getFirst().getCards().isEmpty() && recentHands.getLast().getCards().isEmpty()) {
 			System.out.println("proactive response ");
-			response=playCardsProactively();
-		}
-		else {
+			response = playCardsProactively();
+		} else {
 			System.out.println("passive response ");
-			Hand lastValidHand=null;
-			for(int i=recentHands.size()-1;i>=0;i--) {
-				if(!recentHands.get(i).getCards().isEmpty()) {
-					lastValidHand=recentHands.get(i);
+			Hand lastValidHand = null;
+			for (int i = recentHands.size() - 1; i >= 0; i--) {
+				if (!recentHands.get(i).getCards().isEmpty()) {
+					lastValidHand = recentHands.get(i);
 					break;
 				}
 			}
@@ -92,7 +92,7 @@ public class RobotPlayer extends Player {
 		// Convert response to answer
 		if (response.isEmpty())
 			return "pass";
-		
+
 		String ans = "";
 		for (Card card : response)
 			ans += card.toString();
@@ -131,19 +131,17 @@ public class RobotPlayer extends Player {
 		}
 		return CardRoom.hintCards(cards, formerHand);
 
-  }
+	}
 
-		
 	public String getHandList() {
 		String message = null;
-		for(Hand hand: handList) {
-			message+=hand.toString();
+		for (Hand hand : handList) {
+			message += hand.toString();
 		}
 		return message;
 	}
-  
-  
-	public void sparseCards() {		
+
+	public void sparseCards() {
 
 		handList.clear();
 		bombList.clear();
@@ -424,7 +422,7 @@ public class RobotPlayer extends Player {
 		}
 
 		temp.add(new StraightOfCards(HandType.SOLO, Rank.getRankByValue(maxEnd), maxEnd - maxStart,
-				setCard(copyCards, maxStart, maxEnd)));// 鏃犲彉鍖�
+				setCard(copyCards, maxStart, maxEnd)));
 
 		return temp;
 	}
@@ -450,14 +448,14 @@ public class RobotPlayer extends Player {
 			copyCards.clear();
 			copyCards.add(card);
 			combinationList.add(Hand.cards2hand(copyCards));
-		}	
-		Hand temp1Hand=null;
-		Hand temp2Hand=null;
-		List<Card> temp1Cards=new ArrayList<Card>();
-		List<Card> temp2Cards=new ArrayList<Card>();
-		
-		for(int i=0;i<handList.size()-1;i++) {
-			for(int j=i+1;j<handList.size();j++) {
+		}
+		Hand temp1Hand = null;
+		Hand temp2Hand = null;
+		List<Card> temp1Cards = new ArrayList<Card>();
+		List<Card> temp2Cards = new ArrayList<Card>();
+
+		for (int i = 0; i < handList.size() - 1; i++) {
+			for (int j = i + 1; j < handList.size(); j++) {
 				temp2Cards.clear();
 				temp1Cards.clear();
 				temp1Hand = handList.get(i);
@@ -469,8 +467,8 @@ public class RobotPlayer extends Player {
 					continue;
 				temp2Cards.addAll(temp2Hand.getCards());
 				temp1Cards.addAll(temp2Cards);
-				Hand combinationHand=Hand.cards2hand(temp1Cards);
-				if(combinationHand.getType()!=HandType.ILLEGAL) {
+				Hand combinationHand = Hand.cards2hand(temp1Cards);
+				if (combinationHand.getType() != HandType.ILLEGAL) {
 					combinationList.add(combinationHand);
 				}
 			}
@@ -509,24 +507,27 @@ public class RobotPlayer extends Player {
 	}
 }
 
-class StraightOfCards extends Hand{ // TODO: what is this?
+class StraightOfCards extends Hand {
 	private int chainLength;
 	private HandType type;
 	private Rank endRank;
-		
+
 	public StraightOfCards(HandType handType, Rank EndRank, int length, List<Card> cards) {
-		super(handType,Rank.getRankByValue(EndRank.ordinal()-length+3),null,length,cards);
-		chainLength=length;
-		type=handType;
-		endRank=EndRank;
+		super(handType, Rank.getRankByValue(EndRank.ordinal() - length + 3), null, length, cards);
+		chainLength = length;
+		type = handType;
+		endRank = EndRank;
 	}
+
 	public int getChainLength() {
 		return chainLength;
 	}
+
 	public int getEnd() {
-		return endRank.ordinal()+3;
+		return endRank.ordinal() + 3;
 	}
-	public List<Card>getCards(){
+
+	public List<Card> getCards() {
 		return super.getCards();
 	}
 }
