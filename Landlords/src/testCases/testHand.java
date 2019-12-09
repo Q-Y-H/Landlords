@@ -778,7 +778,7 @@ public class testHand {
 	@Test // getWeight
 	public void getWeight_BR() {
 		Hand h = Hand.cards2hand(Arrays.asList(c[16],c[17]));
-		assertEquals(h.getWeight(), 20);
+		assertEquals(h.getWeight(), 21);
 	}
 	
 	@Test // getWeight
@@ -814,7 +814,7 @@ public class testHand {
 	@Test // getWeight
 	public void getWeight_222A() {
 		Hand h = Hand.cards2hand(Arrays.asList(c[15],c[15],c[15],c[14]));
-		assertEquals(h.getWeight(), 4);
+		assertEquals(h.getWeight(), 3);
 	}
 	
 	@Test

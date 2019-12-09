@@ -31,6 +31,7 @@ public class testCardRoom {
 		ByteArrayInputStream bais = new ByteArrayInputStream(input.getBytes());
 		System.setIn(bais);
 		// The binding to System.in is restored in testPlay.java
+
 		c = new Card[18];
 		for (int i = 3; i < 18; i++)
 			c[i] = new Card(Rank.getRankByValue(i), Suit.BLANK);

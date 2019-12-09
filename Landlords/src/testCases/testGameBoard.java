@@ -142,7 +142,7 @@ public class testGameBoard {
 	@Test // test electLandlord
 	public void electLandlord_n_n_y() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
+			method = GameBoard.class.getDeclaredMethod("claimLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
@@ -167,7 +167,7 @@ public class testGameBoard {
 	@Test // test electLandlord
 	public void electLandlord_n_y_n() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
+			method = GameBoard.class.getDeclaredMethod("claimLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
@@ -218,7 +218,7 @@ public class testGameBoard {
 	@Test // test electLandlord
 	public void electLandlord_n_y_y_y() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
+			method = GameBoard.class.getDeclaredMethod("claimLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
@@ -243,7 +243,7 @@ public class testGameBoard {
 	@Test // test electLandlord
 	public void electLandlord_y_n_y_n() {
 		try {
-			method = GameBoard.class.getDeclaredMethod("electLandlord", int.class);
+			method = GameBoard.class.getDeclaredMethod("claimLandlord", int.class);
 			method.setAccessible(true);
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
