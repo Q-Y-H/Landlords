@@ -6,7 +6,6 @@ import java.util.List;
 
 import enums.HandType;
 import enums.Rank;
-import sun.java2d.marlin.stats.Histogram;
 
 public class Hand {
 
@@ -14,17 +13,17 @@ public class Hand {
 	private Rank primal;
 	private Hand[] kickers;
 	private int chainLength;
-	private List<Card> cards=new ArrayList<Card>();
-	private int weight=0;
+	private List<Card> cards = new ArrayList<Card>();
+	private int weight = 0;
 
-	public Hand(HandType type,Rank primal,Hand[] kickers,int chainLength,List<Card> cards) {
+	public Hand(HandType type, Rank primal, Hand[] kickers, int chainLength, List<Card> cards) {
 		this.setType(type);
-		this.primal=primal;
-		this.kickers=kickers; 
-		this.chainLength=chainLength;
+		this.primal = primal;
+		this.kickers = kickers;
+		this.chainLength = chainLength;
 		this.setCards(cards);
 	}
-	
+
 	public HandType getType() {
 		return type;
 	}
@@ -62,12 +61,12 @@ public class Hand {
 		if (type == HandType.ILLEGAL)
 			return "Illegal " + "\n";
 		String kickersInfo = "";
-		if (kickers == null) 
-			kickersInfo= "null ";
-		else 
-			for(int i = 0;i < kickers.length;i++)
+		if (kickers == null)
+			kickersInfo = "null ";
+		else
+			for (int i = 0; i < kickers.length; i++)
 				kickersInfo += kickers[i].getInfo();
-		return type + " " +primal.getName() + " Kickers: " + kickersInfo +chainLength +"\n";
+		return type + " " + primal.getName() + " Kickers: " + kickersInfo + chainLength + "\n";
 	}
 
 	public String getInfo() {
@@ -79,75 +78,92 @@ public class Hand {
 	}
 
 	private static int sumOfArr(int arr[], int start, int end) {
-		int sum=0;
-		for(int i=start; i<=end; i++) sum += arr[i];
+		int sum = 0;
+		for (int i = start; i <= end; i++)
+			sum += arr[i];
 		return sum;
 	}
-	
-	//convert cards into Hand
+
+	// convert cards into Hand
 	public static Hand cards2hand(List<Card> cards) {
-		if(cards != null && !cards.isEmpty()) {
+		if (cards != null && !cards.isEmpty()) {
 			CardRoom.sortCards(cards);
-			
+
 			int[] numOfRanks = new int[20];
-			for(Card card: cards) numOfRanks[card.getRank().ordinal()+3]++;		//numOfRanks stores how many times a rank occurs
-			int startOfRank=0, endOfRank=0, length = 0, endOfTrio = 0, endOfQuad = 0;	//length stores number of different ranks
-			int[] start = new int[30];	//stores the first card's rank of different cards combination length i.e. SOLO(1),PAIR(2)
-			int[] count = new int[30];	//stores how many times the card combination of different length occur
-			
-			for(int rank=0; rank<numOfRanks.length; rank++) {
-				if(numOfRanks[rank] == 0) continue;
+			for (Card card : cards)
+				numOfRanks[card.getRank().ordinal() + 3]++; // numOfRanks stores how many times a rank occurs
+			int startOfRank = 0, endOfRank = 0, length = 0, endOfTrio = 0, endOfQuad = 0; // length stores number of
+																							// different ranks
+			int[] start = new int[30]; // stores the first card's rank of different cards combination length i.e.
+										// SOLO(1),PAIR(2)
+			int[] count = new int[30]; // stores how many times the card combination of different length occur
+
+			for (int rank = 0; rank < numOfRanks.length; rank++) {
+				if (numOfRanks[rank] == 0)
+					continue;
 				length++;
-				if(startOfRank == 0) startOfRank = rank;
+				if (startOfRank == 0)
+					startOfRank = rank;
 				endOfRank = rank;
-				if(start[numOfRanks[rank]] == 0) start[numOfRanks[rank]] = rank;
-				switch(numOfRanks[rank]) {
-					case 3: endOfTrio = rank;break;		
-					case 4: endOfQuad = rank;break;
+				if (start[numOfRanks[rank]] == 0)
+					start[numOfRanks[rank]] = rank;
+				switch (numOfRanks[rank]) {
+				case 3:
+					endOfTrio = rank;
+					break;
+				case 4:
+					endOfQuad = rank;
+					break;
 				}
 				count[numOfRanks[rank]]++;
 			}
-			
-			if(startOfRank == endOfRank) {//3, 33, 333, 3333
-				for(int i=1; i<=4; i++) {
-					if(count[i]==1 && sumOfArr(count,1,4)-count[i]==0) {
-						if(i==4) return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]), null, 1, cards); 
+
+			if (startOfRank == endOfRank) {// 3, 33, 333, 3333
+				for (int i = 1; i <= 4; i++) {
+					if (count[i] == 1 && sumOfArr(count, 1, 4) - count[i] == 0) {
+						if (i == 4)
+							return new Hand(HandType.BOMB, Rank.getRankByValue(start[4]), null, 1, cards);
 						return new Hand(HandType.getHandType(i), Rank.getRankByValue(start[i]), null, 1, cards);
 					}
 				}
 			}
-			
-			//pair of jokers
-			if(startOfRank==16 && endOfRank==17) return new Hand(HandType.ROCKET, Rank.RANK_BLACK_JOKER, null, 1, cards);
-			
-			//34567, 334455, 333444, 33334444
-			if(endOfRank - startOfRank == length - 1 && endOfRank < 15) {
-				int threshold[] = {5, 3, 2};
-				for(int i=1; i<=3; i++) {
-					if(count[i] >= threshold[i-1] && sumOfArr(count,1,4)-count[i]==0)
+
+			// pair of jokers
+			if (startOfRank == 16 && endOfRank == 17)
+				return new Hand(HandType.ROCKET, Rank.RANK_BLACK_JOKER, null, 1, cards);
+
+			// 34567, 334455, 333444, 33334444
+			if (endOfRank - startOfRank == length - 1 && endOfRank < 15) {
+				int threshold[] = { 5, 3, 2 };
+				for (int i = 1; i <= 3; i++) {
+					if (count[i] >= threshold[i - 1] && sumOfArr(count, 1, 4) - count[i] == 0)
 						return new Hand(HandType.getHandType(i), Rank.getRankByValue(start[i]), null, length, cards);
 				}
 			}
-			//333+4, 333444+56, 333+44, 333444+5566, 3333+45, 33334444+5678, 3333+4455, 33334444+55667788
-			for(int k=3; k<=4; k++) {
-				int end[] = {endOfTrio, endOfQuad};
-				if(count[k] !=0 && end[k-3] - start[k] == count[k]-1) {
-					for(int i=1; i<=2; i++) {
-						int cnt = (k==3)? count[k] : 2*count[k];
-						if( cnt == count[i] && sumOfArr(count,1,4)-count[k]-count[i] == 0) {
+			// 333+4, 333444+56, 333+44, 333444+5566, 3333+45, 33334444+5678, 3333+4455,
+			// 33334444+55667788
+			for (int k = 3; k <= 4; k++) {
+				int end[] = { endOfTrio, endOfQuad };
+				if (count[k] != 0 && end[k - 3] - start[k] == count[k] - 1) {
+					for (int i = 1; i <= 2; i++) {
+						int cnt = (k == 3) ? count[k] : 2 * count[k];
+						if (cnt == count[i] && sumOfArr(count, 1, 4) - count[k] - count[i] == 0) {
 							int n = count[i], temp = start[i];
 							Hand[] kickers = new Hand[n];
-							for(int j=0; j<n; j++, temp++) {
-								while(numOfRanks[temp] != i) temp++; 
-								kickers[j] = new Hand(HandType.getHandType(i), Rank.getRankByValue(temp), null, 1, cards);
+							for (int j = 0; j < n; j++, temp++) {
+								while (numOfRanks[temp] != i)
+									temp++;
+								kickers[j] = new Hand(HandType.getHandType(i), Rank.getRankByValue(temp), null, 1,
+										cards);
 							}
-							return new Hand(HandType.getHandType(k), Rank.getRankByValue(start[k]), kickers, count[k],cards);
+							return new Hand(HandType.getHandType(k), Rank.getRankByValue(start[k]), kickers, count[k],
+									cards);
 						}
-					}		
+					}
 				}
 			}
 		}
-		return new Hand(HandType.ILLEGAL,null, null, 0, cards);//illegal
+		return new Hand(HandType.ILLEGAL, null, null, 0, cards);// illegal
 	}
 
 	public List<Card> getCards() {
@@ -156,69 +172,67 @@ public class Hand {
 
 	public void setCards(List<Card> cards) {
 		this.cards.clear();
-		if(cards != null)
+		if (cards != null)
 			this.cards.addAll(cards);
 	}
+
 	public static Comparator<Hand> handComparator = new Comparator<Hand>() {
 
 		@Override
 		public int compare(Hand h1, Hand h2) {
-			return (h1.getWeight()-h2.getWeight());
-			}
-		};
+			return (h1.getWeight() - h2.getWeight());
+		}
+	};
 
 	public int getWeight() {
-		switch(type){
-		case ROCKET:{
+		switch (type) {
+		case ROCKET: {
 			return 21;
 		}
-		case BOMB:{
-			return primal.ordinal()+8;
+		case BOMB: {
+			return primal.ordinal() + 8;
 		}
-		case SOLO:{
-			if(this.getChainLength()!=1) {
-				return primal.ordinal()-chainLength-7;
-			}
-			else {
-				return primal.ordinal()-7;
-			}
-		}
-		case PAIR:{
-			if(this.getChainLength()!=1) {
-				return primal.ordinal()-chainLength-7;
-			}
-			else {
-				return primal.ordinal()-7;
+		case SOLO: {
+			if (this.getChainLength() != 1) {
+				return primal.ordinal() - chainLength - 7;
+			} else {
+				return primal.ordinal() - 7;
 			}
 		}
-		case TRIO:{
-			if(this.getChainLength()!=1) {
-				return primal.ordinal()-chainLength-8;
+		case PAIR: {
+			if (this.getChainLength() != 1) {
+				return primal.ordinal() - chainLength - 7;
+			} else {
+				return primal.ordinal() - 7;
 			}
-			else {
-				if(this.kickers!=null)					
-					return primal.ordinal()-8+kickers[0].getWeight()-5;
+		}
+		case TRIO: {
+			if (this.getChainLength() != 1) {
+				return primal.ordinal() - chainLength - 8;
+			} else {
+				if (this.kickers != null)
+					return primal.ordinal() - 8 + kickers[0].getWeight() - 5;
 				else {
-					return primal.ordinal()-8;
+					return primal.ordinal() - 8;
 				}
 			}
 		}
-		case QUAD:{
-			return primal.ordinal()/2;
+		case QUAD: {
+			return primal.ordinal() / 2;
 		}
 		default:
 			break;
 		}
-		
+
 		return weight;
 	}
 
 	public int getChainLength() {
 		return this.chainLength;
 	}
-	
+
 	public boolean isPass() {
-		if(this.cards.isEmpty())
+		if (this.cards.isEmpty())
 			return true;
 		else
 			return false;
