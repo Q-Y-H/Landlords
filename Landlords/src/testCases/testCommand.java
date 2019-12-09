@@ -11,6 +11,7 @@ import Commands.Command;
 import Commands.DecideRunForLandlordCommand;
 import Commands.PlayChoiceCommand;
 import Commands.SetNicknameCommand;
+import Strategies.MediumStrategy;
 import entities.HumanPlayer;
 import entities.Player;
 import entities.RobotPlayer;
@@ -24,7 +25,7 @@ public class testCommand {
 	
 	@Test // test SetNicknameCommand
 	public void setNickname_Robot_0() {
-		player = new RobotPlayer("robot");
+		player = new RobotPlayer("robot",new MediumStrategy());
 		nickname = new SetNicknameCommand(player);
 		nickname.execute();
 		assertEquals(player.getNickname(), "Robot 1");
