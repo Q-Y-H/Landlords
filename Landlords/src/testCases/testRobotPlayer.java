@@ -131,10 +131,9 @@ public class testRobotPlayer {
 	@Test
 	public void test10() {	//none vs 5544441515776399101113
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotDecisionStrategy robotDecisionStrategy = new MediumStrategy();
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>()));
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>()));
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory,robotDecisionStrategy);
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory,new MediumStrategy());
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[4],c[4],c[4],c[4],c[15],c[15],c[7],c[7],c[6],c[3],c[9],c[9],c[10],c[11],c[13])));
 		robotplayer1.parseCards();
 		System.out.println("Test8"+robotplayer1.getHandList());
@@ -145,10 +144,9 @@ public class testRobotPlayer {
 	@Test
 	public void test11() {	//none vs 5544441515776399101113
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotDecisionStrategy robotDecisionStrategy = new MediumStrategy();
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3]))));
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>()));
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory,robotDecisionStrategy);
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory,new MediumStrategy());
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[4],c[4],c[4],c[4],c[15],c[15],c[7],c[7],c[6],c[3],c[9],c[9],c[10],c[11],c[13])));
 		robotplayer1.parseCards();
 		System.out.println("Test8"+robotplayer1.getHandList());
@@ -161,27 +159,27 @@ public class testRobotPlayer {
 	@Test
 	public void test12() {	//none vs 5544441515776399101113
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
-		RobotDecisionStrategy robotDecisionStrategy = new SimpleStrategy();
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>()));
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>()));
-		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory,robotDecisionStrategy);
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory,new SimpleStrategy());
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[3],c[4],c[4],c[4],c[4],c[5],c[5],c[6],c[7],c[7],c[9],c[9],c[10],c[11],c[13],c[15],c[15])));
 		robotplayer1.parseCards();
 		System.out.println("Test8"+robotplayer1.getHandList());
 		Assert.assertEquals("3 ",robotplayer1.getPlayChoice());
 	}
 
-
-
-
-
-
-
-
-
-
-
-
+	
+	@Test
+	public void test13() {	//3 vs 5544441515776399101113
+		LinkedList<Hand> handHistory=new LinkedList<Hand>();
+		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3]))));
+		handHistory.add(Hand.cards2hand(new ArrayList<Card>()));
+		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory,new SimpleStrategy());
+		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[3],c[4],c[4],c[4],c[4],c[5],c[5],c[6],c[7],c[7],c[9],c[9],c[10],c[11],c[13],c[15],c[15])));
+		robotplayer1.parseCards();
+		System.out.println("Test8"+robotplayer1.getHandList());
+		Assert.assertEquals("4 ",robotplayer1.getPlayChoice());
+	}
 
 	/*Test for parseCards*/
 	@Test
