@@ -32,7 +32,7 @@ public class GameBoard {
 	public void run() {
 		room.setup();
 		setNickname();
-		electLandlord();
+		claimLandlord();
 		gameStart();
 		checkWinner();
 	}
@@ -43,7 +43,7 @@ public class GameBoard {
 		}
 	}
 
-	private void electLandlord(int initCursor) {
+	private void claimLandlord(int initCursor) {
 		List<Player> players = this.room.getPlayers();
 		List<Boolean> choices = new ArrayList<Boolean>();
 		int currCursor = initCursor;
@@ -63,7 +63,7 @@ public class GameBoard {
 			}
 
 			Player player = players.get(currCursor);
-			this.messenger.handleRunForLandlord(choices, players, currCursor, initCursor);
+			this.messenger.handleClaimLandlord(choices, players, currCursor, initCursor);
 			Command<Boolean> runForLandlord = new DecideRunForLandlordCommand(player);
 			this.playerController.storeAndExecute(runForLandlord);
 
@@ -89,8 +89,8 @@ public class GameBoard {
 		this.messenger.waiting();
 	}
 	
-	private void electLandlord() {
-		electLandlord(new Random().nextInt(3));
+	private void claimLandlord() {
+		claimLandlord(new Random().nextInt(3));
 	}
 
 	public void gameStart() {
@@ -101,7 +101,9 @@ public class GameBoard {
 		Hand lastValidHand = null;
 
 		this.messenger.clear();
+		this.messenger.print("===========\n");
 		this.messenger.print("Game Start!\n");
+		this.messenger.print("===========\n\n");
 
 		while (!isFinish) {
 			Player player = players.get(cursor);
@@ -177,7 +179,7 @@ public class GameBoard {
 			if (player.getCards().size() == 0)
 				isFinish = true;
 
-			// update active player
+			// update active player and recentHands
 			cursor = (cursor + 1) % 3;
 			room.updateRecentHands();
 		}
@@ -192,10 +194,15 @@ public class GameBoard {
 	}
 
 	private void checkWinner() {
-		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD)
+		if (room.getLastHandPlayer().getRole() == PlayerRole.LANDLORD) {
+			this.messenger.println("==============");
 			this.messenger.println("Landlord wins!");
-		else
+			this.messenger.println("==============");
+		}else {
+			this.messenger.println("==============");
 			this.messenger.println("Peasants win!");
+			this.messenger.println("==============");
+		}
 		this.messenger.waiting();
 	}
 }
