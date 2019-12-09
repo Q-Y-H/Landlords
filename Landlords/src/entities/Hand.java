@@ -21,7 +21,11 @@ public class Hand {
 		this.primal = primal;
 		this.kickers = kickers;
 		this.chainLength = chainLength;
-		this.setCards(cards);
+		this.cards.clear();
+		if (cards != null)
+			this.cards = cards;
+		else 
+			this.cards = new ArrayList<Card>();
 	}
 
 	public HandType getType() {
@@ -168,12 +172,6 @@ public class Hand {
 
 	public List<Card> getCards() {
 		return cards;
-	}
-
-	public void setCards(List<Card> cards) {
-		this.cards.clear();
-		if (cards != null)
-			this.cards.addAll(cards);
 	}
 
 	public static Comparator<Hand> handComparator = new Comparator<Hand>() {
