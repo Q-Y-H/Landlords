@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.sun.tools.classfile.StackMapTable_attribute.chop_frame;
 
 import entities.Card;
 import entities.CardRoom;
@@ -115,7 +114,7 @@ public class testRobotPlayer {
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3],c[3],c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[4],c[4],c[4],c[4])));
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		System.out.println("Test8"+robotplayer1.getHandList());
 		Assert.assertEquals("4 4 4 4 ",robotplayer1.getPlayChoice());
 	}
@@ -126,19 +125,19 @@ public class testRobotPlayer {
 		handHistory.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3], c[3],c[3],c[3]))));
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		robotplayer1.setCards(new ArrayList<Card>(Arrays.asList(c[5],c[5],c[4],c[4],c[4],c[4],c[15],c[15],c[7],c[7],c[6],c[3],c[9],c[9],c[10],c[11],c[13])));
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		System.out.println("Test8"+robotplayer1.getHandList());
 		Assert.assertEquals("4 4 4 4 ",robotplayer1.getPlayChoice());
 	}
 	
-	/*Test for sparseCards*/	
+	/*Test for parseCards*/	
 	@Test
-	public void testSparseCards_3333151617() {
+	public void testparseCards_3333151617() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[3], c[15], c[16], c[17]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[15]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3],c[3],c[3],c[3]))));
@@ -151,12 +150,12 @@ public class testRobotPlayer {
 	}
 	
 	@Test
-	public void testSparseCards_4455678910() {
+	public void testparseCards_4455678910() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList( c[4], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[10]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[4]))));
@@ -169,12 +168,12 @@ public class testRobotPlayer {
 	}
 	
 	@Test
-	public void testSparseCards_45678991010() {
+	public void testparseCards_45678991010() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList( c[4], c[5], c[6], c[7], c[8], c[9], c[9], c[10], c[10]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[5],c[6],c[7],c[8]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[9],c[9]))));
@@ -186,12 +185,12 @@ public class testRobotPlayer {
 		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
-	public void testSparseCards_44456789101010() {
+	public void testparseCards_44456789101010() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList( c[4],c[4],c[4],c[5], c[6], c[7], c[8], c[9], c[10], c[10], c[10]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[5]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[4],c[4]))));
@@ -203,12 +202,12 @@ public class testRobotPlayer {
 		Assert.assertEquals(result,robotplayer1.getHandList());
 	}
 	@Test
-	public void testSparseCards_333444678910() {
+	public void testparseCards_333444678910() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList(c[3], c[3], c[3], c[4], c[4], c[4], c[6], c[7], c[8], c[9], c[10]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[4],c[4],c[3],c[3],c[3]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
@@ -220,12 +219,12 @@ public class testRobotPlayer {
 	}
 	
 	@Test
-	public void testSparseCards_334455678910() {
+	public void testparseCards_334455678910() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList(c[3], c[3], c[4], c[4], c[5], c[5], c[6], c[7], c[8], c[9], c[10]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3],c[3],c[4],c[4],c[5],c[5]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[6],c[7],c[8],c[9],c[10]))));
@@ -237,12 +236,12 @@ public class testRobotPlayer {
 	}
 
 	@Test
-	public void testSparseCards_345678891011121317() {
+	public void testparseCards_345678891011121317() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[6], c[7], c[8],c[8] ,c[9], c[10], c[11], c[12] ,c[13], c[17]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[3],c[4],c[5],c[6],c[7]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[11],c[12],c[13],c[8],c[9],c[10]))));
@@ -255,12 +254,12 @@ public class testRobotPlayer {
 	}
 	
 	@Test
-	public void testSparseCards_456789910101111() {
+	public void testparseCards_456789910101111() {
 		LinkedList<Hand> handHistory=new LinkedList<Hand>();
 		RobotPlayer robotplayer1=new RobotPlayer(null,null,handHistory);
 		List<Card> cards1 = Arrays.asList(c[4], c[5], c[6], c[7], c[8], c[9], c[9], c[10], c[10], c[11] ,c[11]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		List<Hand> exceptedHands=new ArrayList<Hand>();
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[4],c[5],c[6],c[7],c[8]))));
 		exceptedHands.add(Hand.cards2hand(new ArrayList<Card>(Arrays.asList(c[11],c[11],c[10],c[9],c[9],c[10]))));
@@ -277,7 +276,7 @@ public class testRobotPlayer {
 		RobotPlayer robotplayer1=new RobotPlayer("R2");
 		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[6], c[7], c[8],c[8] ,c[9], c[10], c[11], c[12] ,c[13],c[16], c[17]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		Assert.assertEquals(robotplayer1.decideRunForLandlord(),true);
 	}
 	
@@ -287,9 +286,9 @@ public class testRobotPlayer {
 		RobotPlayer robotplayer1=new RobotPlayer("R2");
 		List<Card> cards1 = Arrays.asList(c[3], c[4], c[5], c[6], c[7], c[8],c[8] ,c[9], c[10], c[11], c[12] ,c[13],c[13], c[13]);
 		robotplayer1.setCards(cards1);
-		robotplayer1.sparseCards();
+		robotplayer1.parseCards();
 		Assert.assertEquals(robotplayer1.decideRunForLandlord(),false);
 	}
 	
 }
-}
+

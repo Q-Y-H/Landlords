@@ -6,7 +6,7 @@ import java.util.Set;
 
 public enum Rank {
 
-	RANK_3(3, "3", new String[] { "3" }), // TODO: Maybe 'value' is not necessary?
+	RANK_3(3, "3", new String[] { "3" }),
 
 	RANK_4(4, "4", new String[] { "4" }),
 
@@ -36,7 +36,7 @@ public enum Rank {
 
 	RANK_RED_JOKER(17, "R", new String[] { "R", "r" }),;
 
-	private int value; // TODO: not used?
+	private int value;
 	private String name;
 	private String[] alias;
 	private static Set<String> aliasSet = new HashSet<String>();
@@ -62,7 +62,7 @@ public enum Rank {
 	public static boolean aliasSetContains(String key) {
 		return getAliasSet().contains(key);
 	}
-	
+
 	public boolean hasAlias(String key) {
 		return Arrays.asList(this.alias).contains(key);
 	}
