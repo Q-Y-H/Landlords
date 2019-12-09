@@ -14,6 +14,7 @@ import Exceptions.CardsNotOnHandException;
 import Exceptions.DisobeyRulesException;
 import Exceptions.FirstPlayerCannotPassException;
 import Exceptions.InputInvalidException;
+import Strategies.MediumStrategy;
 import enums.HandType;
 import enums.PlayerRole;
 import enums.Rank;
@@ -61,13 +62,17 @@ public class CardRoom {
 				this.players.add(new HumanPlayer("UNDEFINED", PlayerRole.PEASANT, recentHands));
 		} else {
 			this.players.add(new HumanPlayer("UNDEFINED", PlayerRole.PEASANT, recentHands));
-			this.players.add(new RobotPlayer("UNDEFINED", PlayerRole.PEASANT, recentHands));
-			this.players.add(new RobotPlayer("UNDEFINED", PlayerRole.PEASANT, recentHands));
+			this.players.add(new RobotPlayer("UNDEFINED", PlayerRole.PEASANT, recentHands, new MediumStrategy()));
+			this.players.add(new RobotPlayer("UNDEFINED", PlayerRole.PEASANT, recentHands, new MediumStrategy()));
 		}
 
 		for (Player player : this.players) {
 			player.setCards(cardLists.get(player.getId() % 3));
 		}
+	}
+	
+	public RoomType getRoomType() {
+		return roomType;
 	}
 
 	public List<Player> getPlayers() {

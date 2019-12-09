@@ -5,12 +5,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
-
+import Strategies.RobotDecisionStrategy;
 import enums.HandType;
 import enums.PlayerRole;
 import enums.Rank;
-import enums.RobotPlayerDifficulty;
 
 public class RobotPlayer extends Player {
 
@@ -18,39 +16,39 @@ public class RobotPlayer extends Player {
 	 * Attribute
 	 */
 	private int totalHandCount = 0;
-	private List<Hand> handList = new ArrayList<Hand>();
-	private List<Hand> bombList = new ArrayList<Hand>();
-	private List<Hand> combinationList = new ArrayList<Hand>();
-	private List<Card> copyCards = new ArrayList<Card>();
-	private RobotPlayerDifficulty robotPlayerDifficulty;
-	
+	private List<Hand> handList;
+	private List<Hand> bombList;
+	private List<Hand> combinationList;
+	private List<Card> copyCards;
+	private RobotDecisionStrategy robotDecisionStrategy;
+
 	/*
 	 * Constructor
 	 */
-	public RobotPlayer(String nickname, PlayerRole role, LinkedList<Hand> recentHands) {
+	public RobotPlayer(String nickname, PlayerRole role, LinkedList<Hand> recentHands,
+			RobotDecisionStrategy robotDecisionStrategy) {
 		super(nickname, role, recentHands);
-		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUMROBOTSTRATEGY;
+		this.handList = new ArrayList<Hand>();
+		this.bombList = new ArrayList<Hand>();
+		this.combinationList = new ArrayList<Hand>();
+		this.copyCards = new ArrayList<Card>();
+		this.setRobotDecisionStrategy(robotDecisionStrategy);
 	}
 
-	public RobotPlayer(String nickname) {
-		super(nickname, null, null);
-		this.robotPlayerDifficulty=RobotPlayerDifficulty.MEDIUMROBOTSTRATEGY;
+	public RobotPlayer(String nickname, RobotDecisionStrategy robotDecisionStrategy) {
+		this(nickname, null, null, robotDecisionStrategy);
 	}
-	
-	public void setDifficulty(RobotPlayerDifficulty robotPlayerDifficulty) {
-		this.robotPlayerDifficulty=robotPlayerDifficulty;
-	}
+
 	/*
 	 * Methods
 	 */
-
 	@Override
 	public void askForNickname() {
 		this.setNickname("Robot " + getId() % 3);
 	}
 
 	@Override
-	public Boolean decideRunForLandlord() {	//deicde run for landlords based on sum of weight of hands 	
+	public Boolean decideRunForLandlord() { // decide run for landlords based on sum of weight of hands
 		parseCards();
 		int weightSum = 0;
 		for (Hand hand : handList) {
@@ -64,14 +62,10 @@ public class RobotPlayer extends Player {
 	}
 
 	@Override
-	public String getPlayChoice( ) {
-		//Initialization
-		List<Card> response=new ArrayList<Card>();
-		parseCards();	
+	public String getPlayChoice() {
+		parseCards();
 		calculateCombinationList();
-		
-		response=this.robotPlayerDifficulty.calculateResponse(this,this.recentHands);
-
+		List<Card> response = this.robotDecisionStrategy.playCards(this);
 
 		// Convert calculated hand response to string
 		String ans = "";
@@ -118,8 +112,7 @@ public class RobotPlayer extends Player {
 		return message;
 	}
 
-	
-	public void parseCards() {		
+	public void parseCards() {
 
 		handList.clear();
 		bombList.clear();
@@ -289,7 +282,6 @@ public class RobotPlayer extends Player {
 			}
 		}
 
-
 		// 5.2sparse sos into sos plus trio
 		if (numOfRanks[maxStart] >= 2 && maxEnd - maxStart >= 5) { // check trio at the front of straight
 			numOfRanks[maxStart] = 0;
@@ -322,9 +314,8 @@ public class RobotPlayer extends Player {
 			return handlerOfSOS(copyCards, maxStart, maxEnd - 1, numOfRanks, handList);
 		}
 
-
 		// 5.3 parse sos into paris and sos
-		//check pairs at the front of straight
+		// check pairs at the front of straight
 		int point = maxEnd;
 		int[] addition1 = new int[maxEnd - maxStart];
 		int[] addition2 = new int[maxEnd - maxStart];
@@ -467,6 +458,9 @@ public class RobotPlayer extends Player {
 		Collections.sort(combinationList, Hand.handComparator);
 	}
 
+	public void setRobotDecisionStrategy(RobotDecisionStrategy robotDecisionStrategy) {
+		this.robotDecisionStrategy = robotDecisionStrategy;
+	}
 }
 
 class StraightOfCards extends Hand { // data structure of straight of cards for handling straight of solo
@@ -478,6 +472,5 @@ class StraightOfCards extends Hand { // data structure of straight of cards for 
 	public List<Card> getCards() {
 		return super.getCards();
 	}
-	
-}
 
+}

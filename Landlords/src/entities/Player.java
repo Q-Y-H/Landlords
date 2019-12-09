@@ -98,11 +98,14 @@ public abstract class Player {
 	public void removeCards(Hand hand) {
 		this.removeCards(hand.getCards());
 	}
+	
+	public LinkedList<Hand> getRecentHands() {
+		return recentHands;
+	}
 
 	public abstract void askForNickname();
 
 	public abstract Boolean decideRunForLandlord();
 
 	public abstract String getPlayChoice();
-
 }

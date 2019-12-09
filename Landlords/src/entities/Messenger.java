@@ -161,19 +161,23 @@ public final class Messenger {
 			if (size >= i) {
 				Player player = players.get((cursor + 3 - i) % 3);
 				int remainCards = player.getCards().size();
-				msg += ("[" + player.getRole() + "] " + player.getNickname() + ": " + remainCards
-						+ " cards remaining.\n");
+				msg += "[" + player.getRole() + "] " + player.getNickname() + ": " + remainCards
+						+ " cards remaining.\n";
 				if (recenHands.get(size - i).getCards().size() != 0)
-					msg += (printCards(recenHands.get(size - i).getCards()));
+					msg += printCards(recenHands.get(size - i).getCards());
 				else
-					msg += ("PASS\n");
+					msg += "PASS\n";
 			}
 		}
-
-		msg += ("\nIt's your turn. Your cards are as follows:\n");
-		msg += (printCards(players.get(cursor).getCards()) + "\n");
-
+		msg += "\n";
 		return msg;
+	}
+	
+	public void showCurrentCards(Player player) {
+		println("");
+		println("It's your turn. Your cards are as follows:\n");
+		println(printCards(player.getCards()));
+		println("");
 	}
 
 	public void handleClaimLandlord(List<Boolean> choices, List<Player> players, int currCursor, int initCursor) {
@@ -182,6 +186,7 @@ public final class Messenger {
 
 		clear();
 		printBetweenBanner("Round " + (choices.size() + 1) + ": Claiming the LANDLORD position!");
+		println("");
 		waitForPlayer(player);
 		clear();
 		println("Round " + (choices.size() + 1) + ":\n");

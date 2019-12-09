@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import enums.PlayerRole;
+import enums.RoomType;
 
 public class GameBoard {
 	private CardRoom room;
@@ -74,11 +75,16 @@ public class GameBoard {
 
 		do {
 			cursor = ++cursor % 3;
+			boolean isHumanTurnInPvE = this.room.getRoomType().equals(RoomType.PVE) && cursor == 0;
+			boolean isValidInput = false;
 			Player player = players.get(cursor);
+			this.messenger.print(this.messenger.prevPlayersInfo(cursor, this.room));
 			this.messenger.waitForPlayer(player);
 			this.messenger.clear();
-			this.messenger.print(this.messenger.prevPlayersInfo(cursor, this.room));
-			boolean isValidInput = false;
+			if (isHumanTurnInPvE) {
+				this.messenger.print(this.messenger.prevPlayersInfo(cursor, this.room));
+				this.messenger.showCurrentCards(player);
+			}
 
 			while (!isValidInput) {
 				String cmd = this.room.askForPlayChoice(cursor);
@@ -86,10 +92,11 @@ public class GameBoard {
 			}
 
 			Hand lastHand = this.room.getHandHistory().getLast();
-			if (!lastHand.getCards().isEmpty())
+			if (!lastHand.getCards().isEmpty() && isHumanTurnInPvE) {
 				this.messenger.println(this.messenger.printCards(lastHand.getCards()));
-
-			this.messenger.waiting();
+			}
+			if (isHumanTurnInPvE)
+				this.messenger.waiting();
 			this.messenger.clear();
 
 			this.room.updateRecentHands();
